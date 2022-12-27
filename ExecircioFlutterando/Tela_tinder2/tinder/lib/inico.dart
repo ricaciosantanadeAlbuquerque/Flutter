@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:tinder/Tela.dart';
 
@@ -36,7 +33,7 @@ class Estado extends State<Inicio> {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 50,
-                            fontFamily: "Unbounded-Black",
+                            fontFamily: "Nunito-ExtraBold",
                           )),
                     ],
                   ),
@@ -73,9 +70,7 @@ class Estado extends State<Inicio> {
                               child: ListTile(
                                 title: const Center(child: Text("ENTRAR COM FACEBOOK")),
                                 leading: Container(width: 23, height: 23, child: Image.asset("assets/imagem/facebook.png")),
-                                onTap: () {
-                                  
-                                },
+                                onTap: () {},
                               )),
                           Card(
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
@@ -102,9 +97,28 @@ class Estado extends State<Inicio> {
                         child: GestureDetector(
                             child: const Text(
                               "problemas para fazer login ?",
-                              style: TextStyle(fontFamily: "Unbounded-Black", color: Colors.white),
+                              style: TextStyle(fontFamily: "Nunito-ExtraBold", color: Colors.white),
                             ),
-                            onTap: () {})))
+                            onTap: () {
+                              setState(() {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(title: Text("Não tem senha !"), actions: <Widget>[
+                                        Container(
+                                            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: <Widget>[
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  Navigator.pop(context);
+                                                });
+                                              },
+                                              child: const Text("ok!"))
+                                        ]))
+                                      ]);
+                                    });
+                              });
+                            }))),
               ],
             ),
           )

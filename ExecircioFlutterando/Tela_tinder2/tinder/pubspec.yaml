@@ -79,9 +79,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Unbounded-Black
+    - family: Nunito-ExtraBold
       fonts:
-      - asset: assets/fonts/Unbounded-Black.ttf
+      - asset: assets/font/static/Nunito-ExtraBold.ttf
       
      
       
