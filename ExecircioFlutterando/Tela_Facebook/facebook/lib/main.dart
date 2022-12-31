@@ -1,4 +1,6 @@
+import 'package:facebook/cadastro.dart';
 import 'package:facebook/inicio.dart';
+import 'package:facebook/mostrar_dados.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +15,12 @@ class MeuApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(),
-      home: const Inicio(),
+      initialRoute: "inicio",
+      routes:{
+        "inicio":(context) => const Inicio(),
+         "cadastro":(context) => const Cadastro(),
+         "mostraDados":(context) => const MostraDados()
+      },
       
     );
   }
