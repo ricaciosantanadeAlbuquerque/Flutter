@@ -1,6 +1,8 @@
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:whatsapp/tela_lista.dart';
 
 class Inicio extends StatefulWidget {
   const Inicio({super.key});
@@ -11,6 +13,8 @@ class Inicio extends StatefulWidget {
 }
 
 class Estado extends State<StatefulWidget> {
+  TextEditingController p = TextEditingController();
+  dynamic entradaPasta;
   String entradaNome = "";
   dynamic entradaLink = "";
   List<dynamic> imagem = [
@@ -29,12 +33,26 @@ class Estado extends State<StatefulWidget> {
     DateTime.now().subtract(const Duration(days: 2, hours: 6, minutes: 23)),
     DateTime.now().subtract(const Duration(days: 2, hours: 8, minutes: 23))
   ];
+  void passarDados() {
+    
+    setState(() {
+     
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Lista(arrayImage: imagem,arrayNome: nome,arrayData: datas,)));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(elevation: 0, title: const Text("WhatsApp"), backgroundColor: Colors.greenAccent, actions: <Widget>[
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[IconButton(icon: const Icon(Icons.search), onPressed: () {}), IconButton(icon: const Icon(Icons.more_vert), onPressed: () {})])
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
+            IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () {
+                  passarDados();
+                }),
+            IconButton(icon: const Icon(Icons.more_vert), onPressed: () {})
+          ])
         ]),
         body: SingleChildScrollView(
           child: Column(children: <Widget>[
@@ -82,13 +100,30 @@ class Estado extends State<StatefulWidget> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CircleAvatar(radius: 40, backgroundColor: Colors.greenAccent, child: CircleAvatar(radius: 30, backgroundColor: Color.fromRGBO(255, 255, 255, 1), backgroundImage: NetworkImage(imagem[index]))),
-                                Padding(padding: EdgeInsets.all(08), child: Container(child: Column(children: <Widget>[Text(nome[index], style: TextStyle(fontSize: 20, color: Color.fromARGB(255, 11, 11, 11)))]))),
+                                CircleAvatar(
+                                  radius: 40, 
+                                  backgroundColor: Colors.greenAccent,
+                                   child: CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor:
+                                     const Color.fromRGBO(255, 255, 255, 1),
+                                      backgroundImage: NetworkImage(imagem[index])
+                                     )
+                                     ),
+                                Padding(
+                                  padding: EdgeInsets.all(08),
+                                   child: Container(
+                                    child: Column(
+                                      children: <Widget>[Text(nome[index],
+                                       style: const TextStyle(
+                                        fontSize: 20, 
+                                        color: Color.fromARGB(255, 11, 11, 11)))]))),
                                 Container(
                                     child: Row(
                                   children: [
                                     Icon(Icons.timelapse),
-                                    Text(timeago.format(datas[index], locale: 'pt_br')),
+                                    Text(timeago.format(datas[index], locale: 'pt_br')
+                                    ),
                                   ],
                                 ))
                               ],
@@ -104,36 +139,41 @@ class Estado extends State<StatefulWidget> {
                   builder: (BuildContext context) {
                     return AlertDialog(
                       content: Container(
-                        height: 190,
-                        child: Column(children: <Widget>[
-                          const Padding(padding: EdgeInsets.all(8), child: Text("Digite seu nome!")),
-                          TextFormField(
-                            onChanged: (text) {
-                              entradaNome = text;
-                            },
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          const Padding(padding: EdgeInsets.all(8), child: Text("Cole o link da sua imagem de perfil!")),
-                          TextFormField(
-                              onChanged: (text) {
-                                entradaLink = text;
-                              },
-                              decoration: const InputDecoration(border: OutlineInputBorder())),
-                        ]),
+                        padding: const EdgeInsets.all(0),
+                        margin: const EdgeInsets.all(0),
+                        height: 70,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            TextField(
+                                onChanged: (text) {
+                                  entradaNome = text;
+                                },
+                                decoration: const InputDecoration(hintText: "Digite seu nome aqui!")),
+                          ],
+                        ),
                       ),
                       actions: [
-                        TextButton(
-                            onPressed: () {
-                             setState(() {
-                                nome.add(entradaNome);
-                                imagem.add(entradaLink);
-                              
-                             });
-                               Navigator.of(context).pop();
-                            },
-                            child: const Text("Salvar"))
+                        Column(
+                          children: [
+                            IconButton(
+                                onPressed: () async {
+                                  final valeu = await FlutterClipboard.paste();
+                                  setState(() {
+                                    entradaPasta = valeu;
+                                    imagem.add(entradaPasta);
+                                    nome.add(entradaNome);
+                                  });
+                                  Navigator.of(context).pop();
+                                },
+                                icon: const Icon(Icons.paste)),
+                            TextField(
+                                onChanged: (text) {
+                                  entradaLink = entradaPasta;
+                                },
+                                decoration: const InputDecoration(hintText: "Click na Pasta para colar o link da imagem")),
+                          ],
+                        )
                       ],
                     );
                   });

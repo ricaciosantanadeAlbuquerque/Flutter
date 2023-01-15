@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp/inicio.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:whatsapp/tela_lista.dart';
 
 void main(List<String> args) async {
   timeago.setLocaleMessages('pt_br', timeago.PtBrShortMessages());
@@ -15,6 +16,13 @@ class MeuApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: ThemeData(primarySwatch: Colors.green, accentColor: Colors.greenAccent), home: const Inicio());
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.green, 
+        accentColor: Colors.greenAccent),
+        initialRoute:"/",
+        routes:{"/":(context)=> const Inicio(),
+                "p":(context)=>   Lista()}
+    );
   }
 }
