@@ -1,10 +1,9 @@
 // ignore_for_file: unnecessary_this
 
-import 'package:facebook/cadastro.dart';
+import 'package:facebook/view/cadastro.dart';
 import 'package:flutter/src/widgets/editable_text.dart';
 
 class Usuario {
-  
   String? nome;
   String? email;
   String? senha;
@@ -15,11 +14,13 @@ class Usuario {
     this.email = email1;
     this.senha = senha1;
     this.confirmaSenha = confirmaSenha1;
-    
+
+   print( "=====nome: ${this.nome!} email:${this.email!}senha:${this.senha!}confirma senha: ${this.confirmaSenha!}========");
+
   } // construtor
 
   String get getNome {
-    return this.nome!;
+    return this.nome ?? ' valor não foi passado';
   }
 
   set setNome(String nome) {
@@ -27,7 +28,7 @@ class Usuario {
   }
 
   String get getEmail {
-    return this.email!;
+    return this.email ?? ' valor não foi passado';
   }
 
   set setEmail(String emial) {
@@ -35,7 +36,7 @@ class Usuario {
   }
 
   String get getSenha {
-    return this.senha!;
+    return this.senha ?? ' valor não foi passado';
   }
 
   set setSenha(String senha) {
@@ -43,7 +44,7 @@ class Usuario {
   }
 
   String get getConfirmaSenha {
-    return this.confirmaSenha!;
+    return this.confirmaSenha ?? ' valor não foi passado';
   }
 
   set setConfirmaSenha(String confirmaSenha) {
@@ -54,5 +55,4 @@ class Usuario {
   String toString() {
     return "nome:${this.nome!}email:${this.email!}senha:${this.senha!}confirma senha: ${this.confirmaSenha!}";
   }
-   
 }
