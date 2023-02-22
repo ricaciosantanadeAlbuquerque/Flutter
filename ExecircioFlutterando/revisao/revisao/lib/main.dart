@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revisao/Tela1.dart';
+import 'package:revisao/Tela2.dart';
 import 'package:revisao/controle.dart';
 
 void main() {
@@ -17,7 +18,11 @@ class MeuApp extends StatelessWidget {
               primarySwatch:Colors.red,
               brightness:Controle.instancia.logico ? Brightness.dark :Brightness.light
             ),
-            home: Tela1()
+            initialRoute:"/",
+            routes:{
+              "/": (context) => Tela1(),
+              "//":(context) => Tela2()
+              }
           );
         });
   }
