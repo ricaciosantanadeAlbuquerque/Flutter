@@ -17,10 +17,10 @@ class PerguntaApp extends StatelessWidget {
         body:Column(
           children: <Widget>[
             Text(perguntas.elementAt(0)),
-            ElevatedButton(onPressed:(){
-
-            },child: const Text("Resposta1"),
-            )
+            ElevatedButton(onPressed:(){},child: const Text("Resposta 1 "),
+            ),
+            ElevatedButton(onPressed:(){},child:const Text("Resposta 2 ")),
+            ElevatedButton(onPressed:(){},child:const Text("Resposta 3 "))
           ]
         )
       )
