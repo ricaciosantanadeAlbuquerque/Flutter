@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(PerguntaApp());
+void main() => runApp(PerguntaApp()); // main está  como uma função Arrow
 
 class PerguntaApp extends StatelessWidget {
 
