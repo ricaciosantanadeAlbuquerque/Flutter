@@ -1,15 +1,15 @@
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(_PerguntaApp());
+void main() => runApp(PerguntaApp());
 
-class _PerguntaApp extends StatefulWidget{
+class PerguntaApp extends StatefulWidget{
   @override
-  State<_PerguntaApp> createState() => PerguntaAppState();
+  State<PerguntaApp> createState() => _PerguntaAppState();
 
 }
 
-class PerguntaAppState extends State<_PerguntaApp>{
+class _PerguntaAppState extends State<PerguntaApp>{
 
    var _perguntaSelecionada = 0;
 
