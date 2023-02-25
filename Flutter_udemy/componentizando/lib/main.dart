@@ -18,7 +18,7 @@ class _PerguntaAppState extends State<PerguntaApp>{
 
    var _perguntaSelecionada = 0;
 
-    void Function() funcao(){
+    void Function() _funcao(){
         return (){
           setState(() {
             _perguntaSelecionada++;
@@ -37,9 +37,9 @@ class _PerguntaAppState extends State<PerguntaApp>{
             body:Column(
               children: [
                 Questao(texto: _perguntas[_perguntaSelecionada],),
-                ElevatedButton(onPressed: funcao,child:const Text("Pergunta 1")),
-                ElevatedButton(onPressed:funcao(),child:const Text("Pergunta 2")),
-                ElevatedButton(onPressed:funcao(),child: const Text("Pergunta 3"))
+                ElevatedButton(onPressed:_funcao(),child:const Text("Pergunta 1")),
+                ElevatedButton(onPressed:_funcao(),child:const Text("Pergunta 2")),
+                ElevatedButton(onPressed:_funcao(),child: const Text("Pergunta 3"))
               ]
             )
          )
