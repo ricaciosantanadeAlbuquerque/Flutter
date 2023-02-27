@@ -1,10 +1,12 @@
-import 'package:future04/future04.dart' as future04;
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
-void main(List<String> arguments){
+void main(List<String> arguments) async {
+  var cliente = http.Client();
+  var response = await cliente.get(Uri.parse('https://jsonplaceholder.typicode.com/todos/1'));
+  var decodeResponse = jsonDecode(response.body);
+  print(decodeResponse);
 
-}
-void api()async{
-  var URL = 'https://jsonplaceholder.typicode.com/todos/1';
-     var response = await http.get();
+  cliente.close();
 }
