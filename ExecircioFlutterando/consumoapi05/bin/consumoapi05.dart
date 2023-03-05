@@ -18,6 +18,8 @@ Future<ObjetoApi> consumo() async {
     return objeto;
   } catch (e) {
     throw Exception('ERRO! não foi possível consumir esta API');
+  } finally {
+    cliente.close();
   }
 }
 
