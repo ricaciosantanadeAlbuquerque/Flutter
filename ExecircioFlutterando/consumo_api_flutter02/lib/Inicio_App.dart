@@ -56,7 +56,7 @@ ValueNotifier<bool> inLoader =  ValueNotifier(false);
                       itemCount: listaApi.value.length,
                       itemBuilder: (BuildContext, index){
                         return ListTile(
-                          title: Text(listaApi.value[index].title),
+                          title: Text(listaApi.value[index].toString() ),
                         );
                       },
                   
