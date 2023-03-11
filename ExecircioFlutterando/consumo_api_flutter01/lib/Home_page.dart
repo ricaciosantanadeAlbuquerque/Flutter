@@ -50,7 +50,12 @@ class HomePageState extends State<HomePage> {
                                 );
                               })
                           ),
-                  ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.green), onPressed: callApi, child: const Text("BTN"))
+                  ElevatedButton(style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40)
+                    )
+                    ), onPressed: callApi, child: const Text("CUSTOM BTN"))
                 ]),
               ),
             )));
