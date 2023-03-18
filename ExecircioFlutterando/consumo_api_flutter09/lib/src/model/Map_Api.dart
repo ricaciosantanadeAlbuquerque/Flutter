@@ -8,7 +8,7 @@ class Consumo {
   Consumo({required this.userId, required this.id, required this.title, required this.completed});
 
   factory Consumo.fomJson(Map<String, dynamic> json) {
-    return Consumo(userId: json['userId'], id: json['id'], title: json['title'], completed: json['completd']);
+    return Consumo(userId: json['userId'], id: json['id'], title: json['title'], completed: json['completed']);
   }
 
   Map<String, dynamic> toJson() {
