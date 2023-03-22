@@ -1,3 +1,4 @@
+import 'package:consumo_api_dio_flutter04/src/home_app.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +14,8 @@ class MeuApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primarySwatch:Colors.green
-      )
+      ),
+      home: const HomeApp()
     );
   }
 }
