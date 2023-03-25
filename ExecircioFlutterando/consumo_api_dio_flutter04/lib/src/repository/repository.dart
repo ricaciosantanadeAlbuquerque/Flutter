@@ -3,18 +3,30 @@ import 'package:dio/dio.dart';
 import '../model/Api.dart';
 
 class Repository {
-  Dio dio = Dio();
+  Dio? dio;
   final url = 'https://jsonplaceholder.typicode.com/todos';
 
-  Future<List<Api>> consumo() async {
-    final resposta = await dio.get(url);
-    final lista = resposta.data as List;
-    List<Api> listApi = [];
-
-    for (var json in lista) {
-      final ob = Api.fromJson(json);
-      listApi.add(ob);
+  Repository({ Dio? cliente}) {
+    if (cliente == null) {
+      dio = Dio(); // dio verdadeiro
+    }else{
+      dio = cliente; // se o parâmetro tiver uma instância, passe para o cliente.
     }
-    return listApi;
+  }
+
+  Future<List<Api>> consumo() async {
+    List<Api> listApi = [];
+    if(this.dio != null){
+      final resposta = await dio!.get(url);
+      final lista = resposta.data as List;
+
+      for (var json in lista) {
+        final ob = Api.fromJson(json);
+        listApi.add(ob);
+      }
+       
+    }
+     return listApi;
+  
   }
 }
