@@ -14,7 +14,6 @@ void main() async {
     expect(controle.estado.value, EstadoValue.inicio);
     await controle.iniciar();
     expect(controle.estado.value, EstadoValue.sucesso);
-  
-    expect(controle.estado.value, EstadoValue.sucesso);
+   
   });
 }

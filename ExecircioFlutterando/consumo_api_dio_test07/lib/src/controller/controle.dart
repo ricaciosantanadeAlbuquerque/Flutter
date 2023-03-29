@@ -7,8 +7,9 @@ class Controle {
   Repository repository = Repository();
   var estado = ValueNotifier<EstadoValue>(EstadoValue.inicio);
 
-    Future iniciar() async {
+  Future iniciar() async {
     estado.value = EstadoValue.carregando;
+    await Future.delayed(const Duration(seconds: 5));
     try {
       lista = await repository.consumo();
       estado.value = EstadoValue.sucesso;
@@ -16,9 +17,6 @@ class Controle {
       estado.value = EstadoValue.erro;
     }
   }
-
 }
-
-  
 
 enum EstadoValue { inicio, carregando, sucesso, erro }
