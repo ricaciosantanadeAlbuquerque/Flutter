@@ -7,7 +7,7 @@ class Componente extends StatelessWidget {
   Moeda? selecionado;
   void Function(Moeda?)? funcao;
 
-  Componente({required this.controle, required this.lista, required this.selecionado, required this.funcao});
+  Componente({super.key, required this.controle, required this.lista, required this.selecionado, required this.funcao});
 
   @override
   Widget build(BuildContext context) {
