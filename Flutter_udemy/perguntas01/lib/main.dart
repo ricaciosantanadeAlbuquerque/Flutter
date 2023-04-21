@@ -17,11 +17,9 @@ class perguntaAppState extends State<PerguntaApp>{
   final List<String> pergunta = ["Qual a sua cor favorita ?","Qual é o seu animal favorito ? "];
 //=====================================Métodos da classe====================================================
    respoder() {
-   if(perguntaSelecionada < 2){
-     setState(() {
-        perguntaSelecionada++;
-      });
-   }
+    setState(() {
+      perguntaSelecionada++;
+    });
   }
 
   @override
