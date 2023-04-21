@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:perguntas01/questao.dart';
+import 'package:perguntas01/resposta.dart';
 
 void main() => runApp(const PerguntaApp());
 
@@ -6,19 +8,19 @@ void main() => runApp(const PerguntaApp());
 class PerguntaApp extends StatefulWidget {
   const PerguntaApp({super.key});
   @override
-  perguntaAppState createState() => perguntaAppState();
+  _perguntaAppState createState() => _perguntaAppState();
 }
 
 //------------------Estado-------------------------------
-class perguntaAppState extends State<PerguntaApp>{
+class _perguntaAppState extends State<PerguntaApp>{
 // =================================Atribultos de classe ==================================================
-  var perguntaSelecionada = 0;
+  var _perguntaSelecionada = 0;
 
   final List<String> pergunta = ["Qual a sua cor favorita ?","Qual é o seu animal favorito ? "];
 //=====================================Métodos da classe====================================================
-   respoder() {
+   _responder() {
     setState(() {
-      perguntaSelecionada++;
+      _perguntaSelecionada++;
     });
   }
 
@@ -33,21 +35,12 @@ class perguntaAppState extends State<PerguntaApp>{
       ),
       body:Column(
         children:<Widget>[
-          Text(pergunta[perguntaSelecionada]),
-          Padding(
-            padding:const EdgeInsets.all(8),
-            child:ElevatedButton(
-              onPressed:respoder,
-              child:const Text("Respota1"))
-          ),
-          Padding(
-            padding:const EdgeInsets.only(left: 8,right:8,bottom:8),
-            child:ElevatedButton(onPressed:respoder,
-            child:const Text("Resposta2"))
-          ),
-          Padding(
-            padding:const EdgeInsets.only(left: 8, right:8,bottom:8),
-            child:ElevatedButton(onPressed:respoder,child:const Text("Respoder3")) ,)
+          Questao(texto: pergunta[_perguntaSelecionada]),
+          
+          Resposta(texto: "Resposta 1 ", p:_responder),
+          Resposta(texto: "Resposta 2 ", p: _responder),
+          Resposta(texto: "Resposta 3 ", p: _responder)
+         
         ]
       )
     )
