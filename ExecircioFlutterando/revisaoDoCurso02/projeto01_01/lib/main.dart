@@ -13,7 +13,14 @@ class PerguntaApp extends StatelessWidget {
          appBar:AppBar(
            title: const Center(child: Text("Perguntas"))
          ),
-         body: const Text("Olá Flutter !")
+         body: Center(
+           child: Column(
+            mainAxisAlignment:MainAxisAlignment.center,
+            children: const [
+             Text("Olá Flutter !")
+            ],
+           ),
+         )
       )
     );
   }
