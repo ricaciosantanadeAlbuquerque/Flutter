@@ -6,11 +6,15 @@ class Resposta extends StatelessWidget {
   const Resposta({super.key, required this.texto,required this.p});
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8), 
-      child: ElevatedButton(onPressed: p, 
-      child:  Text(texto)
-      )
-      );
+    return Container(
+      width:double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.all(8), 
+        child: ElevatedButton(
+        onPressed: p, 
+        child:  Text(texto)
+        )
+        ),
+    );
   }
 }
