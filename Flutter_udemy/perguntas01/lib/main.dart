@@ -1,38 +1,42 @@
 import 'package:flutter/material.dart';
-import 'package:perguntas01/questao.dart';
-import 'package:perguntas01/questionario.dart';
-import 'package:perguntas01/resposta.dart';
-import 'package:perguntas01/resultado.dart';
+import './questionario.dart';
+import './resultado.dart';
 
 void main() => runApp(const PerguntaApp());
 
-// ---------------- StatefulWidget-------------------
-class PerguntaApp extends StatefulWidget {
-  const PerguntaApp({super.key});
-  @override
-  _perguntaAppState createState() => _perguntaAppState();
-}
-
-//------------------Estado-------------------------------
-class _perguntaAppState extends State<PerguntaApp> {
-// =================================Atribultos de classe ==================================================
+class _PerguntaAppState extends State<PerguntaApp> {
   var _perguntaSelecionada = 0;
-  final List<Map<String, Object>> _pergunta = const [
+  final _perguntas = const [
     {
       'texto': 'Qual é a sua cor favorita?',
-      'resposta': ['Preto', 'Vermelho', 'Verde', 'Branco']
+      'respostas': [
+        {'texto': 'Preto', 'nota': 10},
+        {'texto': 'Vermelho', 'nota': 5},
+        {'texto': 'Verde', 'nota': 3},
+        {'texto': 'Branco', 'nota': 1},
+      ],
     },
     {
       'texto': 'Qual é o seu animal favorito?',
-      'resposta': ['Coelho', 'Cobra', 'Elefante', 'Leão']
+      'respostas': [
+        {'texto': 'Coelho', 'nota': 10},
+        {'texto': 'Cobra', 'nota': 5},
+        {'texto': 'Elefante', 'nota': 3},
+        {'texto': 'Leão', 'nota': 1},
+      ],
     },
     {
-      'texto': 'Qual o seu instrutor favorito?',
-      'resposta': ['Maria', 'joão', 'Leo', 'Pedro']
+      'texto': 'Qual é o seu instrutor favorito?',
+      'respostas': [
+        {'texto': 'Leo', 'nota': 10},
+        {'texto': 'Maria', 'nota': 5},
+        {'texto': 'João', 'nota': 3},
+        {'texto': 'Pedro', 'nota': 1},
+      ],
     }
   ];
-//=====================================Métodos da classe====================================================
-  _responder() {
+
+  void _responder() {
     if (temPerguntaSelecionada) {
       setState(() {
         _perguntaSelecionada++;
@@ -41,33 +45,33 @@ class _perguntaAppState extends State<PerguntaApp> {
   }
 
   bool get temPerguntaSelecionada {
-    return _perguntaSelecionada < _pergunta.length; //operadores condicionais  retornam o valor booleano
+    return _perguntaSelecionada < _perguntas.length;
   }
 
   @override
   Widget build(BuildContext context) {
-    //List<Widget> widgets = resposta.map((texto) => Resposta(texto: texto, p: _responder)).toList();
-    /* for (String element in pergunta[_perguntaSelecionada]['resposta'] as List){ // necessário pitar o retono como uma lista.
-
-      resposta.add(Resposta(texto: element, p: _responder));
-    } */
-
     return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-              title: const Center(
-                child: Text("Perguntas")
-                )
-                ),
-            body: temPerguntaSelecionada ? 
-            Questionario(pergunta: _pergunta,
-             perguntaSelecionada: _perguntaSelecionada, 
-             responder: _responder)
-                : const Resultado()
-                )
-                );
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Perguntas'),
+        ),
+        body: temPerguntaSelecionada
+            ? Questionario(
+                perguntas: _perguntas,
+                perguntaSelecionada: _perguntaSelecionada,
+                quandoResponder: _responder,
+              )
+            : const Resultado(),
+      ),
+    );
   }
 }
-/**
- * ... operador spred pega cada elemento da lista resposta e joga para dentro da lista  de column()
- */
+
+class PerguntaApp extends StatefulWidget {
+  const PerguntaApp({super.key});
+
+  @override
+  _PerguntaAppState createState() {
+    return _PerguntaAppState();
+  }
+}
