@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:perguntas01/questao.dart';
+import 'package:perguntas01/questionario.dart';
 import 'package:perguntas01/resposta.dart';
 import 'package:perguntas01/resultado.dart';
 
@@ -32,11 +33,11 @@ class _perguntaAppState extends State<PerguntaApp> {
   ];
 //=====================================Métodos da classe====================================================
   _responder() {
-   if(temPerguntaSelecionada){
+    if (temPerguntaSelecionada) {
       setState(() {
         _perguntaSelecionada++;
       });
-   }
+    }
   }
 
   bool get temPerguntaSelecionada {
@@ -45,27 +46,26 @@ class _perguntaAppState extends State<PerguntaApp> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> lista = temPerguntaSelecionada ? _pergunta[_perguntaSelecionada]['resposta'] as List<String> : [];
-    List<Widget> widgets = lista.map((texto) => Resposta(texto: texto, p: _responder)).toList();
+    //List<Widget> widgets = resposta.map((texto) => Resposta(texto: texto, p: _responder)).toList();
     /* for (String element in pergunta[_perguntaSelecionada]['resposta'] as List){ // necessário pitar o retono como uma lista.
 
       resposta.add(Resposta(texto: element, p: _responder));
     } */
 
     return MaterialApp(
-      home: 
-      Scaffold(
-        appBar: AppBar(
-          title: const Center(
-            child: Text("Perguntas")
-            )
-            ), body: temPerguntaSelecionada ? Column(
-              children: <Widget>[Questao(
-                texto: _pergunta[_perguntaSelecionada]['texto'].toString()),
-                 ...widgets]
-                 ) : Resultado() 
-                 )
-                 );
+        home: Scaffold(
+            appBar: AppBar(
+              title: const Center(
+                child: Text("Perguntas")
+                )
+                ),
+            body: temPerguntaSelecionada ? 
+            Questionario(pergunta: _pergunta,
+             perguntaSelecionada: _perguntaSelecionada, 
+             responder: _responder)
+                : const Resultado()
+                )
+                );
   }
 }
 /**
