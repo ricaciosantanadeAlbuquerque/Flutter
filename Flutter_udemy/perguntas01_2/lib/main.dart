@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:perguntas01_2/questao.dart';
+import 'package:perguntas01_2/questionario.dart';
 import 'package:perguntas01_2/resposta.dart';
+import 'package:perguntas01_2/resultado.dart';
 
 void main(){
   runApp( const PerguntasApp());
@@ -53,19 +55,25 @@ class PerguntasAppState extends State<PerguntasApp>{
   ];
 
   void andarLista(int pontuacao){
-    setState((){
+    if(temPergunta){
+       setState((){
       contadora++;
       valorTotal += pontuacao;
     });
+    }
   }
 
  bool get temPergunta{
   return contadora < lista.length;
  }
-
+ void resetar(){
+  setState(() {
+    contadora = 0;
+    valorTotal = 0;
+  });
+ }
   @override
   Widget build(BuildContext context){
-    List<Map<String,Object>> respostas = temPergunta ? lista[contadora]['resposta'] as List<Map<String,Object>> : [];
     return MaterialApp(
       home:Scaffold(
         appBar:AppBar(
@@ -73,14 +81,9 @@ class PerguntasAppState extends State<PerguntasApp>{
             child:Text('Pergunstas')
           )
         ),
-        body:Center(
-          child: Column(
-            children: [
-             Questao(texto: lista[contadora]['texto'] as String ),
-              ...respostas.map((map) => Resposta(texto: map['texto'] as String, funcao: (){})).toList()
-            ]
-          ),
-        )
+        body: temPergunta ? 
+        Questionario(lista: lista, contadora: contadora, p: andarLista)
+        : Resultado (pontos: valorTotal,resetar: resetar,)
 
       )
     );
