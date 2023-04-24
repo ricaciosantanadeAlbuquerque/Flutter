@@ -7,10 +7,12 @@ class Questao extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width:double.infinity,
-      child: Text(texto,
-      style:const TextStyle(
-        fontSize:28,
-      )
+      child: Center(
+        child: Text(texto,
+        style:const TextStyle(
+          fontSize:28,
+        )
+        ),
       )
     );
   }
