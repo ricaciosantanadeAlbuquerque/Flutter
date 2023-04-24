@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:perguntas01_1/questionario.dart';
+import 'package:perguntas01_1/resultado.dart';
 
 void main() {
   runApp(const PerguntaApp());
@@ -48,12 +49,20 @@ class PerguntaAppState extends State<PerguntaApp> {
 
    void _responder(int pontuacao){
 
-    setState(() {
-      _perguntaSelecionada++;
-      _pontuacaoTotal += pontuacao;
-    });
+    if(temPerguntaSelecionada){
+       setState(() {
+        _perguntaSelecionada++;
+        _pontuacaoTotal += pontuacao;
+      });
+    }
    }
-
+  
+  void reiniciar(){
+    setState(() {
+      _perguntaSelecionada = 0;
+      _pontuacaoTotal = 0;
+    });
+  }
   bool get temPerguntaSelecionada{
     return _perguntaSelecionada < _perguntas.length;
     // operadores condicionais retornam valores booleano true ou false
@@ -68,7 +77,8 @@ class PerguntaAppState extends State<PerguntaApp> {
               child: Text("Perguntas")
             )
           ),
-          body: Questionario(perguntas: _perguntas, perguntaSelecionada: _perguntaSelecionada, p: _responder),
+          body: temPerguntaSelecionada ? Questionario(perguntas: _perguntas, perguntaSelecionada: _perguntaSelecionada, p: _responder)
+          : Resultado(ponto: _pontuacaoTotal, p: reiniciar)
          )
     );
   }
