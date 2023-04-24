@@ -19,14 +19,17 @@ class Resultado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(fraseRseultado,
-            style: const TextStyle(
-              fontSize: 28,
-            )),
-        TextButton(onPressed: p, child: const Text("Reiniciar !", style: TextStyle(fontSize: 28, color: Colors.blue)))
-      ],
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(fraseRseultado,
+              style: const TextStyle(
+                fontSize: 28,
+              )),
+          TextButton(onPressed: p, child: const Text("Reiniciar !", style: TextStyle(fontSize: 28, color: Colors.blue)))
+        ],
+      ),
     );
   }
 }
