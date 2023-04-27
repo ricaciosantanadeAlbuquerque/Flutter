@@ -4,6 +4,18 @@ void main() => runApp(const PerguntaApp());
 
 class PerguntaApp extends StatelessWidget {
   const PerguntaApp({super.key});
+
+  //Closures
+  void Function() funcao(){
+      return (){
+          print("Pergunta Respondida ");
+      };
+  }
+// funcao
+
+void responder(){
+  print("Pergunta Respondidade ");
+}
   @override
   Widget build(BuildContext context) {
 
@@ -27,11 +39,11 @@ class PerguntaApp extends StatelessWidget {
               child:const Text("Resposta 1 "),
             ),
             ElevatedButton(
-            onPressed:(){},
+            onPressed:responder,
             child:const Text("Resposta 2 ")
             ),
             ElevatedButton(
-              onPressed:(){},
+              onPressed: funcao(),
               child:const Text("Resposta 3 ")
             )
           ]
