@@ -4,7 +4,7 @@ void main() {
   runApp(const PerguntaApp(titulo: "Olá Flutter !!",));
 }
 
-class PerguntaApp extends StatelessWidget {
+class PerguntaApp extends StatelessWidget {  // Classe Imutável
   final String titulo;
   const PerguntaApp({super.key,required this.titulo});
   @override
