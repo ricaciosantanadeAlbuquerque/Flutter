@@ -9,25 +9,25 @@ class PerguntaApp extends StatefulWidget {
   const PerguntaApp({super.key});
 
   @override
-  PerguntaAppState createState() => PerguntaAppState();
+  _PerguntaAppState createState() => _PerguntaAppState();
 
 }
 
-class PerguntaAppState extends State<PerguntaApp> {
-  int index = 0;
+class _PerguntaAppState extends State<PerguntaApp> {
+  int _index = 0;
 
   List<String> perguntas = ["Qual é a sua cor favorita !", 
   "Qual é o seu animal favorito",
    "Qual é o seu instrutor favorito !"];
 
-  void responder(){
+  void _responder(){
     setState(() {
-      index++;
+      _index++;
     });
   }
   
   bool get temPergunta {
-    return index < perguntas.length;
+    return _index < perguntas.length;
   }
   
   @override
@@ -41,10 +41,10 @@ class PerguntaAppState extends State<PerguntaApp> {
           ),
           body: temPergunta ? Column(
             children: [
-              Questao(texto: perguntas[index]),
-              Resposta(texto: 'Resposta 1 ', funcao: responder),
-              Resposta(texto: 'Resposta 2 ', funcao: responder),
-              Resposta(texto: 'Resposta 3 ', funcao: responder)
+              Questao(texto: perguntas[_index]),
+              Resposta(texto: 'Resposta 1 ', funcao: _responder),
+              Resposta(texto: 'Resposta 2 ', funcao: _responder),
+              Resposta(texto: 'Resposta 3 ', funcao: _responder)
             ]
           )
           : Container(
