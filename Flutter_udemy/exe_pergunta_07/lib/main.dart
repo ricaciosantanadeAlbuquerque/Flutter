@@ -66,7 +66,7 @@ class PerguntaAppState extends State<PerguntaApp> {
               Questao(texto: perguntas[index]['texto'] as String ),
               ...respostas
               /**
-               * O operador Spred '...' pega cada elemento da lista 'respostas' e joga para dentro da lista Column([]), um por um 
+               * O operador Spread '...' pega cada elemento da lista 'respostas' e joga para dentro da lista Column([]), um por um 
                * de forma ordenada.
                */
             ]
