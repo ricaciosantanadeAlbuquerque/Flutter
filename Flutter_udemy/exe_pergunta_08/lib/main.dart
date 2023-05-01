@@ -14,7 +14,7 @@ class PerguntaAppState extends State<PerguntaApp> {
   int _index = 0;
   int _valorTotal = 0;
 
-  List<Map<String, Object>> perguntas = [
+   final List<Map<String, Object>> _perguntas = const [
     {
       'texto': 'Qual é a sua cor favorita ?',
       'resposta': ['Preto', 'Vermelho', 'Verde', 'Branco']
@@ -34,15 +34,19 @@ class PerguntaAppState extends State<PerguntaApp> {
 
 
   void _resposnder() {
-    setState(() {
-      _index++;
-    });
+    if(temPergunta){
+      setState(() {
+        _index++;
+      });
+    }
   }
-
+    bool get temPergunta{
+      return _index < _perguntas.length; // operadores boleanos retornam valores lógicos
+    }
   @override
   Widget build(BuildContext context) {
 
-  List<String> respostas = perguntas[_index]['resposta'] as List<String>;
+  List<String> respostas = temPergunta ? _perguntas[_index]['resposta'] as List<String> : [] ;
   List<Widget> widgets = respostas.map((element) => Respostas(texto: element, funcao: _resposnder)).toList();// toList() estamos criando uma lista com os widgets Respostas()
 
 
@@ -54,10 +58,13 @@ class PerguntaAppState extends State<PerguntaApp> {
         theme: ThemeData(primarySwatch: Colors.blue),
         home: Scaffold(
             appBar: AppBar(title: const Center(child: Text("Perguntas"))),
-            body: Column(children: [
-              Questao(texto: perguntas[_index]['texto'] as String),
+            body: temPergunta ? Column(children: [
+              Questao(texto: _perguntas[_index]['texto'] as String),
               ...widgets //... pega cada elemento da lista widget e joga um por um na lista Columun([])
             ]
+            )
+            : Container(
+              child:const Center(child: Text('FIM !',style: TextStyle(fontSize: 28),))
             )
             )
             );
