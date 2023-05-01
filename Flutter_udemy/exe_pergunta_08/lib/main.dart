@@ -56,7 +56,7 @@ class PerguntaAppState extends State<PerguntaApp> {
             appBar: AppBar(title: const Center(child: Text("Perguntas"))),
             body: Column(children: [
               Questao(texto: perguntas[_index]['texto'] as String),
-              ...widgets
+              ...widgets //... pega cada elemento da lista widget e joga um por um na lista Columun([])
             ]
             )
             )
