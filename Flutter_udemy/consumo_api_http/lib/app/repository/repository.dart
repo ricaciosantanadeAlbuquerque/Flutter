@@ -1,9 +1,8 @@
 import 'dart:convert';
-
 import 'package:consumo_api_http/app/model/model_api.dart';
 import 'package:http/http.dart' as http;
 
-class Repository {
+class Repository77{
   final String _url = 'https://jsonplaceholder.typicode.com/todos';
   final _cliente = http.Client();
 
