@@ -1,4 +1,5 @@
 
+import 'package:exe_pergunta_09/questionario.dart';
 import 'package:flutter/material.dart';
 import 'questao.dart';
 import 'resposta.dart';
@@ -48,11 +49,6 @@ class PerguntaAppState extends State<PerguntaApp> {
   @override
   Widget build(BuildContext context){
 
-    List<String> respostas = _perguntas[_index]['resposta'] as List<String>;
-    List<Widget> widget = respostas.map((element) => Resposta(texto: element, funcao: _responder)).toList();
-
-
-
     return MaterialApp(
       home:Scaffold(
          appBar:AppBar(
@@ -60,11 +56,10 @@ class PerguntaAppState extends State<PerguntaApp> {
             child:  Text('perguntas'),
           ),
          ),
-         body:Column(
-          children:[
-              Questao(texto: _perguntas[_index]['texto'] as String), //   as String e uma type Casting
-              ...widget
-          ]
+         body: temPergunta ? Questionario(perguntas: _perguntas, funcao: _responder, index: _index) : Container(
+          child:const Center(
+            child:Text('Parabéns !')
+          )
          )
       )
     );
