@@ -69,7 +69,8 @@ bool get _temPergunta{
         ),
         body: _temPergunta ? Questionario(perguntas: _perguntas, funcao: _responder, index: _index)
         : Container(
-          child:const Center(child: Text('Parabéns'))
+          child:const Center(child: Text('Parabéns')
+          )
         )
       )
     );
