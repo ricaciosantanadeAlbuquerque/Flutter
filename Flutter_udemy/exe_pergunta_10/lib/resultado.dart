@@ -28,7 +28,7 @@ class Resultado extends StatelessWidget {
             Padding(padding: const EdgeInsets.all(10), 
             child: Text('$result sua nota é $nota')
             ),
-             ElevatedButton(onPressed: resetar, child: const Text('Resetar !')
+             TextButton(onPressed: resetar, child: const Text('Resetar !')
              )
              ]
              ),
