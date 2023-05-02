@@ -12,4 +12,10 @@ void main() {
     }
     expect(controle.lista.value.isNotEmpty, true);
   });
+
+  test('testando o estado', () async {
+    expect(controle.estado.value, Estado.inicio);
+    await controle.start();
+    expect(controle.estado.value, Estado.sucesso);
+  });
 }
