@@ -1,4 +1,5 @@
 import 'package:exe_pergunta_10/questionario.dart';
+import 'package:exe_pergunta_10/resultado.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const PerguntaApp());
@@ -55,6 +56,13 @@ class PerguntaAppState extends State<PerguntaApp> {
     }
   }
 
+  void resetar(){
+    setState(() {
+      _index = 0;
+      valorTotal = 0;
+    });
+  }
+
 bool get _temPergunta{
   return _index < _perguntas.length;
 }
@@ -68,11 +76,8 @@ bool get _temPergunta{
           )
         ),
         body: _temPergunta ? Questionario(perguntas: _perguntas, funcao: _responder, index: _index)
-        : Container(
-          child:const Center(child: Text('Parabéns')
-          )
+        : Resultado(resetar: resetar , nota: valorTotal)
         )
-      )
-    );
+      );
   }
 }
