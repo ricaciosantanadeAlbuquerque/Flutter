@@ -28,13 +28,7 @@ class HomeAppState extends State<HomeApp> {
         itemCount: controle.lista.value.length,
         itemBuilder: (context, index) {
           var lista = controle.lista.value[index];
-          return ListTile(
-            leading: Checkbox(
-              value: controle.lista.value[index].completed,
-               onChanged: (value) {}
-               ), title: Text(lista.toString()
-               )
-               );
+          return ListTile(leading: Checkbox(value: controle.lista.value[index].completed, onChanged: (value) {}), title: Text(lista.toString()));
         });
   }
 
@@ -74,7 +68,14 @@ class HomeAppState extends State<HomeApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Center(child: Text('Lista Api_dio'))),
+        appBar: AppBar(title: const Center(child: Text('Lista Api_dio')), actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh_outlined),
+            onPressed: () {
+              controle.iniciar();
+            },
+          )
+        ]),
         body: AnimatedBuilder(
           animation: controle.estado,
           builder: (context, child) {
