@@ -1,5 +1,4 @@
 class ApiDio88 {
-  
   final int _userId;
   final int _id;
   final String _title;
@@ -22,6 +21,12 @@ class ApiDio88 {
 
   @override
   String toString() => 'id:$_id';
+
+  bool get completed {
+    return _completed;
+  }
+
+ 
 }
 
 
