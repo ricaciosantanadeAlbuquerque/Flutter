@@ -27,7 +27,7 @@ class Resultado extends StatelessWidget {
         style:const TextStyle(fontSize:28,color:Colors.black)),
         TextButton(
           onPressed: resetar,
-          child: const Text('Resetar',
+          child: const Text('Resetar??',
           style:TextStyle(
             fontSize: 28,
             color:Colors.blue
