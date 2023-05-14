@@ -51,6 +51,7 @@ class Tela2State extends State<Tela2> {
           title: const Center(
             child: Text("Home Page"),
           ),
+          actions:[escolha()]
         ),
         body: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
