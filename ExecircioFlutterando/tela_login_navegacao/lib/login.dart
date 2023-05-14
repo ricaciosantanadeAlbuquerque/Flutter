@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tela_login_navegacao/botao.dart';
+import 'package:tela_login_navegacao/segunda_tela.dart';
 import 'package:tela_login_navegacao/texto.dart';
 import 'package:tela_login_navegacao/texto2.dart';
 
@@ -28,35 +29,36 @@ class HomeAppState extends State<HomeApp> {
               //mainAxisAlignment:MainAxisAlignment.center,
               children: [
                 Container(
-                    margin: const EdgeInsets.only(
-                      top: 250,
-                    ),
-                    width: 100,
-                    height: 100,
-                    child: Image.asset(
-                      'assets/logo.png',
-                      color: Colors.white,
-                    ),
-                    ),
-                Card(child: 
-                Padding(
-                  padding:const EdgeInsets.all(20),
+                  margin: const EdgeInsets.only(
+                    top: 150,
+                  ),
+                  width: 100,
+                  height: 100,
+                  child: Image.asset(
+                    'assets/logo.png',
+                    color: Colors.white,
+                  ),
+                ),
+                Card(
+                    child: Padding(
+                  padding: const EdgeInsets.all(20),
                   child: Column(
-                    children:
-                   [
-                    const SizedBox(height:10),
-                    Texto(controle: login,),
-                    Texto2(controle: senha),
-                    const SizedBox(height:15),
-                    Botao(funcao: (){
-                      if(login.text == 'ricacio' && senha.text == '123'){
-                        
-                      }else{
-
-                      }
-                    })
+                    children: [
+                      const SizedBox(height: 10),
+                      Texto(
+                        controle: login,
+                      ),
+                      Texto2(controle: senha),
+                      const SizedBox(height: 15),
+                      Botao(funcao: () {
+                        if (login.text == 'ricacio' && senha.text == '123') {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return Tela2(nome: login.text, senha: senha.text);
+                          }));
+                        } else {}
+                      })
                     ],
-                    ),
+                  ),
                 ))
               ]),
         ))
