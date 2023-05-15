@@ -7,9 +7,12 @@ class Botao extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: funcao,
-       child: Text(texto),
-       );
+    return SizedBox(
+      width:double.infinity,
+      child: ElevatedButton(
+        onPressed: funcao,
+         child: Text(texto),
+         ),
+    );
   }
 }

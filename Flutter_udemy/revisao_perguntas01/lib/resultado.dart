@@ -12,7 +12,7 @@ class Resultado extends StatelessWidget {
       return 'Muito bom !';
     } else if (ponto < 20) {
       return ' nível Mestre';
-    } else if (ponto <= 30) {
+    } else if (ponto < 30) {
       return 'nível Mestre++';
     } else {
       return 'Seu nível é fora do normal';
@@ -21,12 +21,20 @@ class Resultado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Text(nota()), // chamada a função nota();
-      ElevatedButton(
-        onPressed: funcao,
-        child: const Text("Resetar"),
-      ),
-    ]);
+    return Center(
+      child: Column(
+        mainAxisAlignment:MainAxisAlignment.center,
+        children: [
+        Text(nota(),
+        style:const TextStyle(
+          fontSize:28,
+          color:Colors.red
+        ),), // chamada a função nota();
+        ElevatedButton(
+          onPressed: funcao,
+          child: const Text("Resetar"),
+        ),
+      ]),
+    );
   }
 }
