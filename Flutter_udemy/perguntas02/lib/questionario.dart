@@ -16,15 +16,18 @@ class Questionario extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, Object>> listaMap = temPergunta ? lista[index]['resposta'] as List<Map<String, Object>> : [];
-    return Column(children: [
-      Pergunta(texto: lista[index]['texto'] as String),
-      ...listaMap
-          .map((map) => Resposta(
-              texto: map['texto'] as String,
-              funcao: () {
-                funcao(map['pontuacao'] as int);
-              }))
-          .toList()
-    ]);
+    return Padding(
+      padding: const EdgeInsets.all(12),
+      child: Column(children: [
+        Pergunta(texto: lista[index]['texto'] as String),
+        ...listaMap
+            .map((map) => Resposta(
+                texto: map['texto'] as String,
+                funcao: () {
+                  funcao(map['pontuacao'] as int);
+                }))
+            .toList()
+      ]),
+    );
   }
 }
