@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:perguntas03/questionario.dart';
+import 'package:perguntas03/resultado.dart';
 
 class PerguntaApp extends StatefulWidget {
   const PerguntaApp({super.key});
@@ -42,16 +44,25 @@ class _PerguntaAppState extends State<PerguntaApp> {
   ];
   //====================================Métodos================================================
 
-  void _mudar() {
-    if(temItemNaLita){
+  void _mudar(int valor) {
+    if (temItemNaLita) {
       setState(() {
         _index++;
+        _valorTotal += valor;
       });
     }
   }
 
-  bool get temItemNaLita {  // enquento houver index tem valor
+  bool get temItemNaLita {
+    // enquento houver index tem valor
     return _index < _lista.length;
+  }
+
+  void resetar() {
+    setState(() {
+      _index = 0;
+      _valorTotal = 0;
+    });
   }
 
   @override
@@ -62,8 +73,9 @@ class _PerguntaAppState extends State<PerguntaApp> {
             child: Text('Perguntas!'),
           ),
         ),
-        body: Column(
-          children: [],
-        ));
+        body: 
+        temItemNaLita ? Questionario(funcao: _mudar, index: _index, lista: _lista) 
+        : Resultado(ponto: _valorTotal, funcao: resetar),
+        );
   }
 }
