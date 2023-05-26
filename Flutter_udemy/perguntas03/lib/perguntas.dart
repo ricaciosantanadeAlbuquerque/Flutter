@@ -8,12 +8,14 @@ class Perguntas extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width:double.infinity,
-      child:Text(
-        texto,
-        style:const TextStyle(
-          fontSize:20,
-        )
-        ),
+      child:Center(
+        child: Text(
+          texto,
+          style:const TextStyle(
+            fontSize:20,
+          )
+          ),
+      ),
     );
   }
 }
