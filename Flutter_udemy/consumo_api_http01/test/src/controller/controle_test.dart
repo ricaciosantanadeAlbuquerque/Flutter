@@ -6,7 +6,9 @@ void main() {
 
   test('verificando se a lista de preenchida', () async {
     await controle.iniciar();
-
+    for (var obj in controle.lista.value) {
+      print(obj.toString());
+    }
     expect(controle.lista.value.isNotEmpty, true);
   });
 

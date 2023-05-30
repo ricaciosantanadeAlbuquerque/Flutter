@@ -13,6 +13,8 @@ class Controle {
       lista.value = await repository.consumo();
       estado.value = Estado.sucesso;
     } catch (e) {
+      estado.value = Estado.carregando;
+      await Future.delayed(const Duration(seconds: 2));
       estado.value = Estado.erro;
     }
   }

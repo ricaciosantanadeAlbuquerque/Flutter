@@ -7,6 +7,11 @@ class MeuApp extends StatelessWidget {
   const MeuApp({super.key});
   @override
   Widget build(BuildContext conetxt) {
-    return const HomeApp();
+    return MaterialApp(
+      theme:ThemeData(
+        primarySwatch:Colors.blue
+      ),
+      home: const HomeApp()
+    );
   }
 }

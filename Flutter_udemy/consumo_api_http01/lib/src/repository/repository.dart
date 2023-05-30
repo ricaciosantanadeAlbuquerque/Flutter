@@ -14,8 +14,6 @@ class Repository {
       return lista;
     } catch (e) {
       throw Exception('ERRO! valor Não foi possível consumir esta api ');
-    } finally {
-      cliente.close();
     }
   }
 }
