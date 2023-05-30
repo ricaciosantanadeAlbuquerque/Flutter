@@ -8,5 +8,10 @@ void main() {
     await controle.inicio();
     expect(controle.lista.value.isNotEmpty, true);
   });
-  
+
+  test('Testando a gerencia de estado ', () async {
+    expect(controle.estado.value, Estado.inicio);
+    await controle.inicio();
+    expect(controle.estado.value, Estado.sucesso);
+  });
 }
