@@ -59,7 +59,7 @@ class HomeAppState extends State<HomeApp> {
               onPressed: () {
                 controle!.converter();
               },
-              icon: const Icon(Icons.currency_bitcoin),
+              icon: const Icon(Icons.currency_exchange),
               label: const Text('CONVERTER'))
         ]),
       ),
