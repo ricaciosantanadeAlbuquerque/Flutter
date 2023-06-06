@@ -15,7 +15,7 @@ class LinhaEntrada extends StatelessWidget {
     return SizedBox(
         child: Row(children: [
       Expanded(
-        flex: 1,
+        flex: 2,
         child: Container(
           height: 63,
           child: DropdownButton(
@@ -30,7 +30,7 @@ class LinhaEntrada extends StatelessWidget {
       ),
       const SizedBox(width: 20),
       Expanded(
-        flex: 4,
+        flex: 5,
         child: TextField(
           controller: controle,
           decoration: const InputDecoration(enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.amberAccent))),
