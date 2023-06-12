@@ -21,10 +21,12 @@ class MyHomePage extends StatelessWidget{
           title:const Text("Despesas Pessoais")
       ),
       body:Column(
+         mainAxisAlignment:MainAxisAlignment.spaceAround, // espaços ao redor dos widgets
+         crossAxisAlignment:CrossAxisAlignment.stretch,  // stretch == esticar
           children: <Widget>[
-            
+
               Container(
-                width:double.infinity,
+               // width:double.infinity,
                 child: const Card(
                   color: Colors.blue,
                   elevation:5,
