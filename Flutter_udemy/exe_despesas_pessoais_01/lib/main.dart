@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 void main() => runApp( const ExpensesApp());
 
-class ExpensesApp extends StatelessWidget {
+class ExpensesApp extends StatelessWidget { // classe imutável
   const ExpensesApp({super.key});
 
   @override
@@ -13,7 +13,7 @@ class ExpensesApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatelessWidget {  // classe imutável
   const MyHomePage({super.key});
   @override
   Widget build(BuildContext context) {
