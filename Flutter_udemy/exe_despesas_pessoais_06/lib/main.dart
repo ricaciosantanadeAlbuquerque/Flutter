@@ -1,5 +1,6 @@
 import 'package:exe_despesas_pessoais_06/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(const ExpensesApp());
 
@@ -17,7 +18,9 @@ class ExpensesApp extends StatelessWidget {
 
 class MyHomeApp extends StatelessWidget {
 
-final List<Transaction> listaTransaction =  [
+ final titulo = TextEditingController();
+ final valor  =  TextEditingController();
+ final List<Transaction> listaTransaction =  [
  Transaction(id: 't1', title:'Tênis para corrida', value: 310.76, date: DateTime.now()),
  Transaction(id: 't2', title: 'Conta de lUz', value: 233.3, date: DateTime.now())
 ];
@@ -30,12 +33,18 @@ final List<Transaction> listaTransaction =  [
         title:const Text('Despesas Pessoais')
       ),
       body:Column(
-        mainAxisAlignment:MainAxisAlignment.spaceAround,
+        mainAxisAlignment:MainAxisAlignment.start,
         crossAxisAlignment:CrossAxisAlignment.stretch,
         children:[
           const Card(
+            color: Colors.blue ,
             elevation:5,
-            child:Text('Gráfico')
+            child:Text(
+              'Gráfico',
+              style: TextStyle(
+                fontWeight:FontWeight.bold,
+                fontSize:16
+              ),)
           ),
           Column(
             children: listaTransaction.map((transac){
@@ -65,15 +74,51 @@ final List<Transaction> listaTransaction =  [
                       )
                     ),
                     Column(
+                      crossAxisAlignment:CrossAxisAlignment.start,
                       children:[
-                        Text(transac.title),
-                        Text(transac.date.toString())
+                        Text(
+                          transac.title,
+                          style:const TextStyle(
+                            fontWeight:FontWeight.bold,
+                            fontSize:16
+                          )),
+                        Text(DateFormat('d MMM y').format(transac.date))
                       ]
                     )
                   ]
                 )
               );
-            }).toList()
+            }).toList(),
+          ),
+          Card(
+            elevation:5,
+            child:Padding(
+              padding:const EdgeInsets.all(10),
+              child: Column(
+                children:[
+                  TextField(
+                    controller:titulo,
+                    decoration: const InputDecoration(
+                      labelText:'Título'
+                    )
+                  ),
+                  TextField(
+                    controller:valor,
+                    decoration:const InputDecoration(
+                      labelText:'Valor'
+                    )
+                  ),
+                  Row(
+                    mainAxisAlignment:MainAxisAlignment.end,
+                    children: [TextButton(onPressed: () {}, child: const Text(
+                      'Nova Transação',
+                      style:TextStyle(color:Colors.purple)
+                      ),
+                      ),
+                      ])
+                ]
+              ),
+            )
           )
         ]
       )
