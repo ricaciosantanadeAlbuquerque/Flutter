@@ -110,7 +110,11 @@ class MyHomeApp extends StatelessWidget {
                   ),
                   Row(
                     mainAxisAlignment:MainAxisAlignment.end,
-                    children: [TextButton(onPressed: () {}, child: const Text(
+                    children: [
+                      TextButton(onPressed: () {
+                      print(titulo.text);
+                      print(valor.text);
+                    }, child: const Text(
                       'Nova Transação',
                       style:TextStyle(color:Colors.purple)
                       ),
