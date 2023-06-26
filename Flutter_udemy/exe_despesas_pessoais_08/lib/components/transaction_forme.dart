@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 class TransactionForme extends StatelessWidget {
   final titulo = TextEditingController();
   final value = TextEditingController();
+  final void Function(String, double) onSubmit;
+
+  TransactionForme({super.key, required this.onSubmit});
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -16,8 +20,12 @@ class TransactionForme extends StatelessWidget {
               TextButton(
                   child: const Text('Nova Transferência', style: TextStyle(color: Colors.purple)),
                   onPressed: () {
-                    print(titulo.text);
-                    print(value.text);
+                    /**
+                     * final Titulo11 = titulo.text;
+                    final valor = double.tryParse(value.text) ?? 0.0;
+                     */
+                    //onSubmit(titulo.text,value.text as double); estamos fazando converção de um atribulto de objeto, typecast não funciona 
+                        onSubmit(titulo.text, double.tryParse(value.text)?? 0.0);
                   })
             ])
           ]),
