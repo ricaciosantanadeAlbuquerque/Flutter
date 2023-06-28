@@ -19,7 +19,7 @@ class TransactionForme extends StatelessWidget {
               decoration: const InputDecoration(labelText: 'Título'),
             ),
             TextField(
-            keyboardType:const TextInputType.numberWithOptions(),
+            keyboardType:const TextInputType.numberWithOptions(decimal:true),
             controller: value, 
             decoration: const InputDecoration(labelText: 'Valor (R\$)')),
             Row(mainAxisAlignment: MainAxisAlignment.end, children: [
