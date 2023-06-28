@@ -18,21 +18,7 @@ class TransactionUserState extends State<TransactionUser> {
   final List<Transaction> _listaTransaction = [
     Transaction(id: 't1', title: 'Novo Tênis de Corrida', value: 310.76, date: DateTime.now()),
     Transaction(id: 't2', title: 'Conta de luz', value: 210.3, date: DateTime.now()),
-     Transaction(id: 't1', title: 'Novo Tênis de Corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Conta de luz', value: 210.3, date: DateTime.now()),
-     Transaction(id: 't1', title: 'Novo Tênis de Corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Conta de luz', value: 210.3, date: DateTime.now()),
-     Transaction(id: 't1', title: 'Novo Tênis de Corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Conta de luz', value: 210.3, date: DateTime.now()),
-     Transaction(id: 't1', title: 'Novo Tênis de Corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Conta de luz', value: 210.3, date: DateTime.now()),
-     Transaction(id: 't1', title: 'Novo Tênis de Corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Conta de luz', value: 210.3, date: DateTime.now()),
-     Transaction(id: 't1', title: 'Novo Tênis de Corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Conta de luz', value: 210.3, date: DateTime.now()),
-     Transaction(id: 't1', title: 'Novo Tênis de Corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: 't2', title: 'Conta de luz', value: 210.3, date: DateTime.now()),
-
+  
   ];
 
  void _addTransaction(String title1, double value1) {
