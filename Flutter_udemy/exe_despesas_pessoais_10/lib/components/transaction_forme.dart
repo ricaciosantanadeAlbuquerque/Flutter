@@ -7,11 +7,17 @@ class TransactionForme extends StatelessWidget {
 
   TransactionForme({super.key, required this.onSubmit});
 
-   void submit() {
+  void submit() {
     final titulo = title.text;
-    final valor = double.tryParse(value.text)?? 0.0;
-    onSubmit(titulo,valor);
+    final valor = double.tryParse(value.text) ?? 0.0;
+
+    if (titulo.isEmpty || valor <= 0) { // se for vazio ou o valor for zero,  a estrutura return encerrará o método.
+      return;
     }
+
+    onSubmit(titulo, valor);
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +36,11 @@ class TransactionForme extends StatelessWidget {
                     labelText: 'Título',
                   )),
               TextField(
-               controller: value,
-               onSubmitted: (value) => submit(),
-               keyboardType:const TextInputType.numberWithOptions(),
-               decoration: const InputDecoration(labelText: 'Valor (R\$)'),
-               ),
+                controller: value,
+                onSubmitted: (value) => submit(),
+                keyboardType: const TextInputType.numberWithOptions(),
+                decoration: const InputDecoration(labelText: 'Valor (R\$)'),
+              ),
               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
                 TextButton(
                   onPressed: submit,
