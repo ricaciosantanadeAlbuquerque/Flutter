@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TransactionForme extends StatefulWidget {
   final void Function(String title, double value) onSubmit;
 
-  TransactionForme({super.key, required this.onSubmit});
+  const TransactionForme({super.key, required this.onSubmit});
 
   @override
   State<TransactionForme> createState() => _TransactionFormeState();
@@ -18,12 +18,14 @@ class _TransactionFormeState extends State<TransactionForme> {
     final titulo = title.text;
     final valor = double.tryParse(value.text) ?? 0.0;
 
-    if (titulo.isEmpty || valor <= 0) { // se for vazio ou o valor for zero,  a estrutura return encerrará o método.
+    if (titulo.isEmpty || valor <= 0) {
+      // se for vazio ou o valor for zero,  a estrutura return encerrará o método.
       return;
     }
 
     widget.onSubmit(titulo, valor);
 
+    Navigator.of(context).pop();
   }
 
   @override
