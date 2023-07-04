@@ -74,6 +74,7 @@ class _HomeAppState extends State<HomeApp> {
           ),
         ),
         floatingActionButton: FloatingActionButton(onPressed: ()=> _openTransactionFromModal(context), child: const Icon(Icons.add)),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat);
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        );
   }
 }

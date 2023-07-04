@@ -47,7 +47,7 @@ class _TransactionFormeState extends State<TransactionForme> {
               TextField(
                 controller: value,
                 onSubmitted: (value) => submit(),
-                keyboardType: const TextInputType.numberWithOptions(),
+                keyboardType: const TextInputType.numberWithOptions(decimal:  true),
                 decoration: const InputDecoration(labelText: 'Valor (R\$)'),
               ),
               Row(mainAxisAlignment: MainAxisAlignment.end, children: [
