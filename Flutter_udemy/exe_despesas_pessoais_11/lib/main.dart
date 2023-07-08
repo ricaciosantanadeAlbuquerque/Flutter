@@ -26,9 +26,11 @@ class MyHomeApp extends StatelessWidget {
         title:const Text("Despesas Pessoais")
       ),
       body:Column(
-        crossAxisAlignment:CrossAxisAlignment.center,
+        crossAxisAlignment:CrossAxisAlignment.stretch,
         children:[
          const Card(
+           elevation:5,
+           color:Colors.blue,
             child: Text('Gráfico')
           ),
           Column(
