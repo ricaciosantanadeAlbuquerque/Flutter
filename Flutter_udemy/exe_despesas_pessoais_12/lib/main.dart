@@ -51,13 +51,14 @@ class MyHomemApp extends StatelessWidget {
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
                           border: Border.all(
-                            width:3,
+                            width:2,
                             color:Colors.purple,
                           ),
                         ),
                         child: Text('R\$ ${objTrs.value.toStringAsFixed(2)}',
                         style:const TextStyle(
                           color:Colors.purple,
+                          fontSize:20,
                           fontWeight:FontWeight.bold,
                         ),
                         ),
