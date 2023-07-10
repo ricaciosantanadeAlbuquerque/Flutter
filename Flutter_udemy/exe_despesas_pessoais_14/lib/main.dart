@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:exe_despesas_pessoais_14/components/transaction_form.dart';
 import 'package:exe_despesas_pessoais_14/models/transaction.dart';
 import 'package:flutter/material.dart';
-
 import 'components/transaction_list.dart';
 
 void main() => runApp(const ExpensesApp());
@@ -12,7 +11,12 @@ class ExpensesApp extends StatelessWidget {
   const ExpensesApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: const MyHomePage());
+    return  MaterialApp(
+      theme:ThemeData(
+        primarySwatch:Colors.purple
+      ),
+      home:  const MyHomePage(),
+      );
   }
 }
 
@@ -25,6 +29,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+
   final List<Transaction> _litTransaction = [
     Transaction(
       id: 't1',
@@ -40,6 +45,7 @@ class MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
+
   addTransaction(String titlo, double valor) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: titlo, value: valor, date: DateTime.now());
 
@@ -48,8 +54,9 @@ class MyHomePageState extends State<MyHomePage> {
     });
 
     Navigator.of(context).pop();
-    
+
   }
+
 
   transactionFormModal(BuildContext context) {
     showModalBottomSheet(
