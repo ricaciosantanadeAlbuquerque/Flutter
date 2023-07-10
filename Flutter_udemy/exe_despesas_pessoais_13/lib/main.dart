@@ -30,7 +30,6 @@ class MyHomeApp extends StatelessWidget {
           children: const [
              Card(elevation: 5, color: Colors.blue, child: Text('Gráfico')),
             TransactionUser()
-            
           ],
         ),
       ),
