@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'components/transaction_forme.dart';
@@ -12,7 +13,7 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       theme:ThemeData(
-        primarySwatch:Colors.purple
+        primarySwatch:Colors.purple 
       ),
       home: const MyHomeApp(),
       );
