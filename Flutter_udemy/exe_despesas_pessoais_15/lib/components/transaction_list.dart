@@ -8,7 +8,7 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 330,
+        height: 580,
         child: ListView.builder(
             itemCount: lista.length,
             itemBuilder: (_, index) {

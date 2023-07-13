@@ -45,10 +45,15 @@ class TransactionFormState extends State<TransactionForm> {
               controller: valor,
               decoration: const InputDecoration(labelText: 'Valor (R\$)'),
             ),
-            Row(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children:
+                 [
               TextButton(
                 onPressed: submit,
-                child: const Text('Nova Transação'),
+                child: const Text('Nova Transação',style:TextStyle(
+                  color:Colors.purple
+                ),),
               ),
             ]),
           ],

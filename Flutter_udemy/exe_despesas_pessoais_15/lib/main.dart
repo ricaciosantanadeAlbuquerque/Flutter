@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-
 import 'components/transaction_forme.dart';
 import 'components/transaction_list.dart';
 import 'models/transaction.dart';
@@ -12,7 +10,12 @@ class ExpensesApp extends StatelessWidget {
   const ExpensesApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: MyHomeApp());
+    return  MaterialApp(
+      theme:ThemeData(
+        primarySwatch:Colors.purple
+      ),
+      home: const MyHomeApp(),
+      );
   }
 }
 
@@ -26,38 +29,60 @@ class _MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> _listTransaction = [
     Transaction(id: Random().nextDouble.toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now()),
     Transaction(id: Random().nextDouble.toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
+   
   ];
 
-  addTransaction(String titulo, double valor) {
+  _addTransaction(String titulo, double valor) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: titulo, value: valor, date: DateTime.now());
     setState(() {
       _listTransaction.add(newTransaction);
     });
+
+    Navigator.of(context).pop(); //7 fecha o modal
+  }
+
+  newTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransactionForm(
+            onSubmitted: _addTransaction,
+          ); // passagem de dados indireta
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions:[]
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment:CrossAxisAlignment.stretch,
-          children: [
-            const Card(
-              elevation: 5,
-              color: Colors.blue,
-              child: Text('Gráfico'),
-            ),
-            TransactionList(
-              lista: _listTransaction,
-            ), // passagem de dados direta
-            TransactionForm(onSubmitted: addTransaction,) // passagem de dados indireta
-          ],
+        appBar: AppBar(title: const Text('Despesas Pessoais'), actions: [
+          IconButton(
+            onPressed: () {
+              newTransactionFormModal(context);
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ]),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Card(
+                elevation: 5,
+                color: Colors.blue,
+                child: Text('Gráfico'),
+              ),
+              TransactionList(
+                lista: _listTransaction,
+              ), // passagem de dados direta
+            ],
+          ),
         ),
-      ),
-    );
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            newTransactionFormModal(context);
+          },
+          child: const Icon(Icons.add),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat);
   }
 }
