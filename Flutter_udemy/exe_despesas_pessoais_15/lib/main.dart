@@ -18,7 +18,7 @@ class ExpensesApp extends StatelessWidget {
         secondary:Colors.amber,  
        ),
         textTheme: ThemeData().textTheme.copyWith(
-          bodyLarge: const TextStyle(
+          titleLarge: const TextStyle(
             fontFamily: 'Quicksand',
             fontSize: 18,
             fontWeight:FontWeight.bold,
