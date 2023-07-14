@@ -23,12 +23,12 @@ class TransactionList extends StatelessWidget {
                   decoration:BoxDecoration(
                     border: Border.all(
                       width:2,
-                      color: Theme.of(context).primaryColor,
+                      color:Theme.of(context).colorScheme.primary,
                     ),
                   ),
                   child: Text('R\$ ${trs.value.toStringAsFixed(2)}',
                   style:TextStyle(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight:FontWeight.bold
                   ),)
                 ),
