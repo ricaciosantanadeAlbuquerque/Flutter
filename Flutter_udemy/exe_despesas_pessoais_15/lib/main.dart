@@ -14,13 +14,13 @@ class ExpensesApp extends StatelessWidget {
     return  MaterialApp(
       theme: ThemeData().copyWith(
        colorScheme: ThemeData().colorScheme.copyWith(
-        primary: Colors.purple,
+        primary: const  Color.fromARGB(255, 207, 78, 229),
         secondary:Colors.amber,  
        ),
         textTheme: ThemeData().textTheme.copyWith(
           titleLarge: const TextStyle(
             fontFamily: 'Quicksand',
-            fontSize: 18,
+            fontSize: 24,
             fontWeight:FontWeight.bold,
             color: Colors.black
           )
@@ -46,8 +46,8 @@ class MyHomeApp extends StatefulWidget {
 
 class _MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> _listTransaction = [
-    Transaction(id: Random().nextDouble.toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: Random().nextDouble.toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
+  /**  Transaction(id: Random().nextDouble.toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now()),
+    Transaction(id: Random().nextDouble.toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now()), */
    
   ];
 
