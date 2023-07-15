@@ -77,15 +77,15 @@ flutter:
   fonts:
     - family: VictorMono
       fonts:
-        - asset: assets/fonts/VictorMono-VariableFont_wght.ttf
+     #   - asset: assets/fonts/VictorMono-VariableFont_wght.ttf
         - asset: assets/fonts/VictorMono-Italic-VariableFont_wght.ttf
           style: italic
 
     - family: Roboto
       fonts:
-        - asset: assets/fonts/Roboto-LightItalic.ttf
+ #       - asset: assets/fonts/Roboto-LightItalic.ttf
         - asset: assets/fonts/Roboto-BlackItalic.ttf
-          style: italic
+          weight: 700
   #  - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
