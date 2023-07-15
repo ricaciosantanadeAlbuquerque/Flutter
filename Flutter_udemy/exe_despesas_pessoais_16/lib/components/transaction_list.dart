@@ -18,7 +18,7 @@ class TransactionList extends StatelessWidget {
             style:Theme.of(context).textTheme.titleLarge),
                   const SizedBox(height: 20),
 
-            Container(
+            SizedBox(
               height:200,
               child: Image.asset('assets/image/waiting.png',fit:BoxFit.cover)
             )
