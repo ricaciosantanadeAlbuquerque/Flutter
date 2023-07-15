@@ -32,15 +32,24 @@ class _TransactionFormState extends State<TransactionForm> {
       child: Column(children: [
         TextField(
           controller: title,
+          onSubmitted:(_) => _subimit(),
+          decoration:const InputDecoration(
+            labelText:'Título',
+          ),
         ),
         TextField(
           controller: value,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          onSubmitted: (_) => _subimit(),
+          decoration: const InputDecoration(
+           labelText:'Valor(R\$)'
+          )
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             TextButton(
-              onPressed: () {},
+              onPressed: _subimit,
               child: Text(
                 'Novo Transação',
                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
