@@ -23,13 +23,16 @@ class ExpensesApp extends StatelessWidget {
                 ),
             textTheme: ThemeData().textTheme.copyWith(
                   titleLarge: const TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                     color: Colors.black,
+                    fontFamily: 'VictorMono',
+                    fontWeight:FontWeight.bold,
                   ),
                 ),
             appBarTheme: const AppBarTheme(
               titleTextStyle: TextStyle(
                 fontSize: 20,
+                fontFamily:'Roboto'
               ),
             )),
         home: const MyHomeApp());
