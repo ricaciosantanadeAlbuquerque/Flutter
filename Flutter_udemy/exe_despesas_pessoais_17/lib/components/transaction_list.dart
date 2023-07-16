@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
-  
+
   final List<Transaction> lista;
 
   const TransactionList({super.key, required this.lista});
@@ -12,7 +12,24 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 330,
-      child: ListView.builder(
+      child: lista.isEmpty?
+        Column(
+          children:[
+            SizedBox(height: 20,),
+            const Text('Nenhuma Transação Cadastrada !',style: 
+            TextStyle(
+              fontSize: 20
+            ),),
+           SizedBox(height: 20,),
+          Container(
+            height:200,
+            child: Image.asset('assets/image/waiting.png',
+            fit:BoxFit.cover,
+            ),
+          ),
+          ],
+        )
+      :ListView.builder(
         itemCount: lista.length,
         itemBuilder: (_, index) {
           final trs = lista[index];

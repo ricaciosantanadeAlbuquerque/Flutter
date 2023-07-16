@@ -28,11 +28,11 @@ class ExpensesApp extends StatelessWidget {
             ),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
-            color: Colors.white, 
-            fontSize: 20, 
+            color: Colors.white,
+            fontSize: 20,
             fontWeight: FontWeight.bold,
             fontFamily: 'PlayfairDisplay-Italic-VariableFont_wght',
-            ),
+          ),
         ),
       ),
       home: const MyHomeApp(),
@@ -50,20 +50,7 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class MyHomeAppState extends State<MyHomeApp> {
-  final List<Transaction> _listTransaction = [
-    Transaction(
-      id: Random().nextDouble().toString(),
-      title: 'Novo Tênis de corrida',
-      value: 310.76,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Conta de Luz',
-      value: 211.30,
-      date: DateTime.now(),
-    ),
-  ];
+  final List<Transaction> _listTransaction = [];
 
   _addTransaction(String title, double value) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
@@ -71,6 +58,9 @@ class MyHomeAppState extends State<MyHomeApp> {
     setState(() {
       _listTransaction.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
+    
   }
 
   _openTransactionFormModal(BuildContext context) {
