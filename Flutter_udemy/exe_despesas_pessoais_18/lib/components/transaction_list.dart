@@ -7,7 +7,7 @@ class TransactionList extends StatelessWidget {
   const TransactionList({super.key, required this.lista});
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height:330,
       child:  ListView(
         children: lista.map((trs) {
@@ -34,10 +34,7 @@ class TransactionList extends StatelessWidget {
                   children: [
                     Text(
                       trs.title,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style:Theme.of(context).textTheme.titleLarge,
                     ),
                     Text(
                       DateFormat('d MMM y').format(trs.date),
