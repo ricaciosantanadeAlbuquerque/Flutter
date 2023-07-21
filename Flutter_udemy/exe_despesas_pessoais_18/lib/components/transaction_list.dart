@@ -7,9 +7,9 @@ class TransactionList extends StatelessWidget {
   const TransactionList({super.key, required this.lista});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width:330,
-      child:  Column(
+    return SizedBox(
+      height:330,
+      child:  ListView(
         children: lista.map((trs) {
           return Card(
             child: Row(

@@ -31,10 +31,13 @@ class TransactionFormState extends State<TransactionForm> {
       child: Column(children: [
         TextField(
           controller: title,
+          onSubmitted:(_) => submit(),
           decoration: const InputDecoration(labelText: 'Valor'),
         ),
         TextField(
           controller: value,
+          keyboardType:const TextInputType.numberWithOptions(decimal:true),
+          onSubmitted:(_) => submit(),
           decoration: const InputDecoration(labelText: 'Valor (R\$)'),
         ),
         Row(
