@@ -34,14 +34,14 @@ class TransactionList extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      border: Border.all(width: 2, color: Colors.purple),
+                      border: Border.all(width: 2,
+                       color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
                     child: Text(
                       'R\$ ${trs.value.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        color: Colors.purple,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                      style:  TextStyle(
+                        color: Theme.of(context).colorScheme.primary
                       ),
                     ),
                   ),

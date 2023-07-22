@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:exe_despesas_pessoais_18/components/transaction_form.dart';
 import 'package:flutter/material.dart';
-
 import 'components/transaction_list.dart';
 import 'models/transaction.dart';
 
@@ -12,43 +11,40 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData().copyWith(
-      colorScheme:ThemeData().colorScheme.copyWith(
-        primary:Colors.purple,
-        secondary:Colors.amberAccent,
-        
-      ),
-      textTheme:ThemeData().textTheme.copyWith(
-        titleLarge:const TextStyle(
-          fontFamily: 'PlayfairDisplay',
-          color:Colors.black,
-          fontSize:18,
-          fontWeight:FontWeight.bold,
-        ),
-      ),
-      appBarTheme: const AppBarTheme(
-        titleTextStyle: TextStyle(
-          fontFamily: 'PlayfairDisplay',
-          fontSize:20,
-          fontWeight:FontWeight.bold,
-        )
-      )
-    )
-    , home: const MyHomeApp());
+        theme: ThemeData().copyWith(
+            colorScheme: ThemeData().colorScheme.copyWith(
+                  primary: Colors.purple,
+                  secondary: Colors.amberAccent,
+                ),
+            textTheme: ThemeData().textTheme.copyWith(
+                  titleLarge: const TextStyle(
+                    fontFamily: 'PlayfairDisplay',
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+            appBarTheme: const AppBarTheme(
+                titleTextStyle: TextStyle(
+              fontFamily: 'PlayfairDisplay',
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ))),
+        home: const MyHomeApp());
   }
 }
 
+//=================================================================================================================================
 class MyHomeApp extends StatefulWidget {
   const MyHomeApp({super.key});
 
   @override
   State<MyHomeApp> createState() => _MyHomeAppState();
 }
-
+//=================================================================================================================================
 class _MyHomeAppState extends State<MyHomeApp> {
-  final List<Transaction> _listaTransaction = [
-   
-  ];
+
+  final List<Transaction> _listaTransaction = [];
 
   _addTransaction(String titulo, double valor) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: titulo, value: valor, date: DateTime.now());
@@ -69,6 +65,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
           ); // comunicação indireta
         });
   }
+//=================================================================================================================================
 
   @override
   Widget build(BuildContext context) {
