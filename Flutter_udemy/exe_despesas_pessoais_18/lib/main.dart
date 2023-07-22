@@ -18,10 +18,19 @@ class ExpensesApp extends StatelessWidget {
         secondary:Colors.amberAccent,
         
       ),
+      textTheme:ThemeData().textTheme.copyWith(
+        titleLarge:const TextStyle(
+          fontFamily: 'PlayfairDisplay',
+          color:Colors.black,
+          fontSize:18,
+          fontWeight:FontWeight.bold,
+        ),
+      ),
       appBarTheme: const AppBarTheme(
         titleTextStyle: TextStyle(
           fontFamily: 'PlayfairDisplay',
           fontSize:20,
+          fontWeight:FontWeight.bold,
         )
       )
     )
