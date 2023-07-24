@@ -24,8 +24,8 @@ class Chart extends StatelessWidget {
 
       for (var i = 0; i < recentTransaction.length; i++) { //l percorre toda lista
         bool samDay = recentTransaction[i].date.day == weekDay.day; // se o dia for igual
-        bool samMonth = recentTransaction[i].date.day == weekDay.day; // não muito relevantes
-        bool samYear = recentTransaction[i].date.day == weekDay.day; // não muito relevantes
+        bool samMonth = recentTransaction[i].date.month == weekDay.month; // não muito relevantes
+        bool samYear = recentTransaction[i].date.year == weekDay.year; // não muito relevantes
 
         if (samDay && samMonth && samYear) {
           totalSum += recentTransaction[i].value; // acumulando valor

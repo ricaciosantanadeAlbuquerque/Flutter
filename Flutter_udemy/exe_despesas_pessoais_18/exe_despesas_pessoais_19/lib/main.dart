@@ -1,8 +1,7 @@
 import 'dart:math';
-
 import 'package:exe_despesas_pessoais_19/models/transaction.dart';
 import 'package:flutter/material.dart';
-
+import 'components/chart.dart';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 
@@ -15,29 +14,23 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData().copyWith(
-        colorScheme:ThemeData().colorScheme.copyWith(
-          primary: Colors.purple,
-          secondary:Colors.amber, 
-        ),
-        textTheme:ThemeData().textTheme.copyWith(
-          titleLarge: const TextStyle(
-            fontFamily: 'PlayfairDisplay',
-            fontSize: 18,
-            color: Colors.black,
-            fontWeight: FontWeight.bold
-          ),
-        ),
-        appBarTheme:const AppBarTheme(
+        colorScheme: ThemeData().colorScheme.copyWith(
+              primary: Colors.purple,
+              secondary: Colors.amber,
+            ),
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: const TextStyle(fontFamily: 'PlayfairDisplay', fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+            ),
+        appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
             fontFamily: 'IBMPlexSans',
-            fontSize:25,
-            fontWeight:FontWeight.bold,
-
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
-     home: const MyHomeApp(),
-     );
+      home: const MyHomeApp(),
+    );
   }
 }
 
@@ -55,9 +48,9 @@ class MyHomeAppState extends State<MyHomeApp> {
       id: Random().nextDouble().toString(),
       title: 'Novo Tênis de Corrida',
       value: 310.76,
-      date: DateTime.now(),
+      date: DateTime.now().subtract(const Duration(days:1)),
     ),
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now().subtract(const Duration(days:8),),),
   ];
 
   void _addTransaction(String titulo, double valor) {
@@ -86,6 +79,23 @@ class MyHomeAppState extends State<MyHomeApp> {
         });
   }
 
+  List<Transaction> get recentTransaction {
+
+    return _lista.where((trs) {
+      return trs.date.isAfter(
+        DateTime.now().subtract(
+          const Duration(days: 7),
+        ),
+      );
+    }).toList();
+  /**
+   * A função where() vai varrer a lista _lista retornando verdadeiro ou falso para cada elemento da lista 
+   * os que passarem  no test passaram a fazer parte da nova lista toList(). os que receberem false não passaram a fazer parte desta nova lista.
+   */
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +114,7 @@ class MyHomeAppState extends State<MyHomeApp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(elevation: 5, color: Colors.blue, child: Text('Gráfico')),
+            Chart(lista: recentTransaction), // nova lista filtrada
             TransactionList(
               // comunicação direta
               lista: _lista,
