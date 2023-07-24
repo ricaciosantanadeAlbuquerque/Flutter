@@ -7,7 +7,7 @@ import 'components/transaction_list.dart';
 
 void main() => runApp(const ExpensesApp());
 
-//=======================STATELESS===============================================================================
+//=======================STATELESS===============================================================================m
 class ExpensesApp extends StatelessWidget {
   const ExpensesApp({super.key});
   @override
