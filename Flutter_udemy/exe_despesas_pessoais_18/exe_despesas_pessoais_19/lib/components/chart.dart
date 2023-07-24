@@ -24,7 +24,8 @@ class Chart extends StatelessWidget {
         if (samDay && samMonth && samYear) {
           totlaSum += lista[i].value;
         }
-      }
+      } // o map só será criado depois que toda lista for varrida
+
       print(DateFormat.E().format(weekDay)[0]);
       print(totlaSum);
       return {
