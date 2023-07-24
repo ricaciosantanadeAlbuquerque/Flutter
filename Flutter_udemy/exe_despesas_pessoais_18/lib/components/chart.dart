@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Chart extends StatelessWidget {
-
   final List<Transaction> recentTransaction;
 
   const Chart({super.key, required this.recentTransaction});
@@ -17,23 +16,25 @@ class Chart extends StatelessWidget {
       final weekDay = DateTime.now().subtract(
         Duration(days: index),
       ); // o objeto weekDay tem o atributo date dentro
-
+      /**
+       * Para cada um loop da lista Generate() havera um loop total da lista de acordo com seu tamanho 
+       * exe: generate() 1 loop  for( List<Transaction>) 10 loop
+       */
       double totalSum = 0.0;
 
-      for (var i = 0; i < recentTransaction.length; i++) {
+      for (var i = 0; i < recentTransaction.length; i++) { //l percorre toda lista
         bool samDay = recentTransaction[i].date.day == weekDay.day; // se o dia for igual
         bool samMonth = recentTransaction[i].date.day == weekDay.day; // não muito relevantes
         bool samYear = recentTransaction[i].date.day == weekDay.day; // não muito relevantes
 
         if (samDay && samMonth && samYear) {
-
           totalSum += recentTransaction[i].value; // acumulando valor
-          
         }
+
       }
 
-      print(DateFormat.E().format(weekDay)[0]);
-      print(totalSum);
+     //B print(DateFormat.E().format(weekDay)[0]);
+      //print(totalSum);
 
       return {
         'day': DateFormat.E().format(weekDay)[0],
@@ -44,6 +45,7 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(groupedTransaction);
     return Card(
       margin: const EdgeInsets.all(20),
       elevation: 6,

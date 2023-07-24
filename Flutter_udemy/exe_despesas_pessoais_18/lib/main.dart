@@ -43,24 +43,61 @@ class MyHomeApp extends StatefulWidget {
   @override
   State<MyHomeApp> createState() => _MyHomeAppState();
 }
+
 //=================================================================================================================================
 class _MyHomeAppState extends State<MyHomeApp> {
-
   final List<Transaction> _listaTransaction = [
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta Antiga', value: 400.00, date: DateTime.now().subtract(const Duration(days:6),),),
-    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now().subtract(const Duration(days:3),),),
-    Transaction(id: Random().nextDouble().toString(), title: 'conta de luz', value: 211.30, date: DateTime.now().subtract(const Duration(days:4),),),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Conta Antiga',
+      value: 400.00,
+      date: DateTime.now().subtract(
+        const Duration(days: 33),
+      ),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Novo Tênis de corrida',
+      value: 310.76,
+      date: DateTime.now().subtract(
+        const Duration(days: 3),
+      ),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'conta de luz',
+      value: 211.30,
+      date: DateTime.now().subtract(
+        const Duration(days: 4),
+      ),
+    ),
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'conta de luz',
+      value: 211.30,
+      date: DateTime.now().subtract(
+        const Duration(days: 4),
+      ),
+    )
   ];
 
-    List<Transaction> get _recentTransaction{ // where() filtrando a lista 
-      return _listaTransaction.where((element){
-          return  element.date.isAfter(DateTime.now().subtract(const Duration(days:7),),);
-      }).toList();
-    
-    /**
+  List<Transaction> get _recentTransaction {
+    // where() filtrando a lista
+    return _listaTransaction.where((element) {
+      return element.date.isAfter(
+        DateTime.now().subtract(
+          const Duration(days: 7),
+        ),
+      );
+    }).toList();
+
+    /** isAfter() retorna true ou false
+     * 
+     * Supondo  a data de hoje 24/07/2023 - 7 dias  é ==  17/07/2023
+     * DateTime.now() seria hoje é 24/07/2023/  eeeee DateTime.now().subtract(const Duration(days:7) ou seja - sete dias  seria   17/07/2023 isAfter() vai retornar true para tudo que for do dia 17 para frente, ou seja os objetos com a data maior que 17 farão parte da lista. Tudo mais que tiver a data antes não fara mais parte da lista  
      * 
      */
-   }
+  }
 
   _addTransaction(String titulo, double valor) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: titulo, value: valor, date: DateTime.now());
@@ -101,7 +138,9 @@ class _MyHomeAppState extends State<MyHomeApp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(recentTransaction: _recentTransaction,),
+            Chart(
+              recentTransaction: _recentTransaction,
+            ),
 
             TransactionList(
               lista: _listaTransaction,
