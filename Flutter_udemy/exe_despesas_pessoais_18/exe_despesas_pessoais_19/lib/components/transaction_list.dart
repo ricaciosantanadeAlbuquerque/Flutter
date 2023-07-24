@@ -28,12 +28,12 @@ class TransactionList extends StatelessWidget {
                     decoration:BoxDecoration(
                       border:Border.all(
                        width:2,
-                       color:Colors.purple,
+                       color:Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   child:Text('R\$ ${trs.value.toStringAsFixed(2)}',
-                  style:const TextStyle(
-                    color:Colors.purple,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
                     fontSize:20,
                     fontWeight:FontWeight.bold,
                   ),),
@@ -42,11 +42,7 @@ class TransactionList extends StatelessWidget {
                   crossAxisAlignment:CrossAxisAlignment.start,
                   children:[
                   Text(trs.title,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize:16,
-                    fontWeight:FontWeight.bold,
-                  ),),
+                  style: Theme.of(context).textTheme.titleLarge),
                   Text(DateFormat('d MMM y').format(trs.date),
                   style:const TextStyle(
                     color:Colors.grey,
