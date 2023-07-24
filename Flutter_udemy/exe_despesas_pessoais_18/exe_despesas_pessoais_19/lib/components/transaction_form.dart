@@ -57,7 +57,9 @@ class TransactionFormState extends State<TransactionForm> {
                     //widget.onSubmit(titulo.text, double.tryParse(valor.text) ?? 0);
                     submitted();
                   },
-                  child: const Text('Nova Transação'),
+                  child: const Text('Nova Transação',
+                  style:TextStyle(color:Colors.purple),
+                  ),
                 ),
               ],
             ),

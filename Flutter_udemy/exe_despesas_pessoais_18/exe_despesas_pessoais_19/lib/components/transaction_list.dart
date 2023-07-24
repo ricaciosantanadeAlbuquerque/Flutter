@@ -8,6 +8,7 @@ class TransactionList extends StatelessWidget {
   final List<Transaction> lista;
   // construtor padrão
   const TransactionList({super.key, required this.lista});
+  
   @override
   Widget build(BuildContext context) {
     return SizedBox(

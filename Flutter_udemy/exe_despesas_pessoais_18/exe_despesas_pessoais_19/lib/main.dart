@@ -26,52 +26,75 @@ class MyHomeApp extends StatefulWidget {
 
 //===========================ESTADO=================================================================================
 class MyHomeAppState extends State<MyHomeApp> {
-
-   final List<Transaction> _lista =[
-     Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de Corrida', value: 310.76, date: DateTime.now(),),
+  final List<Transaction> _lista = [
+    Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Novo Tênis de Corrida',
+      value: 310.76,
+      date: DateTime.now(),
+    ),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
-   ];
+  ];
 
-    void _addTransaction(String titulo,double valor){
-
-    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: titulo, value: valor, date: DateTime.now(),
+  void _addTransaction(String titulo, double valor) {
+    final newTransaction = Transaction(
+      id: Random().nextDouble().toString(),
+      title: titulo,
+      value: valor,
+      date: DateTime.now(),
     );
+    //_lista.add(newTransaction);
+    //print(_lista);
 
     setState(() {
+      // tudo que muda deve está dentro de um setState()
       _lista.add(newTransaction);
     });
 
-   }
+    Navigator.of(context).pop();
+  }
+
+  openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransactionForm(onSubmit: _addTransaction); // comuniacação indireta
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Despesas Pessoais'),
-        actions:[
-          IconButton(onPressed:(){},icon:const Icon(Icons.add),
+        actions: [
+          IconButton(
+            onPressed: () {
+              openTransactionFormModal(context);
+            },
+            icon: const Icon(Icons.add),
           ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Card(elevation: 5, color: Colors.blue, child: Text('Gráfico')),
+            TransactionList(
+              // comunicação direta
+              lista: _lista,
+            ),
           ],
         ),
-     body: SingleChildScrollView(
-       child: Column(
-        crossAxisAlignment:CrossAxisAlignment.stretch,
-        children: [
-          const Card(
-            elevation:5,
-            color:Colors.blue,
-            child:Text('Gráfico')
-          ),
-          TransactionForm(onSubmit:_addTransaction),
-          TransactionList(lista: _lista,),
-          
-         ],
-         ),
-     ),
-     floatingActionButton:FloatingActionButton(onPressed:(){},
-     child:const Icon(Icons.add),
-     ),
-     floatingActionButtonLocation:FloatingActionButtonLocation.centerFloat,
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          openTransactionFormModal(context);
+        },
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
