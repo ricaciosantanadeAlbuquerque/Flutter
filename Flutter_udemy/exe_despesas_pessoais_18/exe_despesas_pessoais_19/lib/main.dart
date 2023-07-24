@@ -20,11 +20,17 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class MyHomeAppState extends State<MyHomeApp> {
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
         title:const Text('Despesas Pessoais')
+      ),
+      body:Column(
+        children:[
+
+        ]
       )
     );
   }
