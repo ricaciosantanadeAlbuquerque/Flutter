@@ -37,28 +37,50 @@ class MyHomeAppState extends State<MyHomeApp> {
     setState(() {
       listTransaction.add(newTransaction);
     });
+    Navigator.of(context).pop();
+  }
+
+  openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => TransactionForm(onSubmitted: addTransaction),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Despesas Sociais"),
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-           children: [
-            const Card(
-              elevation: 5, 
-              color: Colors.blue,
-               child: Text('Gráfico'),
-               ),
-               TransactionForm(onSubmitted: addTransaction),
-                TransactionList(list: listTransaction),
-          ],
+      appBar: AppBar(
+        title: const Text("Despesas Sociais"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              openTransactionFormModal(context);
+            },
+            icon: const Icon(Icons.add),
           ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Card(
+              elevation: 5,
+              color: Colors.blue,
+              child: Text('Gráfico'),
+            ),
+            TransactionList(list: listTransaction),
+          ],
         ),
-        );
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          openTransactionFormModal(context);
+        },
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
   }
 }
