@@ -9,9 +9,23 @@ class TransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 320,
-      child: ListView.builder(
+      child: list.isEmpty ? 
+       Column(
+        children:[
+           const SizedBox(height:15,),
+          Text('Nenhuma Transação cadastrada',
+          style:Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height:15,),
+          SizedBox(
+            height:200,
+            child: Image.asset('assets/image/waiting.png',fit: BoxFit.cover,)
+          ),
+        ],
+       )
+      
+      :ListView.builder(
         itemCount: list.length,
         itemBuilder: (_, index) {
           final trs = list[index];
@@ -42,11 +56,7 @@ class TransactionList extends StatelessWidget {
                   crossAxisAlignment:CrossAxisAlignment.start,
                   children:[
                     Text(trs.title,
-                    style:const TextStyle(
-                      fontSize:16,
-                      color:Colors.black,
-                      fontWeight:FontWeight.bold,
-                    ),
+                    style:Theme.of(context).textTheme.titleLarge,
                     ),
                     Text(DateFormat('d MMM y').format(trs.date),
                     style: const TextStyle(

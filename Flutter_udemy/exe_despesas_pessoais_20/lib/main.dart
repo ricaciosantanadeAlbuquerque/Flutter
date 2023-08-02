@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:exe_despesas_pessoais_20/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'components/transaction_forme.dart';
@@ -11,7 +10,29 @@ class ExpensesApp extends StatelessWidget {
   const ExpensesApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: ThemeData(), home: const MyHomeApp());
+    return MaterialApp(
+      theme: ThemeData().copyWith(
+        colorScheme: ThemeData().colorScheme.copyWith(
+          primary:Colors.purple,
+          secondary:Colors.amberAccent
+        ),
+        textTheme:ThemeData().textTheme.copyWith(
+          titleLarge:const TextStyle(
+            color:Colors.black,
+            fontSize:16,
+            fontWeight:FontWeight.bold,
+            fontFamily: 'PlayfairDisplay'
+          ),
+        ),
+        appBarTheme: ThemeData().appBarTheme.copyWith(
+          titleTextStyle: const TextStyle(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'IBMPlexSans',
+                ),
+        )
+      ),
+       home: const MyHomeApp(),);
   }
 }
 
@@ -23,12 +44,7 @@ class MyHomeApp extends StatefulWidget {
 
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listTransaction = [
-    Transaction(
-      id: Random().nextDouble().toString(),
-      title: 'Novo Tênis de Corrida',
-      valeu: 311.0,
-      date: DateTime.now(),
-    )
+  
   ];
 
   addTransaction(String title, double value) {
