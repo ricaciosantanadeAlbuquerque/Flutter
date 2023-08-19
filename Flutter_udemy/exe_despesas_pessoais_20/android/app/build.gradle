@@ -60,6 +60,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    namespace 'com.example.exe_despesas_pessoais_20'
 }
 
 flutter {

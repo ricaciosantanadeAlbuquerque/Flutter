@@ -1,5 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.exe_despesas_pessoais_20">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
    <application
         android:label="exe_despesas_pessoais_20"
         android:name="${applicationName}"

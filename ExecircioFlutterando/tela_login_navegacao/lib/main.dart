@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tela_login_navegacao/login.dart';
-import 'package:tela_login_navegacao/segunda_tela.dart';
 
 import 'controle.dart';
 

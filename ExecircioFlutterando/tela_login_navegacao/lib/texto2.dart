@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class Texto2 extends StatelessWidget {
   TextEditingController controle;
 
