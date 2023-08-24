@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:exe_despesas_pessoais_22/models/transaction.dart';
 import 'package:flutter/material.dart';
 
+import 'components/transaction_form.dart';
+import 'components/transaction_list.dart';
+
 void main() => runApp(const ExpensesApp());
 
 class ExpensesApp extends StatelessWidget {
@@ -13,7 +16,7 @@ class ExpensesApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(),
       home: const MyHomeApp(),
-      );
+    );
   }
 }
 
@@ -24,19 +27,35 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class MyHomeAppState extends State<MyHomeApp> {
-  final List<Transaction> lista = [
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.30, date: DateTime.now())
-  ]; 
+  final List<Transaction> lista = [Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.30, date: DateTime.now())];
+
+  addTransaction(String title, double value) {
+    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
+
+    setState(() {
+      lista.add(newTransaction);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
+      appBar: AppBar(
         title: const Text('Despessas Pessoais'),
       ),
-      body:const Column(
-        children: [
-          Text('texto')
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Card(
+              elevation: 5,
+              color: Colors.blue,
+              child: Text('Gráfico'),
+            ),
+            TransactionForm(onSubmitted: addTransaction), // passagem indireta de dados
+            TransactionList(lista: lista)// passagem direta de dados
+          ],
+        ),
       ),
     );
   }
