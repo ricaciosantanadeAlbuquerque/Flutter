@@ -29,24 +29,37 @@ class MyHomeAppState extends State<MyHomeApp> {
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
   ];
 
-  void addTransaction(String title,double value){
+  void addTransaction(String title, double value) {
+    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
 
+    setState(() {
+      _listaTransaction.add(newTransaction);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Despesas Pessoais'),
-       actions: [IconButton(icon: const Icon(Icons.add), onPressed: () {}
-      ,)
-      ,],
+      appBar: AppBar(
+        title: const Text('Despesas Pessoais'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {},
+          ),
+        ],
       ),
-      body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-       const  Card(color: Colors.blue, elevation: 5, child: Text('Gráfico'),
-       ),
-       TransactionForm(onSubmitted: addTransaction,), 
-       TransactionList(listaTransaction: _listaTransaction)
-      ]),
+      body: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          const Card(
+            color: Colors.blue,
+            elevation: 5,
+            child: Text('Gráfico'),
+          ),
+          TransactionForm( onSubmitted: addTransaction,), // passagem de dados  indireta !!
+          TransactionList(listaTransaction: _listaTransaction) // passagem dirata
+        ]),
+      ),
       floatingActionButton: FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
