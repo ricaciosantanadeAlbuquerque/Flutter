@@ -26,7 +26,8 @@ class MyHomeApp extends StatefulWidget {
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> _listaTransaction = [
     Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
+    
   ];
 
   void addTransaction(String title, double value) {
@@ -35,6 +36,17 @@ class MyHomeAppState extends State<MyHomeApp> {
     setState(() {
       _listaTransaction.add(newTransaction);
     });
+
+    Navigator.of(context).pop(); // fechando o modal !!
+  }
+
+  openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) => TransactionForm(
+        onSubmitted: addTransaction,
+      ), // passagem de dados  indireta !!,
+    );
   }
 
   @override
@@ -45,7 +57,7 @@ class MyHomeAppState extends State<MyHomeApp> {
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () => openTransactionFormModal(context),
           ),
         ],
       ),
@@ -56,11 +68,10 @@ class MyHomeAppState extends State<MyHomeApp> {
             elevation: 5,
             child: Text('Gráfico'),
           ),
-          TransactionForm( onSubmitted: addTransaction,), // passagem de dados  indireta !!
           TransactionList(listaTransaction: _listaTransaction) // passagem dirata
         ]),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(onPressed: () => openTransactionFormModal(context), child: const Icon(Icons.add)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
