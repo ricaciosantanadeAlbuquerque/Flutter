@@ -10,7 +10,18 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height:330,
-      child: ListView.builder(
+      child: listaTransaction.isEmpty ? Column(
+        children:[
+         const  Text('Nenhuma transação cadastrada!'),
+          const SizedBox(height: 15,),
+          Container(
+            height:280,
+            child: Image.asset('assets/image/waiting.png',fit:BoxFit.cover),
+          ),
+        ]
+      )
+      :ListView.builder(
+        shrinkWrap: true,
         itemCount: listaTransaction.length,
         itemBuilder: (__, index) {
           var trs = listaTransaction[index];

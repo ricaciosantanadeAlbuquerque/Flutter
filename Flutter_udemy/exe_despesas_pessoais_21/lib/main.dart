@@ -11,7 +11,17 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(),
+      theme: ThemeData().copyWith(
+      colorScheme:ThemeData().colorScheme.copyWith(
+        primary:Colors.purple,
+        secondary:Colors.amberAccent,
+      ),
+      textTheme:ThemeData().textTheme.copyWith(
+        titleLarge:const TextStyle(
+          
+        )
+      ),
+      ),
       home: const MyHomeApp(),
     );
   }
@@ -25,9 +35,7 @@ class MyHomeApp extends StatefulWidget {
 
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> _listaTransaction = [
-    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
-    
+   
   ];
 
   void addTransaction(String title, double value) {
