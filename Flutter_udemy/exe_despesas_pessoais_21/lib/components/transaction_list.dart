@@ -12,7 +12,9 @@ class TransactionList extends StatelessWidget {
       height:330,
       child: listaTransaction.isEmpty ? Column(
         children:[
-         const  Text('Nenhuma transação cadastrada!'),
+         Text('Nenhuma transação cadastrada!',
+         style: Theme.of(context).textTheme.titleLarge
+         ),
           const SizedBox(height: 15,),
           Container(
             height:280,
@@ -50,10 +52,7 @@ class TransactionList extends StatelessWidget {
                   children: [
                     Text(
                       trs.title,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge
                     ),
                     Text(
                       DateFormat('d MMM y').format(trs.date),
