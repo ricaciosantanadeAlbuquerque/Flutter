@@ -10,7 +10,22 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
     height: 330, 
-    child: ListView.builder(
+    child: lista.isEmpty ? 
+     Column(
+      children:[
+        Text('Nenhuma Transação',
+        style:Theme.of(context).textTheme.titleLarge),
+        const SizedBox(height:15),
+        Container(
+          height:225,
+          child:Image.asset('assets/image/waiting.png',
+          fit:BoxFit.cover,
+          ),
+        ),
+      ],
+     )
+    
+    :ListView.builder(
       shrinkWrap: true,
       itemCount:lista.length,
       itemBuilder:(_,index){

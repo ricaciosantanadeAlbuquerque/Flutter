@@ -25,12 +25,14 @@ class ExpensesApp extends StatelessWidget {
             fontSize: 20,
             fontWeight:FontWeight.bold,
             color:Colors.black,
+            fontFamily: 'OpenSans'
           ),
         ),
         appBarTheme:const AppBarTheme(
           titleTextStyle:TextStyle(
             fontSize:20,
             fontWeight:FontWeight.bold,
+            fontFamily: 'IBMPlexSans'
           ),
         ),
       ),
@@ -47,7 +49,7 @@ class MyHomeApp extends StatefulWidget {
 
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> lista = [
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.30, date: DateTime.now()),
+   // Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.30, date: DateTime.now()),
     
   ];
 
