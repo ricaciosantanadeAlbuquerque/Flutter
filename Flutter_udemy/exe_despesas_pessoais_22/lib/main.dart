@@ -107,13 +107,9 @@ class MyHomeAppState extends State<MyHomeApp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(
-              elevation: 5,
-              color: Colors.blue,
-              child: Text('Gráfico'),
-            ),
+            Chart(lista: recentTransaction),
             TransactionList(lista: lista) ,// passagem direta de dados
-            Chart(lista: recentTransaction)
+           
           ],
         ),
       ),

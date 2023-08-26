@@ -45,7 +45,9 @@ class Chart extends StatelessWidget {
         elevation: 6,
         margin: const EdgeInsets.all(20),
         child: Row(
-          children: [],
+          children: groupedTransaction.map((map){
+            return Text('${map['day']}==${map['value']}');
+          }).toList(),
         ));
   }
 }
