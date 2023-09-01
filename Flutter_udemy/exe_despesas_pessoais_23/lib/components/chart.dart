@@ -30,13 +30,11 @@ class Chart extends StatelessWidget {
     return Card(
         elevation: 6,
         margin:const  EdgeInsets.all(20),
-        child: Expanded(
-          child: Row(
-              children: groupedTransaction.map((map) {
-            return ChartBar(label: map['day'] as String, percentage: 0.0, value: map['value'] as double);
-          }).toList()
-          ,),
-        )
+        child: Row(
+            children: groupedTransaction.map((map) {
+          return ChartBar(label: map['day'] as String, percentage: 0.0, value: map['value'] as double);
+        }).toList()
+        ,)
         ,);
   }
 }
