@@ -1,3 +1,4 @@
+import 'package:exe_despesas_pessoais_23/components/chart_bar.dart';
 import 'package:exe_despesas_pessoais_23/transaction/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -29,11 +30,13 @@ class Chart extends StatelessWidget {
     return Card(
         elevation: 6,
         margin:const  EdgeInsets.all(20),
-        child: Row(
-            children: groupedTransaction.map((map) {
-          return Text('${map['day']} == ${map['value']}');
-        }).toList()
-        ,)
+        child: Expanded(
+          child: Row(
+              children: groupedTransaction.map((map) {
+            return ChartBar(label: map['day'] as String, percentage: 0.0, value: map['value'] as double);
+          }).toList()
+          ,),
+        )
         ,);
   }
 }
