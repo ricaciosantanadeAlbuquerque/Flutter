@@ -34,6 +34,16 @@ class _MyHomeAppState extends State<MyHomeApp> {
     setState(() {
       _lista.add(newTransaction);
     });
+
+    Navigator.of(context).pop(); // fechando o modal;
+  }
+
+  _openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransactionForm(onSubmitted: _addTransaction); // comunicação indireta
+        });
   }
 
   @override
@@ -41,22 +51,32 @@ class _MyHomeAppState extends State<MyHomeApp> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Despesas Pessoais'),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add),
-        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _openTransactionFormModal(context);
+            },
+            icon: const Icon(Icons.add),
+          ),
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch, 
-        children: [
-          const Card(elevation: 5, color: Colors.blue, child: Text('Gráfico')),
-           TransactionForm(onSubmitted:_addTransaction), 
-           TransactionList(listaTransaction: _lista),
-           ],
-           ),
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Card(
+              elevation: 5,
+              color: Colors.blue,
+              child: Text('Gráfico'),
+            ),
+            TransactionList(listaTransaction: _lista), // comunicação direta
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          _openTransactionFormModal(context);
+        },
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
