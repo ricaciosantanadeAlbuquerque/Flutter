@@ -1,5 +1,7 @@
+import 'dart:ffi';
 import 'dart:math';
 
+import 'package:exe_despesas_pessoais_23/components/chart.dart';
 import 'package:exe_despesas_pessoais_23/components/transaction_form.dart';
 import 'package:exe_despesas_pessoais_23/components/transaction_list.dart';
 import 'package:exe_despesas_pessoais_23/transaction/transaction.dart';
@@ -15,28 +17,16 @@ class ExpensesApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData().copyWith(
-        colorScheme:ThemeData().colorScheme.copyWith(
-          primary: Colors.purple,
-          secondary:Colors.amberAccent
+        colorScheme: ThemeData().colorScheme.copyWith(primary: Colors.purple, secondary: Colors.amberAccent),
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontFamily: 'Lobster'),
+            ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, fontFamily: 'RussoOne'),
         ),
-        textTheme:ThemeData().textTheme.copyWith(
-          titleLarge:const TextStyle(
-            color:Colors.black,
-            fontWeight:FontWeight.bold,
-            fontFamily: 'Lobster'
-          ),
-        ),
-        appBarTheme:const AppBarTheme(
-          titleTextStyle: TextStyle(
-            fontSize:22,
-            fontWeight:FontWeight.bold,
-            fontFamily: 'RussoOne'
-          ),
-        ),
-      ), 
-      home: const MyHomeApp()
-      ,
-      );
+      ),
+      home: const MyHomeApp(),
+    );
   }
 }
 
@@ -70,6 +60,12 @@ class _MyHomeAppState extends State<MyHomeApp> {
         });
   }
 
+  List<Transaction> get _recentTransaction { // filtrando a lista
+    return _lista.where((trs) {
+      return trs.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,11 +84,9 @@ class _MyHomeAppState extends State<MyHomeApp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(
-              elevation: 5,
-              color: Colors.blue,
-              child: Text('Gráfico'),
-            ),
+
+            Chart(listaTransaction: _recentTransaction),
+
             TransactionList(listaTransaction: _lista), // comunicação direta
           ],
         ),
