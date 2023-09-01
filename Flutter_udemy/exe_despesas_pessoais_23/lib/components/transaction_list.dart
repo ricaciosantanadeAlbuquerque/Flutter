@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 import '../transaction/transaction.dart';
 
 class TransactionList extends StatelessWidget {
@@ -19,18 +19,32 @@ class TransactionList extends StatelessWidget {
                   child: Row(children: [
                 Container(
                   margin:const EdgeInsets.symmetric(vertical: 10,horizontal: 15),
-                  padding:const EdgeInsets.all(12),
+                  padding:const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     border: Border.all(
                       width:2,
                       color:Colors.purple
                     ),
                   ),
-                  child: Text(trs.value.toStringAsFixed(2),),
+                  child: Text(trs.value.toStringAsFixed(2),
+                  style: const TextStyle(
+                   color: Colors.purple,
+                   fontSize:16,
+                   fontWeight:FontWeight.bold
+                  ),
+                  ),
                 ),
-                Column(children: [
-                  Text(trs.title),
-                  Text(trs.date.toString()),
+                Column(
+                  crossAxisAlignment:CrossAxisAlignment.start,
+                  children: [
+                  Text(trs.title,
+                  style:const TextStyle(
+                    fontSize:16,
+                    fontWeight:FontWeight.bold
+                  ),
+                  ),
+                  Text(DateFormat('d MMM y').format(trs.date),
+                  style:const TextStyle(color:Colors.grey),),
                 ],),
               ],),);
             },),);
