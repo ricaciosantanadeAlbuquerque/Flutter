@@ -23,12 +23,14 @@ class ExpensesApp extends StatelessWidget {
           titleLarge:const TextStyle(
             color:Colors.black,
             fontWeight:FontWeight.bold,
+            fontFamily: 'Lobster'
           ),
         ),
         appBarTheme:const AppBarTheme(
           titleTextStyle: TextStyle(
             fontSize:22,
-            fontWeight:FontWeight.bold
+            fontWeight:FontWeight.bold,
+            fontFamily: 'RussoOne'
           ),
         ),
       ), 
