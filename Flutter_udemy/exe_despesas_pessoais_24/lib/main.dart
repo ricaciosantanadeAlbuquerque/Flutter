@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
+import 'model/transaction.dart';
 
 void main() => runApp(const ExpensesApp());
 
@@ -17,21 +19,22 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class MyHomeAppState extends State<MyHomeApp> {
+  final List<Transaction> listaTransaction = [Transaction(id: Random().nextDouble().toString(), title: 'Novo tênis de corrida', value: 310.76, date: DateTime.now()),
+  Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais')
-      ),
+      appBar: AppBar(title: const Text('Despesas Pessoais')),
       body: const Column(
-        crossAxisAlignment:CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-         Card(
-          elevation:5,
-          color: Colors.blue,
-         ) 
-        ]
-      )
+          Card(
+            elevation: 5,
+            color: Colors.blue,
+          ),
+        ],
+      ),
     );
   }
 }
