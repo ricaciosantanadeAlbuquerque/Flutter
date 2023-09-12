@@ -1,3 +1,4 @@
+import 'package:exe_despesas_pessoais_24/components/transaction_list.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'model/transaction.dart';
@@ -26,13 +27,14 @@ class MyHomeAppState extends State<MyHomeApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Despesas Pessoais')),
-      body: const Column(
+      body:  Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Card(
             elevation: 5,
             color: Colors.blue,
           ),
+          TransactionList(listTransaction: listaTransaction)
         ],
       ),
     );
