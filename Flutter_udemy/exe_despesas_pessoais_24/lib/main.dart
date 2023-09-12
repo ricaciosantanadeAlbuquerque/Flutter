@@ -1,6 +1,7 @@
 import 'package:exe_despesas_pessoais_24/components/transaction_list.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'components/chart.dart';
 import 'components/transaction_form.dart';
 import 'model/transaction.dart';
 
@@ -44,8 +45,9 @@ class MyHomeApp extends StatefulWidget {
 
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listaTransaction = [
-   // Transaction(id: Random().nextDouble().toString(), title: 'Novo tênis de corrida', value: 310.76, date: DateTime.now()),
-    //Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo tênis de corrida', value: 310.76, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
+     Transaction(id: Random().nextDouble().toString(), title: 'Conta Mercadinho', value: 400.30, date: DateTime.now().subtract(const Duration(days:3))),
   ];
 
   addTransaction(String title, double value) {
@@ -83,7 +85,7 @@ class MyHomeAppState extends State<MyHomeApp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(elevation: 5, color: Colors.blue, child: Text('Gráfico')),
+            Chart(listaTransaction: listaTransaction),
             TransactionList(listTransaction: listaTransaction),
           ],
         ),
