@@ -21,14 +21,24 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class MyHomeAppState extends State<MyHomeApp> {
-  final List<Transaction> listaTransaction = [Transaction(id: Random().nextDouble().toString(), title: 'Novo tênis de corrida', value: 310.76, date: DateTime.now()),
-  Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())];
+  final List<Transaction> listaTransaction = [
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo tênis de corrida', value: 310.76, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
+  ];
+
+  addTransaction(String title, double value) {
+    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
+
+    setState(() {
+      listaTransaction.add(newTransaction);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Despesas Pessoais')),
-      body:  Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           const Card(
@@ -36,7 +46,7 @@ class MyHomeAppState extends State<MyHomeApp> {
             color: Colors.blue,
           ),
           TransactionList(listTransaction: listaTransaction),
-          TransactionForm()
+          TransactionForm(onSubmitted: addTransaction,)
         ],
       ),
     );
