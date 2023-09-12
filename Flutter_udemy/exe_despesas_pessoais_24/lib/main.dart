@@ -23,7 +23,7 @@ class MyHomeApp extends StatefulWidget {
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listaTransaction = [
     Transaction(id: Random().nextDouble().toString(), title: 'Novo tênis de corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
   ];
 
   addTransaction(String title, double value) {
@@ -32,23 +32,42 @@ class MyHomeAppState extends State<MyHomeApp> {
     setState(() {
       listaTransaction.add(newTransaction);
     });
+    Navigator.of(context).pop();
+  }
+
+  openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransactionForm(
+            onSubmitted: addTransaction,
+          );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Despesas Pessoais')),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Card(
-            elevation: 5,
-            color: Colors.blue,
+      appBar: AppBar(
+        title: const Text('Despesas Pessoais'),
+        actions: [
+          IconButton(
+            onPressed: () => openTransactionFormModal(context),
+            icon: const Icon(Icons.add),
           ),
-          TransactionList(listTransaction: listaTransaction),
-          TransactionForm(onSubmitted: addTransaction,)
         ],
       ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Card(elevation: 5, color: Colors.blue, child: Text('Gráfico')),
+            TransactionList(listTransaction: listaTransaction),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(onPressed: () => openTransactionFormModal(context), child: const Icon(Icons.add)),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
