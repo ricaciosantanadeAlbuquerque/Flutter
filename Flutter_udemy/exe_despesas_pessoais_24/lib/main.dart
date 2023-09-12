@@ -1,6 +1,7 @@
 import 'package:exe_despesas_pessoais_24/components/transaction_list.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'components/transaction_form.dart';
 import 'model/transaction.dart';
 
 void main() => runApp(const ExpensesApp());
@@ -30,11 +31,12 @@ class MyHomeAppState extends State<MyHomeApp> {
       body:  Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Card(
+          const Card(
             elevation: 5,
             color: Colors.blue,
           ),
-          TransactionList(listTransaction: listaTransaction)
+          TransactionList(listTransaction: listaTransaction),
+          TransactionForm()
         ],
       ),
     );
