@@ -13,27 +13,14 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData().copyWith(
-        colorScheme:ThemeData().colorScheme.copyWith(
-          primary: Colors.purple,
-          secondary:Colors.amberAccent
+        colorScheme: ThemeData().colorScheme.copyWith(primary: Colors.purple, secondary: Colors.amberAccent),
+        textTheme: ThemeData().textTheme.copyWith(titleLarge: const TextStyle(fontSize: 16, color: Colors.black, fontFamily: 'Quicksand', fontWeight: FontWeight.bold)),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, fontFamily: 'IBMPlexSans'),
         ),
-
-        textTheme:ThemeData().textTheme.copyWith(
-          titleLarge:const TextStyle(
-            fontSize:16,
-            color: Colors.black,
-            fontFamily: 'Quicksand',
-            fontWeight:FontWeight.bold
-          )
-        ),
-        appBarTheme:const AppBarTheme(
-          titleTextStyle: TextStyle(
-            fontSize:20,
-            fontWeight:FontWeight.bold,
-            fontFamily: 'IBMPlexSans'
-          ),
-        ),
-      ), home: const MyHomeApp(),);
+      ),
+      home: const MyHomeApp(),
+    );
   }
 }
 
@@ -47,7 +34,7 @@ class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listaTransaction = [
     Transaction(id: Random().nextDouble().toString(), title: 'Novo tênis de corrida', value: 310.76, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
-     Transaction(id: Random().nextDouble().toString(), title: 'Conta Mercadinho', value: 400.30, date: DateTime.now().subtract(const Duration(days:3))),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta Mercadinho', value: 400.30, date: DateTime.now().subtract(const Duration(days: 33))),
   ];
 
   addTransaction(String title, double value) {
@@ -69,6 +56,12 @@ class MyHomeAppState extends State<MyHomeApp> {
         });
   }
 
+  List<Transaction> get recentTransaction {
+    return listaTransaction.where((tr) {
+      return tr.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +78,7 @@ class MyHomeAppState extends State<MyHomeApp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(listaTransaction: listaTransaction),
+            Chart(listaTransaction: recentTransaction),
             TransactionList(listTransaction: listaTransaction),
           ],
         ),

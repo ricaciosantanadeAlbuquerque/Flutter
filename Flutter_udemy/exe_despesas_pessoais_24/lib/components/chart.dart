@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../model/transaction.dart';
+import 'chart_bar.dart';
 
 class Chart extends StatelessWidget {
+
   final List<Transaction> listaTransaction;
+
   const Chart({super.key, required this.listaTransaction});
 
   List<Map<String, Object>> get groupedTransaction {
@@ -11,7 +14,9 @@ class Chart extends StatelessWidget {
       final weekDay = DateTime.now().subtract(Duration(days: index));
 
       double totlaSum = 0.0;
-     // para cada um loop da List.generate(), ocorrerá todos os loops  do laço for()
+
+      // para cada um loop da List.generate(), ocorrerá todos os loops  do laço for()
+      
       for (var i = 0; i < listaTransaction.length; i++) {
         bool sameDay = listaTransaction[i].date.day == weekDay.day;
         bool sameMonth = listaTransaction[i].date.month == weekDay.month;
@@ -22,8 +27,8 @@ class Chart extends StatelessWidget {
         }
       }
 
-      print(DateFormat.E().format(weekDay)[0]);
-      print(totlaSum);
+      //print(DateFormat.E().format(weekDay)[0]);
+      //print(totlaSum);
       //DateFormat.E() retorna a sigla dos dias da semana,
       return {'day': DateFormat.E().format(weekDay)[0], 'value': totlaSum};
     });
@@ -31,7 +36,20 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    groupedTransaction;
-    return const Card(elevation: 6, margin: EdgeInsets.all(20), child: Row(children: []));
+    //groupedTransaction;
+    return Card(
+      elevation: 6,
+      margin: const EdgeInsets.all(20),
+      child: Row(
+
+        children: groupedTransaction.map((map) {
+          return ChartBar(
+            label: map['day'] as String,
+            value: map['value'] as double,
+            percentage: 0.0,
+          );
+        }).toList(),
+      ),
+    );
   }
 }
