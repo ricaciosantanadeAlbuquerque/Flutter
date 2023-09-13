@@ -35,8 +35,8 @@ class MyHomeAppState extends State<MyHomeApp> {
 
   final List<Transaction> listaTransaction = [
     // Transaction(id: Random().nextDouble().toString(), title: 'Novo tênis de corrida', value: 310.76, date: DateTime.now()),
-   // Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now().subtract(const Duration(days: 3))),
-    //Transaction(id: Random().nextDouble().toString(), title: 'Conta Mercadinho', value: 400.30, date: DateTime.now().subtract(const Duration(days: 6))),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now().subtract(const Duration(days: 3))),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta Mercadinho', value: 400.30, date: DateTime.now().subtract(const Duration(days: 6))),
   ];
 
   addTransaction(String title, double value) {
@@ -76,7 +76,11 @@ class MyHomeAppState extends State<MyHomeApp> {
     });
   }
 
- 
+  @override
+  void initState() {
+    acumulovalor();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
