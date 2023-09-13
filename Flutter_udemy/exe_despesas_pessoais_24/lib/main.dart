@@ -31,11 +31,11 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class MyHomeAppState extends State<MyHomeApp> {
- 
+  var totalvalor = 0.0;
 
   final List<Transaction> listaTransaction = [
     // Transaction(id: Random().nextDouble().toString(), title: 'Novo tênis de corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now().subtract(const Duration(days: 3))),
+   // Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now().subtract(const Duration(days: 3))),
     //Transaction(id: Random().nextDouble().toString(), title: 'Conta Mercadinho', value: 400.30, date: DateTime.now().subtract(const Duration(days: 6))),
   ];
 
@@ -64,17 +64,38 @@ class MyHomeAppState extends State<MyHomeApp> {
     }).toList();
   }
 
+  acumulovalor() {
+    for (var j in listaTransaction) {
+      totalvalor += j.value;
+    }
+  }
+
+  sumTotalValue(double total) {
+    setState(() {
+      totalvalor  = total;
+    });
+  }
+
+ 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Despesas Pessoais'),
         actions: [
+          Container(
+              margin: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              child: Card(
+                color: Theme.of(context).colorScheme.secondary,
+                child: FittedBox(
+                  child: Text(totalvalor.toStringAsFixed(2), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white)),
+                ),
+              )),
           IconButton(
             onPressed: () => openTransactionFormModal(context),
             icon: const Icon(Icons.add),
           ),
-          
         ],
       ),
       body: SingleChildScrollView(
@@ -83,6 +104,7 @@ class MyHomeAppState extends State<MyHomeApp> {
           children: [
             Chart(
               listaTransaction: recentTransaction,
+              onSubmitted: sumTotalValue,
             ),
             TransactionList(listTransaction: listaTransaction),
           ],

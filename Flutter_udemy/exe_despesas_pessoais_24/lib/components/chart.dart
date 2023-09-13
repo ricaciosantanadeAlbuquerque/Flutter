@@ -5,7 +5,9 @@ import 'chart_bar.dart';
 
 class Chart extends StatelessWidget {
   final List<Transaction> listaTransaction;
-  const Chart({super.key, required this.listaTransaction,});
+  final void Function(double) onSubmitted;
+
+  const Chart({super.key, required this.listaTransaction, required this.onSubmitted});
 
   List<Map<String, Object>> get groupedTransaction {
     return List.generate(7, (index) {
@@ -32,34 +34,42 @@ class Chart extends StatelessWidget {
     });
   }
 
-  double get _weekTotalValue {
+  double get weekTotalValue {
     return groupedTransaction.fold(0.0, (count, map) {
       return count + (map['value'] as double);
     });
   }
 
-  
+  void retorno() {
+     onSubmitted(weekTotalValue);
+  }
+
   @override
   Widget build(BuildContext context) {
     //groupedTransaction;
     // print(_weekTotalValue);
-    return Card(
-      elevation: 6,
-      margin: const EdgeInsets.all(10),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: groupedTransaction.isNotEmpty
-              ? groupedTransaction.map((map) {
-                  return Flexible(
-                    fit: FlexFit.tight,
-                    child: ChartBar(label: map['day'] as String, value: map['value'] as double, percentage: groupedTransaction.isNotEmpty ? (map['value'] as double) / _weekTotalValue : 0.5),
-                  );
-                }).toList()
-              : [],
+    return Column(
+      children: [
+        Card(
+          elevation: 6,
+          margin: const EdgeInsets.all(10),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children:  groupedTransaction.isNotEmpty
+                  ? groupedTransaction.map((map) {
+                      return Flexible(
+                        fit: FlexFit.tight,
+                        child: ChartBar(label: map['day'] as String, value: map['value'] as double, percentage: groupedTransaction.isNotEmpty ? (map['value'] as double) / weekTotalValue : 0.5),
+                      );
+                    }).toList() : []
+            ),
+          ),
         ),
-      ),
+        ElevatedButton(
+          onPressed: retorno, child: const Text('Total da Semana'))
+      ],
     );
   }
 }
