@@ -1,7 +1,8 @@
 import 'dart:math';
-
 import 'package:exe_despesas_pessoais_25/model/transaction.dart';
 import 'package:flutter/material.dart';
+
+import 'components/transaction_list.dart';
 
 void main() => runApp(const ExpensesApp());
 
@@ -22,7 +23,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> ListTransaction = [
+  final List<Transaction> listTransaction = [
     Transaction(id: Random().nextDouble.toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.33, date: DateTime.now())
   ];
@@ -33,12 +34,14 @@ class MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(title: const Text('Despesas Pessoais'),
         actions:[IconButton(onPressed: (){}, icon: const Icon(Icons.add))]
         ),
-        body: const Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Card(
+        body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          const Card(
             elevation: 5,
             color: Colors.blue,
             child: Text('Gráfico'),
           ),
+           TransactionList(listaTransaction: listTransaction)
+          
         ],
         ),
         floatingActionButton:FloatingActionButton(onPressed: (){},
