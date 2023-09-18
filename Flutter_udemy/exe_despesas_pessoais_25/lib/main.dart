@@ -19,12 +19,20 @@ class ExpensesApp extends StatelessWidget {
                 ),
             textTheme: ThemeData().textTheme.copyWith(
                   titleLarge: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
+                    fontFamily: 'OpenSans',
                   ),
                 ),
-            appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+            appBarTheme: const AppBarTheme(
+              titleTextStyle: TextStyle(color: Colors.white,
+               fontWeight: FontWeight.bold,
+               fontSize:25,
+               fontFamily: 'IBMPlexSans'
+               )
+               ,)
+               ,),
         home: const MyHomePage());
   }
 }
