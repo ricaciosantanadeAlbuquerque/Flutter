@@ -28,9 +28,12 @@ class Chart extends StatelessWidget {
   const Chart({super.key, required this.listaTransaction});
   @override
   Widget build(BuildContext context) {
-    return const Card(
+    return Card(
       elevation: 6,
-      child: Row(children: []),
+      child: Row(
+          children: groupedTransaction.map((map) {
+        return Text('${map['day']} == ${map['value']}');
+      }).toList()),
     );
   }
 }

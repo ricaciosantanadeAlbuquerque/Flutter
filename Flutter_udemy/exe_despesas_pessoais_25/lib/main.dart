@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:exe_despesas_pessoais_25/model/transaction.dart';
 import 'package:flutter/material.dart';
+import 'components/chart.dart';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 
@@ -92,12 +93,8 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(
-              elevation: 5,
-              color: Colors.blue,
-              child: Text('Gráfico'),
-            ),
-            TransactionList(listaTransaction: recentTransaction) // comunicação dirate
+           Chart (listaTransaction: recentTransaction),
+            TransactionList(listaTransaction:listTransaction) // comunicação dirate
           ],
         ),
       ),
