@@ -13,26 +13,22 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData().copyWith(
-            colorScheme: ThemeData().colorScheme.copyWith(
-                  primary: Colors.purple,
-                  secondary: Colors.amberAccent,
+          colorScheme: ThemeData().colorScheme.copyWith(
+                primary: Colors.purple,
+                secondary: Colors.amberAccent,
+              ),
+          textTheme: ThemeData().textTheme.copyWith(
+                titleLarge: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                  fontFamily: 'OpenSans',
                 ),
-            textTheme: ThemeData().textTheme.copyWith(
-                  titleLarge: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    fontFamily: 'OpenSans',
-                  ),
-                ),
-            appBarTheme: const AppBarTheme(
-              titleTextStyle: TextStyle(color: Colors.white,
-               fontWeight: FontWeight.bold,
-               fontSize:25,
-               fontFamily: 'IBMPlexSans'
-               )
-               ,)
-               ,),
+              ),
+          appBarTheme: const AppBarTheme(
+            titleTextStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 25, fontFamily: 'IBMPlexSans'),
+          ),
+        ),
         home: const MyHomePage());
   }
 }
@@ -70,15 +66,28 @@ class MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  List<Transaction> get recentTransaction {
+    return listTransaction.where((trs) {
+      return trs.date.isAfter(
+        DateTime.now().subtract(
+          const Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Despesas Pessoais'), 
-      actions: [IconButton(onPressed: () => openTransactionFormModal(context),
-       icon: const Icon(Icons.add)
-      ,)
-      ,]
-      ,),
+      appBar: AppBar(
+        title: const Text('Despesas Pessoais'),
+        actions: [
+          IconButton(
+            onPressed: () => openTransactionFormModal(context),
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -88,7 +97,7 @@ class MyHomePageState extends State<MyHomePage> {
               color: Colors.blue,
               child: Text('Gráfico'),
             ),
-            TransactionList(listaTransaction: listTransaction) // comunicação dirate
+            TransactionList(listaTransaction: recentTransaction) // comunicação dirate
           ],
         ),
       ),
