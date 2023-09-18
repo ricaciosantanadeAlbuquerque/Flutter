@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:exe_despesas_pessoais_25/model/transaction.dart';
 import 'package:flutter/material.dart';
 
+import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 
 void main() => runApp(const ExpensesApp());
@@ -34,15 +35,18 @@ class MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(title: const Text('Despesas Pessoais'),
         actions:[IconButton(onPressed: (){}, icon: const Icon(Icons.add))]
         ),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          const Card(
-            elevation: 5,
-            color: Colors.blue,
-            child: Text('Gráfico'),
+        body: SingleChildScrollView(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            const Card(
+              elevation: 5,
+              color: Colors.blue,
+              child: Text('Gráfico'),
+            ),
+            TransactionForm(),
+             TransactionList(listaTransaction: listTransaction)
+            
+          ],
           ),
-           TransactionList(listaTransaction: listTransaction)
-          
-        ],
         ),
         floatingActionButton:FloatingActionButton(onPressed: (){},
         child: const Icon(Icons.add)
