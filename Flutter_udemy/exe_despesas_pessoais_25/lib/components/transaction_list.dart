@@ -45,12 +45,14 @@ class TransactionList extends StatelessWidget {
                       color:Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                  child: Text('R\$ ${trs.value.toStringAsFixed(2)}',
-                  style:TextStyle(
-                    fontWeight:FontWeight.bold,
-                    fontSize:20,
-                    color:Theme.of(context).colorScheme.primary,
-                  ),
+                  child: FittedBox(
+                    child: Text('R\$ ${trs.value.toStringAsFixed(2)}',
+                    style:TextStyle(
+                      fontWeight:FontWeight.bold,
+                      fontSize:20,
+                      color:Theme.of(context).colorScheme.primary,
+                    ),
+                    ),
                   ),
                 ),
                 Column(

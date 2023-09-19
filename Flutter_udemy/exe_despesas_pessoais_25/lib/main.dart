@@ -45,24 +45,26 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> {
   final List<Transaction> listTransaction = [
     
-      Transaction(id: Random().nextDouble.toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now().subtract(const Duration(days:4)),),
-      Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.33, date: DateTime.now().subtract(const Duration(days: 3),),),
+     
+        Transaction(id: Random().nextDouble.toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now().subtract(const Duration(days:4)),),
+      Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.33, date: DateTime.now().subtract(const Duration(days: 5),),),
        Transaction(
       id: Random().nextDouble().toString(),
       title: 'Bike',
-      value: 2300,
+      value: 300,
       date: DateTime.now().subtract(
         const Duration(days: 3),
       ),
     ),
-     Transaction(
+    /** Transaction(
       id: Random().nextDouble().toString(),
       title: 'Casa',
       value: 230000,
       date: DateTime.now().subtract(
         const Duration(days: 20),
       ),
-    ),
+    ), */
+    
      
   ];
 

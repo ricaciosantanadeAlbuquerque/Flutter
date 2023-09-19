@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 
 class ChartBar extends StatelessWidget {
@@ -30,7 +32,7 @@ class ChartBar extends StatelessWidget {
               ),
             ),
             FractionallySizedBox(
-              heightFactor:percent,
+              heightFactor:percent.isNaN ? 0 : percent, // isNaN == valor Não-Número
               child: Container(
                 decoration: BoxDecoration(
                   color: Colors.purple, 
