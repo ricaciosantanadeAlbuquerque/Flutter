@@ -2,6 +2,8 @@ import 'package:exe_despesas_pessoais_25/model/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'chart_bar.dart';
+
 class Chart extends StatelessWidget {
   final List<Transaction> listaTransaction;
 
@@ -30,10 +32,18 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
-      child: Row(
-          children: groupedTransaction.map((map) {
-        return Text('${map['day']} == ${map['value']}');
-      }).toList()),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment:MainAxisAlignment.spaceAround,
+            children: groupedTransaction.map((map) {
+
+          return Flexible(
+            fit:FlexFit.tight,
+            child: ChartBar(label: (map['day'] as String), value: (map['value'] as double), percent: 0.5));
+          
+        }).toList()),
+      ),
     );
   }
 }
