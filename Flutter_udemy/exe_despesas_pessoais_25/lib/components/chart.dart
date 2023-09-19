@@ -27,6 +27,12 @@ class Chart extends StatelessWidget {
     });
   }
 
+  double get weekTotlaSum {
+    return groupedTransaction.fold(0.0, (cont, map) {
+      return cont + (map['value'] as double);
+    });
+  }
+
   const Chart({super.key, required this.listaTransaction});
   @override
   Widget build(BuildContext context) {
@@ -35,14 +41,10 @@ class Chart extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
-          mainAxisAlignment:MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: groupedTransaction.map((map) {
-
-          return Flexible(
-            fit:FlexFit.tight,
-            child: ChartBar(label: (map['day'] as String), value: (map['value'] as double), percent: 0.5));
-          
-        }).toList()),
+              return Flexible(fit: FlexFit.tight, child: ChartBar(label: (map['day'] as String), value: (map['value'] as double), percent: (map['value'] as double) / weekTotlaSum));
+            }).toList()),
       ),
     );
   }
