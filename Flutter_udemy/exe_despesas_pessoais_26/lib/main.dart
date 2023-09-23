@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:exe_despesas_pessoais_26/models/transaction.dart';
 import 'package:flutter/material.dart';
 
+import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 
 void main() => runApp(const ExpensesApp());
@@ -27,15 +28,14 @@ class MyHomeApp extends StatefulWidget {
   @override
   State<MyHomeApp> createState() => MyHomeAppState();
 }
-
+// ===============================State================================
 class MyHomeAppState extends State<MyHomeApp> {
-  final title = TextEditingController();
-  final value = TextEditingController();
 
   final List<Transaction> listaTransaction = [
     Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
   ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -52,40 +52,9 @@ class MyHomeAppState extends State<MyHomeApp> {
             color: Colors.blue,
             child: Text('Gráfico'),
           ),
+        const TransactionForm(),
          TransactionList(listaTransaction: listaTransaction,), // comunicação direta
-          Card(
-              elevation: 5,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(children: [
-                  TextField(
-                    controller: title,
-                    decoration:const InputDecoration(
-                      labelText: 'Título'
-                    )
-                  ),
-                  TextField(
-                    controller:value,
-                    decoration:const InputDecoration(
-                      labelText:'valor (R\$)'
-                    )
-                  ),
-                  Row(
-                    mainAxisAlignment:MainAxisAlignment.end,
-                    children: [TextButton(onPressed: () {
-
-                    }, child: const Text('Nova Transação',
-                    style:TextStyle(
-                        color: Colors.purple
-                    )
-                    ,)
-                    ,),
-                    ],
-                    ),
-                ],
-                ),
-              ),
-              )
+         
         ],
       ),
       floatingActionButton:FloatingActionButton(
