@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
@@ -14,11 +13,15 @@ class TransactionList extends StatelessWidget {
       child: listaTransaction.isEmpty
           ? Column(
               children: [
-                const SizedBox(height: 10),
-                const Text('Nenhuma Transação Cadastrada'),
-                const SizedBox(height: 10),
-                Container(
+                const SizedBox(height: 20),
+                 Text('Nenhuma Transação Cadastrada',
+                style:Theme.of(context).textTheme.titleLarge),
+                const SizedBox(height: 20),
+                SizedBox(
                   height: 250,
+                  child: Image.asset('assets/image/waiting.png',
+                  fit: BoxFit.cover,
+                  ),
                 ),
               ],
             )
@@ -38,12 +41,13 @@ class TransactionList extends StatelessWidget {
                         decoration: BoxDecoration(
                           border: Border.all(
                             width: 2,
-                            color: Colors.purple,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                         child: Text(
                           'R\$ ${TRS.value.toStringAsFixed(2)}',
-                          style: const TextStyle(color: Colors.purple, fontWeight: FontWeight.bold, fontSize: 20),
+                          style: TextStyle(color: Theme.of(context).colorScheme.primary
+                          , fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                       ),
                       Column(
@@ -51,10 +55,7 @@ class TransactionList extends StatelessWidget {
                         children: [
                           Text(
                             TRS.title,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context).textTheme.titleLarge
                           ),
                           Text(
                             DateFormat('d MMM y').format(TRS.date),

@@ -15,7 +15,28 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(),
+      theme: ThemeData().copyWith(
+        colorScheme:ThemeData().colorScheme.copyWith(
+          primary: Colors.purple,
+          secondary:Colors.amberAccent
+        ),
+        textTheme:ThemeData().textTheme.copyWith(
+          titleLarge:  const TextStyle(
+            fontSize:20,
+            color:Colors.black,
+            fontWeight:FontWeight.bold,
+            fontFamily: 'IBMPlexSans'
+
+          )
+        ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize:25,
+            fontWeight:FontWeight.bold,
+            fontFamily: 'OpenSans'
+          ),
+        ),
+      ),
       home: const MyHomeApp(),
     );
   }
@@ -32,8 +53,8 @@ class MyHomeApp extends StatefulWidget {
 // ===============================State================================
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listaTransaction = [
-    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now()),
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
+    //Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now()),
+    //Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
   ];
 
   addTransaction(String title, double value) {
@@ -42,6 +63,18 @@ class MyHomeAppState extends State<MyHomeApp> {
     setState(() {
       listaTransaction.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
+  }
+    /**
+     * Colocando  função  showModalBottomSheet() dentro de uma função da classe MyHomeAppState() eu a torno a visével em toda a classe, sendo que todos os botões apontaram para o mesmo lugar. Ou seja  'openTransactionFormModal()'
+     */
+  openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransactionForm(onSubmitted: addTransaction); // comunicação indireta
+        });
   }
 
   @override
@@ -49,7 +82,13 @@ class MyHomeAppState extends State<MyHomeApp> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Despesas Pessoais'),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                openTransactionFormModal(context); 
+              },
+              icon: const Icon(Icons.add))
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -60,13 +99,15 @@ class MyHomeAppState extends State<MyHomeApp> {
               color: Colors.blue,
               child: Text('Gráfico'),
             ),
-            TransactionForm(onSubmitted: addTransaction), // comunicação indireta
-            TransactionList(
-              listaTransaction: listaTransaction), // comunicação direta
+            TransactionList(listaTransaction: listaTransaction), // comunicação direta
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            openTransactionFormModal(context);
+          },
+          child: const Icon(Icons.add)),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

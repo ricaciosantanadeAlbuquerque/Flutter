@@ -48,9 +48,9 @@ class TransactionFormState extends State<TransactionForm> {
               children: [
                 TextButton(
                   onPressed: submitter,
-                  child: const Text(
+                  child: Text(
                     'Nova Transação',
-                    style: TextStyle(color: Colors.purple),
+                    style: TextStyle(color: Theme.of(context).colorScheme.primary),
                   ),
                 ),
               ],
