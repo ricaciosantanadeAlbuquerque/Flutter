@@ -1,7 +1,9 @@
 import 'dart:math';
-import 'package:intl/intl.dart';
+
 import 'package:exe_despesas_pessoais_26/models/transaction.dart';
 import 'package:flutter/material.dart';
+
+import 'components/transaction_list.dart';
 
 void main() => runApp(const ExpensesApp());
 
@@ -50,64 +52,7 @@ class MyHomeAppState extends State<MyHomeApp> {
             color: Colors.blue,
             child: Text('Gráfico'),
           ),
-          SizedBox(
-            height: 330,
-            child: listaTransaction.isEmpty
-                ? Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      const Text('Nenhuma Transação Cadastrada'),
-                      const SizedBox(height: 10),
-                      Container(
-                        height: 250,
-                      ),
-                    ],
-                  )
-                : ListView.builder(
-                    itemCount: listaTransaction.length,
-                    itemBuilder: (_, index) {
-                      final TRS = listaTransaction[index];
-                      return Card(
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                vertical: 10,
-                                horizontal: 15,
-                              ),
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 2,
-                                  color: Colors.purple,
-                                ),
-                              ),
-                              child: Text(
-                                'R\$ ${TRS.value.toStringAsFixed(2)}',
-                                style: const TextStyle(color: Colors.purple, fontWeight: FontWeight.bold, fontSize: 20),
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  TRS.title,
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  DateFormat('d MMM y').format(TRS.date),
-                                  style: const TextStyle(color: Colors.grey),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-          ),
+         TransactionList(listaTransaction: listaTransaction,), // comunicação direta
           Card(
               elevation: 5,
               child: Padding(
