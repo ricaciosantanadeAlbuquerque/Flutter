@@ -28,40 +28,46 @@ class MyHomeApp extends StatefulWidget {
   @override
   State<MyHomeApp> createState() => MyHomeAppState();
 }
+
 // ===============================State================================
 class MyHomeAppState extends State<MyHomeApp> {
-
   final List<Transaction> listaTransaction = [
     Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
   ];
 
+  addTransaction(String title, double value) {
+    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
+
+    setState(() {
+      listaTransaction.add(newTransaction);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Despesas Pessoais'),
-      actions:[
-        IconButton(onPressed: (){},icon:const Icon(Icons.add))
-      ],),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Card(
-            elevation: 5,
-            color: Colors.blue,
-            child: Text('Gráfico'),
-          ),
-        const TransactionForm(),
-         TransactionList(listaTransaction: listaTransaction,), // comunicação direta
-         
-        ],
+      appBar: AppBar(
+        title: const Text('Despesas Pessoais'),
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add))],
       ),
-      floatingActionButton:FloatingActionButton(
-        onPressed:(){},
-        child:const Icon(Icons.add)
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Card(
+              elevation: 5,
+              color: Colors.blue,
+              child: Text('Gráfico'),
+            ),
+            TransactionForm(onSubmitted: addTransaction), // comunicação indireta
+            TransactionList(
+              listaTransaction: listaTransaction), // comunicação direta
+          ],
+        ),
       ),
-      floatingActionButtonLocation:FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(onPressed: () {}, child: const Icon(Icons.add)),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
