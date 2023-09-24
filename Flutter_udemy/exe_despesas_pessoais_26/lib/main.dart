@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:exe_despesas_pessoais_26/models/transaction.dart';
 import 'package:flutter/material.dart';
 
+import 'components/chart.dart';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 
@@ -16,25 +17,10 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData().copyWith(
-        colorScheme:ThemeData().colorScheme.copyWith(
-          primary: Colors.purple,
-          secondary:Colors.amberAccent
-        ),
-        textTheme:ThemeData().textTheme.copyWith(
-          titleLarge:  const TextStyle(
-            fontSize:20,
-            color:Colors.black,
-            fontWeight:FontWeight.bold,
-            fontFamily: 'IBMPlexSans'
-
-          )
-        ),
+        colorScheme: ThemeData().colorScheme.copyWith(primary: Colors.purple, secondary: Colors.amberAccent),
+        textTheme: ThemeData().textTheme.copyWith(titleLarge: const TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold, fontFamily: 'IBMPlexSans')),
         appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(
-            fontSize:25,
-            fontWeight:FontWeight.bold,
-            fontFamily: 'OpenSans'
-          ),
+          titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: 'OpenSans'),
         ),
       ),
       home: const MyHomeApp(),
@@ -66,7 +52,8 @@ class MyHomeAppState extends State<MyHomeApp> {
 
     Navigator.of(context).pop();
   }
-    /**
+
+  /**
      * Colocando  função  showModalBottomSheet() dentro de uma função da classe MyHomeAppState() eu a torno a visével em toda a classe, sendo que todos os botões apontaram para o mesmo lugar. Ou seja  'openTransactionFormModal()'
      */
   openTransactionFormModal(BuildContext context) {
@@ -77,6 +64,12 @@ class MyHomeAppState extends State<MyHomeApp> {
         });
   }
 
+  List<Transaction> get recentTransaction {
+    return listaTransaction.where((trs) {
+      return trs.date.isAfter(DateTime.now().subtract(const Duration(days:7)));
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +78,7 @@ class MyHomeAppState extends State<MyHomeApp> {
         actions: [
           IconButton(
               onPressed: () {
-                openTransactionFormModal(context); 
+                openTransactionFormModal(context);
               },
               icon: const Icon(Icons.add))
         ],
@@ -94,11 +87,7 @@ class MyHomeAppState extends State<MyHomeApp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(
-              elevation: 5,
-              color: Colors.blue,
-              child: Text('Gráfico'),
-            ),
+           Chart(listaTransaction: recentTransaction,),
             TransactionList(listaTransaction: listaTransaction), // comunicação direta
           ],
         ),
