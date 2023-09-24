@@ -32,7 +32,7 @@ class ChartBar extends StatelessWidget {
                 )
               ),
               FractionallySizedBox(
-                heightFactor: (percentage.isNaN) ? 0.0 : percentage, // isNaN não é um numero ?
+                heightFactor: (percentage.isNaN) ? 0 : percentage, // isNaN não é um numero ?
                 child: Container(
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primary,
