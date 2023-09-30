@@ -29,30 +29,38 @@ class TransactionFormState extends State<TransactionForm> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 5,
-      child: Column(
-        children: [
-          TextField(
-            controller: title,
-            onSubmitted: (_) => submitte(),
-            decoration: const InputDecoration(labelText: 'Títle'),
-          ),
-          TextField(
-            controller: value,
-            onSubmitted: (_) => submitte(),
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            decoration: const InputDecoration(labelText: 'valor (R\$)'),
-          ),
-          Row(
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  submitte();
-                },
-                child: const Text('Nova Transação'),
-              ),
-            ],
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            TextField(
+              controller: title,
+              onSubmitted: (_) => submitte(),
+              decoration: const InputDecoration(labelText: 'Títle'),
+            ),
+            TextField(
+              controller: value,
+              onSubmitted: (_) => submitte(),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              decoration: const InputDecoration(labelText: 'valor (R\$)'),
+            ),
+            Row(
+              mainAxisAlignment:MainAxisAlignment.end,
+              children: 
+              [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:Colors.purple,
+                  ),
+                  onPressed: () {
+                    submitte();
+                  },
+                  child: const Text('Nova Transação'),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
