@@ -13,7 +13,24 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(),
+      theme: ThemeData().copyWith(
+        colorScheme:ThemeData().colorScheme.copyWith(
+          primary: Colors.purple,
+          secondary:Colors.amberAccent,
+        ),
+        textTheme:ThemeData().textTheme.copyWith(
+          titleLarge: const TextStyle(
+            fontSize:16,
+            fontWeight:FontWeight.bold,
+          ),
+        ),
+        appBarTheme:const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize:25,
+            fontWeight:FontWeight.bold,
+          ),
+        ),
+      ),
       home: const MyHomePage(),
     );
   }
@@ -37,6 +54,16 @@ class MyHomePageState extends State<MyHomePage> {
     setState(() {
       listaTransaction.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
+  }
+
+  openTransactionForm(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransactionForm(onSubmitted: addTransaction); // comunicação indireta
+        });
   }
 
   @override
@@ -46,7 +73,9 @@ class MyHomePageState extends State<MyHomePage> {
         title: const Text('Despesas Pessoais'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              openTransactionForm(context);
+            },
             icon: const Icon(Icons.add),
           ),
         ],
@@ -59,14 +88,16 @@ class MyHomePageState extends State<MyHomePage> {
             color: Colors.blue,
             child: Text('Gráfico'),
           ),
-          TransactionForm(onSubmitted: addTransaction), // comunicação indireta
+
           TransactionList(
             listaTransaction: listaTransaction,
           ), // comunicação direta
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          openTransactionForm(context);
+        },
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
