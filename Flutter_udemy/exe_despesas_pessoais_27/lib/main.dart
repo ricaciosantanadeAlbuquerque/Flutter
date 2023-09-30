@@ -33,7 +33,15 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Despesas Pessoais')),
+        appBar: AppBar(
+          title: const Text('Despesas Pessoais'),
+          actions:[
+            IconButton(
+              onPressed:(){},
+              icon:const Icon(Icons.add),
+            ),
+          ]
+          ,),
         body: Column(
           crossAxisAlignment:CrossAxisAlignment.stretch,
           children: [
@@ -43,7 +51,12 @@ class MyHomePageState extends State<MyHomePage> {
           ),
           TransactionList(
             listaTransaction: listaTransaction,
-          ) // comunicação direta
-        ]));
+          ), // comunicação direta
+        ],
+        ),
+        floatingActionButton:FloatingActionButton(onPressed:(){},child:const Icon(Icons.add)
+        ,),
+        floatingActionButtonLocation:FloatingActionButtonLocation.centerFloat,
+        );
   }
 }
