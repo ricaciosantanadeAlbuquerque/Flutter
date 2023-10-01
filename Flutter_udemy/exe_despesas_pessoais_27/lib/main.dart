@@ -1,8 +1,6 @@
 import 'dart:math';
-
 import 'package:exe_despesas_pessoais_27/components/transaction_form.dart';
 import 'package:flutter/material.dart';
-
 import 'components/transaction_list.dart';
 import 'models/transaction.dart';
 
@@ -22,12 +20,20 @@ class ExpensesApp extends StatelessWidget {
           titleLarge: const TextStyle(
             fontSize:16,
             fontWeight:FontWeight.bold,
+            color:Colors.black,
+            fontFamily: 'OpenSans'
+          ),
+          labelLarge: const TextStyle(
+            fontSize:16,
+            fontWeight:FontWeight.bold,
+            color: Colors.white,
           ),
         ),
         appBarTheme:const AppBarTheme(
           titleTextStyle: TextStyle(
             fontSize:25,
             fontWeight:FontWeight.bold,
+            fontFamily: 'Quicksand'
           ),
         ),
       ),
@@ -44,8 +50,8 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final List<Transaction> listaTransaction = [
-    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 211.30, date: DateTime.now()),
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.33, date: DateTime.now())
+   // Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 211.30, date: DateTime.now()),
+    //Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.33, date: DateTime.now())
   ];
 
   addTransaction(String title, double value) {
