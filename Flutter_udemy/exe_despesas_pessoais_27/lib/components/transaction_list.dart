@@ -8,8 +8,8 @@ class TransactionList extends StatelessWidget {
   const TransactionList({super.key, required this.listaTransaction});
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        height: 380,
+    return Container(
+        height: 590,
         child: listaTransaction.isEmpty? Column(
           children:[
             const SizedBox(height:15),
@@ -30,39 +30,26 @@ class TransactionList extends StatelessWidget {
             itemBuilder: (_, index) {
               final trs = listaTransaction[index];
               return Card(
-                  child: Row(children: [
-                Container(
-                  margin:const EdgeInsets.symmetric(
-                    vertical:10,
-                    horizontal:15,
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  decoration:BoxDecoration(
-                    border:Border.all(
-                      width:2,
-                      color:Theme.of(context).colorScheme.primary,
+                elevation: 6,
+                margin: const EdgeInsets.all(6),
+                  child: ListTile(
+                    leading:CircleAvatar(
+                      radius:30,
+                      backgroundColor:Theme.of(context).colorScheme.primary,
+                      child: Padding(
+                        padding: const EdgeInsets.all(6),
+                        child: FittedBox(
+                          child: Text('R\$ ${trs.value.toStringAsFixed(2)}',
+                          ),
+                          ),
+                      ),
                     ),
+                    title: Text(trs.title,
+                  style: Theme.of(context).textTheme.titleLarge,
                   ),
-                  child: Text('R\$ ${trs.value.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    fontSize:20,
-                    color:Theme.of(context).colorScheme.primary,
-                    fontWeight:FontWeight.bold,
+                  subtitle: Text(DateFormat('d MMM y').format(trs.date)),
                   ),
-                  ),
-                ),
-                Column(
-                  crossAxisAlignment:CrossAxisAlignment.start,
-                  children: [
-                  Text(trs.title,
-                  style: Theme.of(context).textTheme.titleLarge
-                  ,),
-                  Text(DateFormat('d MMM y').format(trs.date)),
-                ],
-                ),
-              ]
-              ,)
-              ,);
+              );
             },
             ),);
   }
