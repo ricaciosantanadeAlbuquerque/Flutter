@@ -23,30 +23,35 @@ class Chart extends StatelessWidget {
         }
       }
 
-      return {'day':DateFormat.E().format(weekDay)[0]  ,'value': totlasum};
+      return {'day': DateFormat.E().format(weekDay)[0], 'value': totlasum};
+    });
+  }
+
+  double get weekTotleValue {
+    return groupedTransaction.fold(0.0, (cont, map) {
+      return cont += (map['value'] as double);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return  Card(
+    return Card(
         elevation: 6,
-        margin:const EdgeInsets.all(20),
+        margin: const EdgeInsets.all(20),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
-            mainAxisAlignment:MainAxisAlignment.spaceAround,
-            children: groupedTransaction.map((map){
-              return  Flexible(
-                fit:FlexFit.tight,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: groupedTransaction.map((map) {
+              return Flexible(
+                fit: FlexFit.tight,
                 child: ChartBar(
                   label: map['day'] as String,
-                   value: map['value'] as double,
-                    percentage: 0.5,),
-                    );
-            }).toList()
-              
-            ,
+                  value: map['value'] as double,
+                  percentage: (map['value'] as double) / weekTotleValue,
+                ),
+              );
+            }).toList(),
           ),
         ));
   }
