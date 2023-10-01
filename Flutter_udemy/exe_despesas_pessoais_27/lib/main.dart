@@ -42,8 +42,8 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final List<Transaction> listaTransaction = [
-    // Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 211.30, date: DateTime.now()),
-    //Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.33, date: DateTime.now())
+     Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 211.30, date: DateTime.now().subtract(const Duration(days: 22))),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.33, date: DateTime.now().subtract(const Duration(days:3)))
   ];
 
   addTransaction(String title, double value) {
@@ -88,15 +88,17 @@ class MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Chart(listaTransaction: recentTransaction),
-
-          TransactionList(
-            listaTransaction: listaTransaction,
-          ), // comunicação direta
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Chart(listaTransaction: recentTransaction),
+      
+            TransactionList(
+              listaTransaction: listaTransaction,
+            ), // comunicação direta
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
