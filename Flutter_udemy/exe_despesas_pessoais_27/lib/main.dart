@@ -20,7 +20,7 @@ class ExpensesApp extends StatelessWidget {
         textTheme: ThemeData().textTheme.copyWith(
               titleLarge: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black, fontFamily: 'OpenSans'),
               labelLarge: const TextStyle(
-                fontSize: 20,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),

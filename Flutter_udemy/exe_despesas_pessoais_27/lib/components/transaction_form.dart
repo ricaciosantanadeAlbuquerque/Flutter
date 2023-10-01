@@ -44,22 +44,31 @@ class TransactionFormState extends State<TransactionForm> {
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(labelText: 'valor (R\$)'),
             ),
+            Container(
+              height:70,
+              child: Row(children: [
+                Text('Nenhuma Data selecionada !',
+                style: Theme.of(context).textTheme.titleLarge,),
+                TextButton(onPressed: (){},child:  Text('Selecionar Data',
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary
+                ),),)
+              ],),
+            ),
             Row(
               mainAxisAlignment:MainAxisAlignment.end,
               children: 
               [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:Colors.purple,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                   ),
                   onPressed: () {
                     submitte();
                   },
-                  child: const Text('Nova Transação',
-                  style: TextStyle(
-                    color: Colors.white
-                  )
-                  ,),
+                  child: Text('Nova Transação',
+                  style: Theme.of(context).textTheme.labelLarge
+                  ),
                 ),
               ],
             ),
