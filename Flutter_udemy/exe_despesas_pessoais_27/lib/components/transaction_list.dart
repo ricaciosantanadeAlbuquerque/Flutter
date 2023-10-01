@@ -13,7 +13,7 @@ class TransactionList extends StatelessWidget {
         child: listaTransaction.isEmpty? Column(
           children:[
             const SizedBox(height:15),
-            Text('Nenhuma transação Cadastrada',
+            Text('Nenhuma Transação Cadastrada!',
             style:Theme.of(context).textTheme.titleLarge
             ),
             const SizedBox(height:15),

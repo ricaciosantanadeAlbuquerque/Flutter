@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:exe_despesas_pessoais_27/components/chart.dart';
 import 'package:exe_despesas_pessoais_27/components/transaction_form.dart';
 import 'package:flutter/material.dart';
 import 'components/transaction_list.dart';
@@ -12,29 +13,20 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData().copyWith(
-        colorScheme:ThemeData().colorScheme.copyWith(
-          primary: Colors.purple,
-          secondary:Colors.amberAccent,
-        ),
-        textTheme:ThemeData().textTheme.copyWith(
-          titleLarge: const TextStyle(
-            fontSize:16,
-            fontWeight:FontWeight.bold,
-            color:Colors.black,
-            fontFamily: 'OpenSans'
-          ),
-          labelLarge: const TextStyle(
-            fontSize:16,
-            fontWeight:FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        appBarTheme:const AppBarTheme(
-          titleTextStyle: TextStyle(
-            fontSize:25,
-            fontWeight:FontWeight.bold,
-            fontFamily: 'Quicksand'
-          ),
+        colorScheme: ThemeData().colorScheme.copyWith(
+              primary: Colors.purple,
+              secondary: Colors.amberAccent,
+            ),
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black, fontFamily: 'OpenSans'),
+              labelLarge: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: 'Quicksand'),
         ),
       ),
       home: const MyHomePage(),
@@ -50,7 +42,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final List<Transaction> listaTransaction = [
-   // Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 211.30, date: DateTime.now()),
+    // Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 211.30, date: DateTime.now()),
     //Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.33, date: DateTime.now())
   ];
 
@@ -72,6 +64,16 @@ class MyHomePageState extends State<MyHomePage> {
         });
   }
 
+  List<Transaction> get recentTransaction {
+    return listaTransaction.where((trs) {
+      return trs.date.isAfter(
+        DateTime.now().subtract(
+          const Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,11 +91,7 @@ class MyHomePageState extends State<MyHomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Card(
-            elevation: 5,
-            color: Colors.blue,
-            child: Text('Gráfico'),
-          ),
+          Chart(listaTransaction: recentTransaction),
 
           TransactionList(
             listaTransaction: listaTransaction,
