@@ -20,7 +20,7 @@ class Chart extends StatelessWidget {
         bool sameYear = listaTransaction[i].date.year == weekDay.year;
 
         if (sameDay && sameMonth && sameYear) {
-          totlaSum += listaTransaction[index].value;
+          totlaSum += listaTransaction[i].value;
         }
       }
       return {'day': DateFormat.E().format(weekDay)[0], 'value': totlaSum};
@@ -29,7 +29,7 @@ class Chart extends StatelessWidget {
 
   get weekTotleSum {
     return groupedTransaction.fold(0.0, (ct, map) {
-      return ct += (map['value'] as double);
+      return ct + (map['value'] as double);
     });
   }
 
@@ -37,7 +37,7 @@ class Chart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(12),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(

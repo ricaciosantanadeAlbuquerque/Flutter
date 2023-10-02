@@ -26,38 +26,25 @@ class TransactionList extends StatelessWidget {
           itemBuilder: (_, index) {
             final trs = listaTransaction[index];
             return Card(
-              child: Row(
-                children: [
-                  Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 2,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                    child: Text(
-                      'R\$ ${trs.value.toStringAsFixed(2)}',
-                      style:  TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                        
-                      ),
+              elevation:5,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius:30,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    child: Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: FittedBox(
+                        child: Text('R\$ ${trs.value.toStringAsFixed(2)}'),
+                        ),
                     ),
                   ),
-                  Column(
-                    crossAxisAlignment:CrossAxisAlignment.start,
-                    children: [
-                    Text(trs.title,
-                    style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    Text(DateFormat('d MMM y').format(trs.date),
-                    style:const TextStyle(color:Colors.grey)
-                    ),
-                  ]),
-                ],
+                  title: Text(trs.title,
+                  style: Theme.of(context).textTheme.titleLarge),
+                  subtitle: Text(DateFormat('d MMM y').format(trs.date),
+                  ),
+                ),
               ),
             );
           }),
