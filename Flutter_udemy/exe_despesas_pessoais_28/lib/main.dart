@@ -45,6 +45,18 @@ class HyHomeAppState extends State<MyHomeApp> {
     setState(() {
       listaTransaction.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
+  }
+
+  openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransactionForm(
+            onSubmitted: addTransaction,
+          ); // comunicação indireta
+        });
   }
 
   @override
@@ -52,9 +64,16 @@ class HyHomeAppState extends State<MyHomeApp> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Despesas Pessoais'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              openTransactionFormModal(context);
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
-        
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -63,15 +82,20 @@ class HyHomeAppState extends State<MyHomeApp> {
               elevation: 5,
               child: Text('Gráfico'),
             ),
-            TransactionForm(
-              onSubmitted: addTransaction,
-            ), // comunicação indireta
+
             TransactionList(
               listaTransaction: listaTransaction,
             ), // comunicação direta.
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          openTransactionFormModal(context);
+        },
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
