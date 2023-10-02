@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+import 'components/chart.dart';
 import 'components/transaction.form.dart';
 import 'components/transaction_lits.dart';
 import 'models/transaction.dart';
@@ -14,28 +15,19 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        colorScheme: ThemeData().colorScheme.copyWith(
-          primary: Colors.deepPurple,
-          secondary:Colors.amberAccent,
-        ),
-        textTheme: ThemeData().textTheme.copyWith(
-          titleLarge: const TextStyle(
-            fontSize: 20,
-            fontWeight:FontWeight.bold,
-            color: Colors.black,
-            fontFamily:'IBMPlexSans'
+        theme: ThemeData(
+          colorScheme: ThemeData().colorScheme.copyWith(
+                primary: Colors.deepPurple,
+                secondary: Colors.amberAccent,
+              ),
+          textTheme: ThemeData().textTheme.copyWith(
+                titleLarge: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black, fontFamily: 'IBMPlexSans'),
+              ),
+          appBarTheme: const AppBarTheme(
+            titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: 'OpenSans'),
           ),
         ),
-        appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(
-            fontSize:25,
-            fontWeight:FontWeight.bold,
-            fontFamily: 'OpenSans'
-          ),
-        ),
-      ),
-       home: const MyHomeApp());
+        home: const MyHomeApp());
   }
 }
 
@@ -47,7 +39,7 @@ class MyHomeApp extends StatefulWidget {
 
 class HyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listaTransaction = [
-   /**
+    /**
     *  Transaction(
       id: Random().nextDouble().toString(),
       title: 'Novo Tênis de corrida',
@@ -83,6 +75,12 @@ class HyHomeAppState extends State<MyHomeApp> {
         });
   }
 
+  List<Transaction> get recentTransaction {
+    return listaTransaction.where((trs) {
+      return trs.date.isAfter(DateTime.now().subtract(const Duration(days:7)));
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -101,12 +99,7 @@ class HyHomeAppState extends State<MyHomeApp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const Card(
-              color: Colors.blue,
-              elevation: 5,
-              child: Text('Gráfico'),
-            ),
-
+            Chart(listaTransaction: recentTransaction,),
             TransactionList(
               listaTransaction: listaTransaction,
             ), // comunicação direta.
