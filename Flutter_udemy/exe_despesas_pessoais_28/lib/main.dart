@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'components/chart.dart';
-import 'components/transaction.form.dart';
+import 'components/transaction_form.dart';
 import 'components/transaction_lits.dart';
 import 'models/transaction.dart';
 
@@ -41,20 +41,19 @@ class HyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listaTransaction = [
     
     
-   /**
-    *      Transaction(
+      Transaction(
       id: Random().nextDouble().toString(),
       title: 'Novo Tênis de corrida',
       value: 310.10,
       date: DateTime.now(),
     ),
-    */
+    
    
     
   ];
 
   addTransaction(String title, double value) {
-    
+
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
 
     setState(() {
