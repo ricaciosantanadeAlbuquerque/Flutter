@@ -9,7 +9,19 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 520,
-      child: ListView.builder(
+      child: listaTransaction.isEmpty? Column(
+        children:[
+         const SizedBox(height:15),
+          Text('Nenhuma transação Cadastrada !',
+          style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height:15),
+          SizedBox(
+            height:250,
+            child: Image.asset('assets/image/waiting.png',
+            fit: BoxFit.cover,),
+          ),
+        ],
+      )  :ListView.builder(
           itemCount: listaTransaction.length,
           itemBuilder: (_, index) {
             final trs = listaTransaction[index];
@@ -22,15 +34,15 @@ class TransactionList extends StatelessWidget {
                     decoration: BoxDecoration(
                       border: Border.all(
                         width: 2,
-                        color: Colors.purple,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     child: Text(
                       'R\$ ${trs.value.toStringAsFixed(2)}',
-                      style: const TextStyle(
+                      style:  TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color:Colors.purple,
+                        color: Theme.of(context).colorScheme.primary,
                         
                       ),
                     ),
@@ -39,10 +51,7 @@ class TransactionList extends StatelessWidget {
                     crossAxisAlignment:CrossAxisAlignment.start,
                     children: [
                     Text(trs.title,
-                    style: const TextStyle(
-                      fontSize:16,
-                      fontWeight:FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge,
                     ),
                     Text(DateFormat('d MMM y').format(trs.date),
                     style:const TextStyle(color:Colors.grey)

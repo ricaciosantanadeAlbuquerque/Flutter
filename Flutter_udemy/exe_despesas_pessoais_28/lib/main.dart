@@ -13,7 +13,29 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: ThemeData(), home: const MyHomeApp());
+    return MaterialApp(
+      theme: ThemeData(
+        colorScheme: ThemeData().colorScheme.copyWith(
+          primary: Colors.deepPurple,
+          secondary:Colors.amberAccent,
+        ),
+        textTheme: ThemeData().textTheme.copyWith(
+          titleLarge: const TextStyle(
+            fontSize: 20,
+            fontWeight:FontWeight.bold,
+            color: Colors.black,
+            fontFamily:'IBMPlexSans'
+          ),
+        ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize:25,
+            fontWeight:FontWeight.bold,
+            fontFamily: 'OpenSans'
+          ),
+        ),
+      ),
+       home: const MyHomeApp());
   }
 }
 
@@ -25,7 +47,8 @@ class MyHomeApp extends StatefulWidget {
 
 class HyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listaTransaction = [
-    Transaction(
+   /**
+    *  Transaction(
       id: Random().nextDouble().toString(),
       title: 'Novo Tênis de corrida',
       value: 310.10,
@@ -37,6 +60,7 @@ class HyHomeAppState extends State<MyHomeApp> {
       value: 310.10,
       date: DateTime.now(),
     )
+    */
   ];
 
   addTransaction(String title, double value) {
