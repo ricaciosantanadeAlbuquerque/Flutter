@@ -12,7 +12,24 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 380,
-      child: ListView.builder(
+      child: listaTransaction.isEmpty? Column(
+        children: [
+          const SizedBox(
+            height:10
+          ),
+           Text('Nenhuma Transação Cadastrada !',
+          style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(
+            height:10,
+          ),
+          Container(
+            height: 280,
+            child: Image.asset('assets/image/waiting.png',
+            fit: BoxFit.cover,
+            ),
+          ),
+        ],
+      ) :ListView.builder(
         itemCount: listaTransaction.length,
         itemBuilder:(_,index){
           final trs = listaTransaction[index];
@@ -28,12 +45,12 @@ class TransactionList extends StatelessWidget {
                   decoration:BoxDecoration(
                     border: Border.all(
                       width:2,
-                      color:Colors.purple,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
                   child: Text('R\$ ${trs.value.toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    color: Colors.purple,
+                  style:  TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
                     fontWeight:FontWeight.bold,
                     fontSize:20,
                   ),
@@ -43,14 +60,15 @@ class TransactionList extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(trs.title,
+                    style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                    Text(DateFormat('d MMM y').format(trs.date),
                     style: const TextStyle(
-                     fontSize:16,
-                     fontWeight:FontWeight.bold,
+                      color: Colors.grey,
                     ),
                     ),
-                    Text(DateFormat('d MMM y').format(trs.date),),
                   ],
-                )
+                ),
               ],
             ),
           );
