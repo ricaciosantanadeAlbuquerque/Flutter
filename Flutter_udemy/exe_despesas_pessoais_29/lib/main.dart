@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'components/chart.dart';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 import 'models/transaction.dart';
@@ -14,22 +15,18 @@ class ExpensesApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         colorScheme: ThemeData().colorScheme.copyWith(
-          primary: Colors.purple,
-          secondary:Colors.amberAccent,
-        ),
+              primary: Colors.purple,
+              secondary: Colors.amberAccent,
+            ),
         textTheme: const TextTheme(
           titleLarge: TextStyle(
-            fontSize:16,
-            fontWeight:FontWeight.bold,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
             fontFamily: 'OpenSans',
           ),
         ),
-        appBarTheme:const AppBarTheme(
-          titleTextStyle: TextStyle(
-            fontSize:25,
-            fontWeight:FontWeight.bold,
-            fontFamily: 'Quicksand'
-          ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: 'Quicksand'),
         ),
       ),
       home: const MyHomeApp(),
@@ -45,9 +42,10 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class MyHomeAppState extends State<MyHomeApp> {
+  
   final List<Transaction> listaTransaction = [
-   // Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
-    //Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.10, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.10, date: DateTime.now()),
   ];
 
   addTransaction(String title, double value) {
@@ -68,6 +66,16 @@ class MyHomeAppState extends State<MyHomeApp> {
         });
   }
 
+  List<Transaction> get recentTransaction {
+    return listaTransaction.where((trs) {
+      return trs.date.isAfter(
+        DateTime.now().subtract(
+          const Duration(days:7),
+        ),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,10 +91,8 @@ class MyHomeAppState extends State<MyHomeApp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(
-              elevation: 5,
-              color: Colors.blue,
-              child: Text('Gráfico'),
+            Chart(
+              listaTransaction: recentTransaction,
             ),
             TransactionList(listaTransaction: listaTransaction), // comunicação direta
           ],
