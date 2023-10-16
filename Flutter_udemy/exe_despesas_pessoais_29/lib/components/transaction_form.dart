@@ -62,7 +62,7 @@ class TransactionFormState extends State<TransactionForm> {
               height: 70,
               child: Row(
                 children: [
-                   Expanded(child: Text(_selectedDate == null ? 'Nenhuma data selecionada!' : 'Data selecionada: ${DateFormat('d/M/y').format(_selectedDate)}')),
+                   Expanded(child: Text('Data selecionada: ${DateFormat('d/M/y').format(_selectedDate)}')),
                   TextButton(onPressed: _showDatePicker, child: const Text('Selecionar Data')),
                 ],
               ),
