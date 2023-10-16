@@ -45,15 +45,14 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class MyHomeAppState extends State<MyHomeApp> {
-
   final List<Transaction> listaTransaction = [
-
-    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.10, date: DateTime.now()),
+   // Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
+   // Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.10, date: DateTime.now()),
+     
   ];
 
-  addTransaction(String title, double value) {
-    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
+  addTransaction(String title, double value, DateTime date) {
+    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
 
     setState(() {
       listaTransaction.add(newTransaction);
@@ -74,10 +73,18 @@ class MyHomeAppState extends State<MyHomeApp> {
     return listaTransaction.where((trs) {
       return trs.date.isAfter(
         DateTime.now().subtract(
-          const Duration(days:7),
+          const Duration(days: 7),
         ),
       );
     }).toList();
+  }
+
+  void removeTrasaction(String id) {
+    setState(() {
+      listaTransaction.removeWhere((trs) {
+        return trs.id == id;
+      });
+    });
   }
 
   @override
@@ -98,7 +105,7 @@ class MyHomeAppState extends State<MyHomeApp> {
             Chart(
               listaTransaction: recentTransaction,
             ),
-            TransactionList(listaTransaction: listaTransaction), // comunicação direta
+            TransactionList(listaTransaction: listaTransaction, onRemove:removeTrasaction), // comunicação direta // comunicação indireta
           ],
         ),
       ),
