@@ -32,34 +32,57 @@ class MyHomeAppState extends State<MyHomeApp> {
   ];
 
   _addTransaction(String title, double value) {
-
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
 
     setState(() {
       _listaTransaction.add(newTransaction);
     });
+
+    Navigator.of(context).pop(); // Widget herdado
+  }
+
+  _openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          // comunicação indireta
+          return TransactionForm(
+            onSubmitted: _addTransaction,
+          );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Despesas Pessoais'),
+      appBar: AppBar(
+        title: const Text('Despesas Pessoais'),
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                _openTransactionFormModal(context);
+              }),
+        ],
+      ),
+      body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        const Card(
+          elevation: 5,
+          color: Colors.blue,
+          child: Text('Gráfico'),
         ),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          const Card(
-            elevation: 5,
-            color: Colors.blue,
-            child: Text('Gráfico'),
-          ),
-         
-          TransactionForm(
-            onSubmitted: _addTransaction,
-          ),
-           TransactionList(
-            listTransaction: _listaTransaction,
-          ),
-        ]),
-        );
+        TransactionList(
+          // comunicação direta
+          listTransaction: _listaTransaction,
+        ),
+      ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _openTransactionFormModal(context);
+        },
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
   }
 }
