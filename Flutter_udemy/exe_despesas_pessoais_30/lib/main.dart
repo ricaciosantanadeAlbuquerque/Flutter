@@ -22,6 +22,7 @@ class ExpensesApp extends StatelessWidget {
             fontWeight:FontWeight.bold,
             fontSize:16,
             fontFamily: 'OpenSans',
+            color:Colors.black,
 
           ),
         ),
@@ -47,8 +48,8 @@ class MyHomeApp extends StatefulWidget {
 
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> _listaTransaction = [
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
-    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
+   // Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
+    //Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
   ];
 
   _addTransaction(String title, double value) {
