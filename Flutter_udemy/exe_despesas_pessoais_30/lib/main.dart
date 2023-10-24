@@ -21,6 +21,7 @@ class ExpensesApp extends StatelessWidget {
           titleLarge: const TextStyle(
             fontWeight:FontWeight.bold,
             fontSize:16,
+            fontFamily: 'OpenSans',
 
           ),
         ),
@@ -28,6 +29,7 @@ class ExpensesApp extends StatelessWidget {
         titleTextStyle: TextStyle(
           fontSize:25,
           fontWeight:FontWeight.bold,
+          fontFamily: 'Quicksand',
         ),
       ),
       ),
