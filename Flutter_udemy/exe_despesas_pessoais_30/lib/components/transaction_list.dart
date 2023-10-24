@@ -15,12 +15,12 @@ class TransactionList extends StatelessWidget {
         Column(
           children:[
             const SizedBox(
-                height: 10,
+                height: 15,
               ),
             Text('Nenhuma Transação Cadastrada !',
             style:Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(height: 15,),
             SizedBox(
               height:280,
               child: Image.asset('assets/image/waiting.png',
