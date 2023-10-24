@@ -12,7 +12,25 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData().copyWith(),
+      theme: ThemeData().copyWith(
+        colorScheme: ThemeData().colorScheme.copyWith(
+         primary: Colors.purple,
+         secondary:Colors.amberAccent,
+        ),
+        textTheme:ThemeData().textTheme.copyWith(
+          titleLarge: const TextStyle(
+            fontWeight:FontWeight.bold,
+            fontSize:16,
+
+          ),
+        ),
+      appBarTheme:const AppBarTheme(
+        titleTextStyle: TextStyle(
+          fontSize:25,
+          fontWeight:FontWeight.bold,
+        ),
+      ),
+      ),
       home: const MyHomeApp(),
     );
   }
@@ -65,17 +83,19 @@ class MyHomeAppState extends State<MyHomeApp> {
               }),
         ],
       ),
-      body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        const Card(
-          elevation: 5,
-          color: Colors.blue,
-          child: Text('Gráfico'),
-        ),
-        TransactionList(
-          // comunicação direta
-          listTransaction: _listaTransaction,
-        ),
-      ]),
+      body: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          const Card(
+            elevation: 5,
+            color: Colors.blue,
+            child: Text('Gráfico'),
+          ),
+          TransactionList(
+            // comunicação direta
+            listTransaction: _listaTransaction,
+          ),
+        ]),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _openTransactionFormModal(context);
