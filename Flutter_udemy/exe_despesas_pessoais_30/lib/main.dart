@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:exe_despesas_pessoais_30/models/transaction.dart';
 import 'package:flutter/material.dart';
+import 'components/chart.dart';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 
@@ -14,25 +15,24 @@ class ExpensesApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData().copyWith(
         colorScheme: ThemeData().colorScheme.copyWith(
-         primary: Colors.purple,
-         secondary:Colors.amberAccent,
-        ),
-        textTheme:ThemeData().textTheme.copyWith(
-          titleLarge: const TextStyle(
-            fontWeight:FontWeight.bold,
-            fontSize:16,
-            fontFamily: 'OpenSans',
-            color:Colors.black,
-
+              primary: Colors.purple,
+              secondary: Colors.amberAccent,
+            ),
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                fontFamily: 'OpenSans',
+                color: Colors.black,
+              ),
+            ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Quicksand',
           ),
         ),
-      appBarTheme:const AppBarTheme(
-        titleTextStyle: TextStyle(
-          fontSize:25,
-          fontWeight:FontWeight.bold,
-          fontFamily: 'Quicksand',
-        ),
-      ),
       ),
       home: const MyHomeApp(),
     );
@@ -48,8 +48,9 @@ class MyHomeApp extends StatefulWidget {
 
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> _listaTransaction = [
-   // Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
-    //Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 450.3, date: DateTime.now().subtract(const Duration(days: 44))),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
   ];
 
   _addTransaction(String title, double value) {
@@ -73,6 +74,12 @@ class MyHomeAppState extends State<MyHomeApp> {
         });
   }
 
+  List<Transaction> get _recentTransaction {
+    return _listaTransaction.where((trs) {
+      return trs.date.isAfter(DateTime.now().subtract(const Duration(days: 7),),);
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,11 +95,7 @@ class MyHomeAppState extends State<MyHomeApp> {
       ),
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          const Card(
-            elevation: 5,
-            color: Colors.blue,
-            child: Text('Gráfico'),
-          ),
+          Chart(listaTransaction: _recentTransaction),
           TransactionList(
             // comunicação direta
             listTransaction: _listaTransaction,
