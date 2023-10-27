@@ -48,7 +48,7 @@ class MyHomeApp extends StatefulWidget {
 
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> _listaTransaction = [
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 450.3, date: DateTime.now().subtract(const Duration(days: 44))),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 450.3, date: DateTime.now().subtract(const Duration(days: 4))),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
   ];
