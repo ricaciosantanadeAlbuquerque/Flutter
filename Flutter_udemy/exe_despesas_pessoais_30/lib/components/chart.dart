@@ -48,10 +48,13 @@ class Chart extends StatelessWidget {
         children: groupedTransaction.map((map) {
           return Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ChartBart(label: map['day'] as String,
-             value: (map['value'] as double),
-              perncentage: (map['value'] as double) / weektotlaSum
-              ),
+            child: Flexible(
+               fit: FlexFit.tight,
+              child: ChartBart(label: map['day'] as String,
+               value: (map['value'] as double),
+                perncentage: (map['value'] as double) / weektotlaSum
+                ),
+            ),
           );
         }).toList(),
       ),
