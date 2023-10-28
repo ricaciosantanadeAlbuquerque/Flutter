@@ -12,7 +12,7 @@ class ChartBart extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: 17,
+          height: 20,
           child: FittedBox(
             child: Text(value.toStringAsFixed(2),
           ),

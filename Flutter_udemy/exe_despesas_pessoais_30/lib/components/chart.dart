@@ -28,7 +28,7 @@ class Chart extends StatelessWidget {
 
         return {'day': DateFormat.E().format(weekDay)[0], 'value': totalSum};
       },
-    );
+    ).reversed.toList();
   }
 
   double get weektotlaSum {
@@ -43,20 +43,17 @@ class Chart extends StatelessWidget {
     return Card(
       elevation: 6,
       margin: const EdgeInsets.all(20),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: groupedTransaction.map((map) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Flexible(
-               fit: FlexFit.tight,
-              child: ChartBart(label: map['day'] as String,
-               value: (map['value'] as double),
-                perncentage: (map['value'] as double) / weektotlaSum
-                ),
-            ),
-          );
-        }).toList(),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: groupedTransaction.map((map) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBart(label: map['day'] as String, value: (map['value'] as double), perncentage: (map['value'] as double) / weektotlaSum),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
