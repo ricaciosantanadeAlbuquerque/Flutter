@@ -31,7 +31,7 @@ class Chart extends StatelessWidget {
     ).reversed.toList();
   }
 
-  double get weektotlaSum {
+  double get weektotlaValue {
     return groupedTransaction.fold(0.0, (ct, map) {
       return ct += map['value'] as double;
     });
@@ -50,7 +50,7 @@ class Chart extends StatelessWidget {
           children: groupedTransaction.map((map) {
             return Flexible(
               fit: FlexFit.tight,
-              child: ChartBart(label: map['day'] as String, value: (map['value'] as double), perncentage: (map['value'] as double) / weektotlaSum),
+              child: ChartBart(label: map['day'] as String, value: (map['value'] as double), perncentage: (weektotlaValue == 0) ? 0 : (map['value'] as double) / weektotlaValue),
             );
           }).toList(),
         ),

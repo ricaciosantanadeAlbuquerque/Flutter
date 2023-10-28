@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 class TransactionForm extends StatefulWidget {
   final void Function(String, double, DateTime) onSubmitted;
 
+
   const TransactionForm({super.key, required this.onSubmitted});
 
   @override
@@ -36,11 +37,9 @@ class TransactionFormState extends State<TransactionForm> {
       lastDate: DateTime.now(),
     ).then(((dateValue) {
       if (dateValue != null) {
-
-        setState((){
+        setState(() {
           _selectedDate = dateValue;
         });
-
       }
     }));
   }
@@ -65,7 +64,7 @@ class TransactionFormState extends State<TransactionForm> {
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: const InputDecoration(labelText: 'Valor (R\$)'),
           ),
-          Container(
+          SizedBox(
             height: 60,
             child: Row(children: [
               Expanded(child: Text('Data Selecionada ${DateFormat('dd MMM y').format(_selectedDate)}')),
