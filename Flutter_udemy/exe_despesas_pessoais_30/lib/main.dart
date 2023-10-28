@@ -53,8 +53,8 @@ class MyHomeAppState extends State<MyHomeApp> {
     Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
   ];
 
-  _addTransaction(String title, double value) {
-    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
+  _addTransaction(String title, double value, DateTime date) {
+    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
 
     setState(() {
       _listaTransaction.add(newTransaction);

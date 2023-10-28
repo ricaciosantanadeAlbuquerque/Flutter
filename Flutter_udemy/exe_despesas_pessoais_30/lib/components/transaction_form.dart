@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String, double) onSubmitted;
+  final void Function(String, double, DateTime) onSubmitted;
 
   const TransactionForm({super.key, required this.onSubmitted});
 
@@ -14,6 +15,7 @@ class TransactionForm extends StatefulWidget {
 class TransactionFormState extends State<TransactionForm> {
   final title = TextEditingController();
   final value = TextEditingController();
+  DateTime _selectedDate = DateTime.now();
 
   submite() {
     final titulo = title.text;
@@ -23,10 +25,25 @@ class TransactionFormState extends State<TransactionForm> {
       return;
     }
 
-    widget.onSubmitted(titulo, valor);
+    widget.onSubmitted(titulo, valor, _selectedDate);
   }
 
+  _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2023),
+      lastDate: DateTime.now(),
+    ).then(((dateValue) {
+      if (dateValue != null) {
 
+        setState((){
+          _selectedDate = dateValue;
+        });
+
+      }
+    }));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,27 +54,33 @@ class TransactionFormState extends State<TransactionForm> {
         child: Column(children: [
           TextField(
             controller: title,
-            onSubmitted:(_) => submite(),
+            onSubmitted: (_) => submite(),
             decoration: const InputDecoration(
               labelText: 'Título',
             ),
           ),
           TextField(
             controller: value,
-            onSubmitted:(_) => submite(),
-            keyboardType:const TextInputType.numberWithOptions(decimal:true),
+            onSubmitted: (_) => submite(),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: const InputDecoration(labelText: 'Valor (R\$)'),
+          ),
+          Container(
+            height: 60,
+            child: Row(children: [
+              Expanded(child: Text('Data Selecionada ${DateFormat('dd MMM y').format(_selectedDate)}')),
+              TextButton(
+                onPressed: _showDatePicker,
+                child: const Text('Selecionar Data'),
+              ),
+            ]),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              TextButton(
+              ElevatedButton(
                 onPressed: () => submite(),
-                child: const Text('Nova Transação',
-                style: TextStyle(
-                  color:Colors.purple,
-                ),
-                ),
+                child: const Text('Nova Transação'),
               ),
             ],
           ),
