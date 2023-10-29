@@ -14,29 +14,22 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData().copyWith(
-        colorScheme:ThemeData().colorScheme.copyWith(
-          primary:Colors.purple,
-          secondary:Colors.amberAccent,
-        ),
-        textTheme: const TextTheme(
-          titleLarge: TextStyle(
-             fontSize: 20,
-             fontFamily: 'BarlowCondensed',
-             fontWeight:FontWeight.bold,
-             color:Colors.black,
-          ),
-          labelLarge: TextStyle(
-            color:Colors.white,
-          ),
-        ),
-        appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(
-            fontWeight:FontWeight.bold,
-            fontSize:25,
-            fontFamily:'EBGaramond'
-          )
-        )
-      ),
+          colorScheme: ThemeData().colorScheme.copyWith(
+                primary: Colors.purple,
+                secondary: Colors.amberAccent,
+              ),
+          textTheme: ThemeData().textTheme.copyWith(
+                titleLarge: const TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'BarlowCondensed',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+                labelLarge: const TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+          appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, fontFamily: 'EBGaramond'))),
       home: const MyHomeApp(),
     );
   }
@@ -61,6 +54,25 @@ class MyHomeAppState extends State<MyHomeApp> {
       _listaTransaction.add(newTransaction);
     });
 
+    Navigator.of(context).pop();
+  }
+
+  _openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransactionForm(
+            onSubmitted: _addTransaction,
+          );
+        });
+  }
+
+  _deleteTransaction(String id) {
+    setState(() {
+      _listaTransaction.removeWhere((trs) {
+        return  trs.id == id;
+      });
+    });
   }
 
   @override
@@ -68,6 +80,12 @@ class MyHomeAppState extends State<MyHomeApp> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Despesas Pessoais'),
+        actions: [
+          IconButton(
+            onPressed: () => _openTransactionFormModal(context),
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -81,11 +99,18 @@ class MyHomeAppState extends State<MyHomeApp> {
             ),
             TransactionList(
               listTransaction: _listaTransaction,
+              onRemove: _deleteTransaction,
             ),
-            TransactionForm(onSubmitted: _addTransaction,),
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _openTransactionFormModal(context);
+        },
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

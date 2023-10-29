@@ -48,10 +48,16 @@ class TransactionFormState extends State<TransactionForm> {
             Container(
               height: 60,
               child: Row(children: [
-                const Expanded(child: Text('Data selecionada')),
+                Expanded(child: Text('Data selecionada',
+                style: Theme.of(context).textTheme.titleLarge),
+                ),
                 TextButton(
                   onPressed: () {},
-                  child: const Text('Selecionar Data'),
+                  child: Text('Selecionar Data',
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  ),
                 ),
               ]),
             ),
