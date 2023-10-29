@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:exe_despesas_pessoais_31/models/transaction.dart';
 import 'package:flutter/material.dart';
 
+import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 
 void main() => runApp(const ExpensesApp());
@@ -12,7 +13,30 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(),
+      theme: ThemeData().copyWith(
+        colorScheme:ThemeData().colorScheme.copyWith(
+          primary:Colors.purple,
+          secondary:Colors.amberAccent,
+        ),
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(
+             fontSize: 20,
+             fontFamily: 'BarlowCondensed',
+             fontWeight:FontWeight.bold,
+             color:Colors.black,
+          ),
+          labelLarge: TextStyle(
+            color:Colors.white,
+          ),
+        ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontWeight:FontWeight.bold,
+            fontSize:25,
+            fontFamily:'EBGaramond'
+          )
+        )
+      ),
       home: const MyHomeApp(),
     );
   }
@@ -30,26 +54,37 @@ class MyHomeAppState extends State<MyHomeApp> {
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
   ];
 
+  _addTransaction(String title, double value) {
+    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
+
+    setState(() {
+      _listaTransaction.add(newTransaction);
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Despesas Pessoais'),
       ),
-      body:  Column(
-        mainAxisAlignment:MainAxisAlignment.spaceAround,
-        crossAxisAlignment:CrossAxisAlignment.stretch,
-        children: [
-          const Card(
-            color:Colors.blue,
-            elevation: 5,
-            child: Text('Gráfico'),
-          ),
-          TransactionList(listTransaction: _listaTransaction,),
-         const  Card(
-            color:Colors.blue,
-            elevation: 5, child: Text('form')),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Card(
+              color: Colors.blue,
+              elevation: 5,
+              child: Text('Gráfico'),
+            ),
+            TransactionList(
+              listTransaction: _listaTransaction,
+            ),
+            TransactionForm(onSubmitted: _addTransaction,),
+          ],
+        ),
       ),
     );
   }
