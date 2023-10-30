@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:exe_despesas_pessoais_31/components/chart.dart';
 import 'package:exe_despesas_pessoais_31/models/transaction.dart';
 import 'package:flutter/material.dart';
 
@@ -70,9 +71,15 @@ class MyHomeAppState extends State<MyHomeApp> {
   _deleteTransaction(String id) {
     setState(() {
       _listaTransaction.removeWhere((trs) {
-        return  trs.id == id;
+        return trs.id == id;
       });
     });
+  }
+
+  List<Transaction> get recentTransaction {
+    return _listaTransaction.where((map) {
+      return map.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
   }
 
   @override
@@ -92,11 +99,7 @@ class MyHomeAppState extends State<MyHomeApp> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(
-              color: Colors.blue,
-              elevation: 5,
-              child: Text('Gráfico'),
-            ),
+            Chart(listTransaction: recentTransaction),
             TransactionList(
               listTransaction: _listaTransaction,
               onRemove: _deleteTransaction,
