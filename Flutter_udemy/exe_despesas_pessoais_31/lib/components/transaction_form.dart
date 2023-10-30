@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String, double) onSubmitted;
+  final void Function(String, double, DateTime) onSubmitted;
   const TransactionForm({super.key, required this.onSubmitted});
 
   @override
@@ -21,7 +22,22 @@ class TransactionFormState extends State<TransactionForm> {
       return;
     }
 
-    widget.onSubmitted(titulo, valor);
+    widget.onSubmitted(titulo, valor,selectedDate);
+  }
+
+  _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2023),
+      lastDate: DateTime.now(),
+    ).then((date) {
+       if(date != null){
+       setState(() {
+          selectedDate = date;
+       });
+       }
+    });
   }
 
   @override
@@ -34,29 +50,32 @@ class TransactionFormState extends State<TransactionForm> {
           children: [
             TextField(
               controller: title,
-              onSubmitted:(_) => submit(),
+              onSubmitted: (_) => submit(),
               decoration: const InputDecoration(
                 labelText: 'Título',
               ),
             ),
             TextField(
               controller: value,
-              keyboardType: const TextInputType.numberWithOptions(decimal:true),
-              onSubmitted:(_) => submit(),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (_) => submit(),
               decoration: const InputDecoration(labelText: 'valor (R\$)'),
             ),
             Container(
               height: 60,
               child: Row(children: [
-                Expanded(child: Text('Data selecionada',
-                style: Theme.of(context).textTheme.titleLarge),
+                Expanded(
+                  child: Text('Data selecionada: ${DateFormat('d MMM y').format(selectedDate)}', style: Theme.of(context).textTheme.titleLarge),
                 ),
                 TextButton(
-                  onPressed: () {},
-                  child: Text('Selecionar Data',
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+                  onPressed: () {
+                    _showDatePicker();
+                  },
+                  child: Text(
+                    'Selecionar Data',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
                 ),
               ]),
@@ -66,10 +85,7 @@ class TransactionFormState extends State<TransactionForm> {
               children: [
                 ElevatedButton(
                   onPressed: submit,
-                  child:  Text(
-                    'Nova Transação',
-                    style: Theme.of(context).textTheme.labelLarge
-                  ),
+                  child: Text('Nova Transação', style: Theme.of(context).textTheme.labelLarge),
                 ),
               ],
             ),
