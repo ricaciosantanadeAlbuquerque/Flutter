@@ -36,10 +36,19 @@ class MyHomeApp extends StatefulWidget {
 
 class MyHomeAppSteta extends State<MyHomeApp> {
   final List<Transaction> _listaTransaction = [
-    //Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
   ];
 
-  void _addTransaction(String title, double value,DateTime date) {
+  void _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
 
     setState(() {
@@ -59,11 +68,17 @@ class MyHomeAppSteta extends State<MyHomeApp> {
   }
 
   void _removeTransaction(String id) {
-     setState(() {
-       _listaTransaction.removeWhere((trs) {
+    setState(() {
+      _listaTransaction.removeWhere((trs) {
         return trs.id == id;
       });
-     });
+    });
+  }
+
+  List<Transaction> get _recentTransaction {
+    return _listaTransaction.where((trs) {
+      return trs.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
   }
 
   @override
@@ -82,8 +97,11 @@ class MyHomeAppSteta extends State<MyHomeApp> {
         //mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-         Chart(listaTransaction: _listaTransaction ),
-          TransactionList(listaTransaction: _listaTransaction, onRemove: _removeTransaction,), // comunicação direta
+          Chart(listaTransaction: _recentTransaction),
+          TransactionList(
+            listaTransaction: _listaTransaction,
+            onRemove: _removeTransaction,
+          ), // comunicação direta
         ],
       ),
       floatingActionButton: FloatingActionButton(

@@ -26,17 +26,32 @@ class Chart extends StatelessWidget {
     }).reversed.toList();
   }
 
+  double get weekTotlavalue {
+    return groupedTransactions.fold(0.0,(cont, map) {
+      return cont += (map['value'] as double);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 6,
       margin: const EdgeInsets.all(20),
-      child: Row(
-          children: groupedTransactions.map((map) {
-        return ChartBar(label: map['day'] as String,
-         value: map['value'] as double,
-          percentage: 0.5);
-      }).toList()),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+            mainAxisAlignment:MainAxisAlignment.spaceAround,
+            children: groupedTransactions.map((map) {
+          return        
+          Flexible(
+            fit: FlexFit.tight,
+            child: ChartBar(
+              label: map['day'] as String, 
+              value: map['value'] as double,
+             percentage: weekTotlavalue == 0 ? 0 : (map['value'] as double) / weekTotlavalue),
+          );
+        }).toList()),
+      ),
     );
   }
 }
