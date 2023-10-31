@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String, double) onSubmitted;
-  
+  final void Function(String, double, DateTime) onSubmitted;
 
   const TransactionForm({super.key, required this.onSubmitted});
 
@@ -23,7 +22,22 @@ class TransactionFormState extends State<TransactionForm> {
     if (titulo.isEmpty || valor <= 0) {
       return;
     }
-    widget.onSubmitted(titulo, valor);
+    widget.onSubmitted(titulo, valor, selectedDate);
+  }
+
+  _showDatePicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2023),
+      lastDate: DateTime.now(),
+    ).then((datePicker) {
+      if (datePicker != null) {
+         setState(() {
+           selectedDate = datePicker;
+         });
+      }
+    });
   }
 
   @override
@@ -52,7 +66,7 @@ class TransactionFormState extends State<TransactionForm> {
               child: Row(children: [
                 Expanded(child: Text('Data Selecionada ${DateFormat('dd MMM y').format(selectedDate)}')),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: _showDatePicker,
                   child: const Text('Selecionar Data'),
                 ),
               ]),
