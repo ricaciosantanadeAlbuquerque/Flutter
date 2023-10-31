@@ -4,7 +4,9 @@ import '../model/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> listaTransaction;
+
   const TransactionList({super.key,required this.listaTransaction});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -13,15 +15,21 @@ class TransactionList extends StatelessWidget {
         itemCount: listaTransaction.length,
         itemBuilder:(_,index){
           final trs = listaTransaction[index];
-          return ListTile(
-            leading: CircleAvatar(
-              radius:30,
-              backgroundColor:Colors.purple,
-              child: Text(trs.value.toStringAsFixed(2),
+          return Card(
+            elevation:5,
+            child: ListTile(
+              leading: CircleAvatar(
+                radius:30,
+                backgroundColor:Colors.purple,
+                child: Text(trs.value.toStringAsFixed(2),
+                ),
               ),
-            ),
-            title: Text(trs.title),
-            subtitle: Text(trs.date.toString(),
+              title: Text(trs.title),
+              subtitle: Text(trs.date.toString(),
+              ),
+              trailing: IconButton(onPressed:(){},icon: const Icon(Icons.delete),
+              color: Theme.of(context).colorScheme.error,
+              ),
             ),
           );
         }
