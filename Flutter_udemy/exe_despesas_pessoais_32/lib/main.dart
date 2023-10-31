@@ -38,21 +38,48 @@ class MyHomeAppSteta extends State<MyHomeApp> {
     setState(() {
       _listaTransaction.add(newTransaction);
     });
+    Navigator.of(context).pop();
+  }
+
+  _openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransactionForm(
+            onSubmitted: _addTransaction,
+          ); // comunicação indireta
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text('Despesas Pessoais'),
+        actions: [
+          IconButton(
+            onPressed: () => _openTransactionFormModal(context),
+            icon: const Icon(Icons.add),
+          ),
+        ],
+      ),
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Card(elevation: 5, color: Colors.blue, child: Text('Gráfico'),), 
-        TransactionList(listaTransaction: _listaTransaction), // comunicação direta
-        TransactionForm(onSubmitted: _addTransaction,) // comunicação indireta
+          const Card(
+            elevation: 5,
+            color: Colors.blue,
+            child: Text('Gráfico'),
+          ),
+          TransactionList(listaTransaction: _listaTransaction), // comunicação direta
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _openTransactionFormModal(context),
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
