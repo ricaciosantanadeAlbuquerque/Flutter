@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:exe_despesas_pessoais_32/model/transaction.dart';
 import 'package:flutter/material.dart';
 
+import 'components/chart.dart';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 
@@ -81,11 +82,7 @@ class MyHomeAppSteta extends State<MyHomeApp> {
         //mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Card(
-            elevation: 5,
-            color: Colors.blue,
-            child: Text('Gráfico'),
-          ),
+         Chart(listaTransaction: _listaTransaction ),
           TransactionList(listaTransaction: _listaTransaction, onRemove: _removeTransaction,), // comunicação direta
         ],
       ),
