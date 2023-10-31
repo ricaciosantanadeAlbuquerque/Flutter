@@ -15,29 +15,12 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData().copyWith(
-        colorScheme: ThemeData().colorScheme.copyWith(
-          primary:Colors.purple,
-          secondary: Colors.amberAccent
-        ),
-        textTheme:ThemeData().textTheme.copyWith(
-          titleLarge: const TextStyle(
-            color: Colors.black,
-            fontSize:16,
-            fontWeight:FontWeight.bold,
-            fontFamily: 'BarlowCondensed'
-          ),
-          labelLarge: const TextStyle(
-            color:Colors.white
-          ),
-        ),
-      appBarTheme: const AppBarTheme(
-        titleTextStyle: TextStyle(
-          fontSize:25,
-          fontWeight:FontWeight.bold,
-          fontFamily: 'EBGaramond'
-        )
-      )
-      ),
+          colorScheme: ThemeData().colorScheme.copyWith(primary: Colors.purple, secondary: Colors.amberAccent),
+          textTheme: ThemeData().textTheme.copyWith(
+                titleLarge: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'BarlowCondensed'),
+                labelLarge: const TextStyle(color: Colors.white),
+              ),
+          appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: 'EBGaramond'))),
       home: const MyHomeApp(),
     );
   }
@@ -55,7 +38,7 @@ class MyHomeAppSteta extends State<MyHomeApp> {
     //Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
   ];
 
-  _addTransaction(String title, double value) {
+  void _addTransaction(String title, double value) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
 
     setState(() {
@@ -64,7 +47,7 @@ class MyHomeAppSteta extends State<MyHomeApp> {
     Navigator.of(context).pop();
   }
 
-  _openTransactionFormModal(BuildContext context) {
+  void _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
         context: context,
         builder: (_) {
@@ -72,6 +55,14 @@ class MyHomeAppSteta extends State<MyHomeApp> {
             onSubmitted: _addTransaction,
           ); // comunicação indireta
         });
+  }
+
+  void _removeTransaction(String id) {
+     setState(() {
+       _listaTransaction.removeWhere((trs) {
+        return trs.id == id;
+      });
+     });
   }
 
   @override
@@ -95,7 +86,7 @@ class MyHomeAppSteta extends State<MyHomeApp> {
             color: Colors.blue,
             child: Text('Gráfico'),
           ),
-          TransactionList(listaTransaction: _listaTransaction), // comunicação direta
+          TransactionList(listaTransaction: _listaTransaction, onRemove: _removeTransaction,), // comunicação direta
         ],
       ),
       floatingActionButton: FloatingActionButton(

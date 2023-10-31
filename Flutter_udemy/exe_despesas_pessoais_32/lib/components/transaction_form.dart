@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double) onSubmitted;
+  
 
   const TransactionForm({super.key, required this.onSubmitted});
 
@@ -42,18 +43,19 @@ class TransactionFormState extends State<TransactionForm> {
             ),
             TextField(
               controller: value,
-              onSubmitted:(_) => submitted(),
-              keyboardType: const TextInputType.numberWithOptions(decimal:true),
+              onSubmitted: (_) => submitted(),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(labelText: 'Valor (R\$)'),
             ),
             SizedBox(
-              height:70,
-              child: Row(
-               children:[
+              height: 70,
+              child: Row(children: [
                 Expanded(child: Text('Data Selecionada ${DateFormat('dd MMM y').format(selectedDate)}')),
-                TextButton(onPressed:(){},child: const Text('Selecionar Data'),),
-               ]
-              ),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text('Selecionar Data'),
+                ),
+              ]),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.end, children: [
               ElevatedButton(
