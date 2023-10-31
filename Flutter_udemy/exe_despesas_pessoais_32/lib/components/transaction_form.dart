@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double) onSubmitted;
@@ -14,37 +15,55 @@ class TransactionFormState extends State<TransactionForm> {
   final value = TextEditingController();
   DateTime selectedDate = DateTime.now();
 
+  submitted() {
+    final titulo = title.text;
+    final valor = double.tryParse(value.text) ?? 0.0;
+
+    if (titulo.isEmpty || valor <= 0) {
+      return;
+    }
+    widget.onSubmitted(titulo, valor);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(children: [
+      elevation: 5,
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          children: [
             TextField(
-              controller:title,
-              decoration:const InputDecoration(
-                labelText:'title',
-              ),
-            ),
-            TextField(
-              controller:value,
+              controller: title,
+              onSubmitted: (_) => submitted(),
               decoration: const InputDecoration(
-                labelText: 'Valor (R\$)'
+                labelText: 'Título',
               ),
             ),
-            
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children:
-               [
-                ElevatedButton(onPressed:(){},
-                child: const Text('Nova Transação'),
-                ),
-              ]
+            TextField(
+              controller: value,
+              onSubmitted:(_) => submitted(),
+              keyboardType: const TextInputType.numberWithOptions(decimal:true),
+              decoration: const InputDecoration(labelText: 'Valor (R\$)'),
             ),
-          ],),
+            SizedBox(
+              height:70,
+              child: Row(
+               children:[
+                Expanded(child: Text('Data Selecionada ${DateFormat('dd MMM y').format(selectedDate)}')),
+                TextButton(onPressed:(){},child: const Text('Selecionar Data'),),
+               ]
+              ),
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              ElevatedButton(
+                onPressed: submitted,
+                child: const Text('Nova Transação'),
+              ),
+            ]),
+          ],
         ),
-        );
+      ),
+    );
   }
 }

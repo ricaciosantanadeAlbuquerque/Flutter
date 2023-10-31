@@ -28,26 +28,29 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class MyHomeAppSteta extends State<MyHomeApp> {
-
   final List<Transaction> _listaTransaction = [
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250, date: DateTime.now()),
   ];
 
+  _addTransaction(String title, double value) {
+    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
 
+    setState(() {
+      _listaTransaction.add(newTransaction);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body:  Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: Column(
+        //mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Card(elevation: 5, color: Colors.blue, child: Text('Gráfico')),
-
-         TransactionList(listaTransaction: _listaTransaction),
-
-       TransactionForm()
+          const Card(elevation: 5, color: Colors.blue, child: Text('Gráfico'),), 
+        TransactionList(listaTransaction: _listaTransaction), // comunicação direta
+        TransactionForm(onSubmitted: _addTransaction,) // comunicação indireta
         ],
       ),
     );
