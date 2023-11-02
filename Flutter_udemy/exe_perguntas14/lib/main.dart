@@ -1,3 +1,5 @@
+import 'package:exe_perguntas14/questao.dart';
+import 'package:exe_perguntas14/resposta.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -41,12 +43,7 @@ class PerguntaAppState extends State<PerguntaApp> {
    final List<Widget> listaResposta = [];
     for (var element in lista[index]['resposta'] as List<String>) {
       listaResposta.add(
-        SizedBox(
-        width:double.infinity,
-        child: ElevatedButton(onPressed: responder,
-         child: Text(element),
-         ),
-         ),
+               Resposta(texto: element,onSelected: responder,)
          );
     }
     //List<String> listaResposta = lista[index]['resposta'] as List<String>;
@@ -55,17 +52,7 @@ class PerguntaAppState extends State<PerguntaApp> {
         appBar: AppBar(),
         body: Column(
           children: [
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.all(6),
-              child: Text(
-                lista[index]['texto'] as String,
-                style: const TextStyle(
-                  fontSize: 28,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
+           Questao(texto: lista[index]['texto'] as String),
             ...listaResposta,
           ],
         ),
