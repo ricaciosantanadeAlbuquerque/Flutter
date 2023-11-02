@@ -51,7 +51,7 @@ class PerguntasAppState extends State<PerguntasApp> {
         body: Column(
           children: [
             Questao(texto: _perguntas[index]['texto'] as String),
-            ...lista.map((element){
+            ...lista.map((element){ // operador spread
               return Resposta(texto: element, onSelected: responder);
             }).toList(),
             ],
