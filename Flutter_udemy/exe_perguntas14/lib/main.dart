@@ -48,7 +48,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
       home: Scaffold(
           appBar: AppBar(
             title: const Center(
-              child: Text('Perguntas'),
+              child: Text('Perguntas'), 
             ),
           ),
           body: _temPerguntaSelecionada
