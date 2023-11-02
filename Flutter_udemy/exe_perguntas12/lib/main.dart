@@ -11,7 +11,9 @@ class PerguntaApp extends StatefulWidget {
 }
 
 class PerguntaAppState extends State<PerguntaApp> {
+  
   int perguntaSelecionada = 0;
+
   final List<String> perguntas = [
     'Qual é a sua cor favorita ?',
     'Qual é o seu animal favorito ?',
