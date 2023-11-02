@@ -1,6 +1,6 @@
-import 'package:exe_perguntas14/questao.dart';
-import 'package:exe_perguntas14/resposta.dart';
+import 'package:exe_perguntas14/questionario.dart';
 import 'package:flutter/material.dart';
+import './resultado.dart';
 
 void main() {
   runApp(const PerguntaApp());
@@ -9,10 +9,10 @@ void main() {
 class PerguntaApp extends StatefulWidget {
   const PerguntaApp({super.key});
   @override
-  PerguntaAppState createState() => PerguntaAppState();
+  State<PerguntaApp> createState() => _PerguntaAppState();
 }
 
-class PerguntaAppState extends State<PerguntaApp> {
+class _PerguntaAppState extends State<PerguntaApp> {
   int _index = 0;
 
   final List<Map<String, Object>> _lista = const [
@@ -30,39 +30,31 @@ class PerguntaAppState extends State<PerguntaApp> {
     }
   ];
 
-  void responder() {
-   if(temPerguntaSelecionada){
-     setState(() {
+  void _responder() {
+    if (_temPerguntaSelecionada) {
+      setState(() {
         _index++;
       });
-   }
+    }
   }
 
-  bool get temPerguntaSelecionada {
+  bool get _temPerguntaSelecionada {
     return _index < _lista.length; // tamanho 3 (0 1 2)
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> listaResposta = temPerguntaSelecionada == true ? _lista[_index]['resposta'] as List<String> : [];
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Center(
-            child: Text('Perguntas'),
+          appBar: AppBar(
+            title: const Center(
+              child: Text('Perguntas'),
+            ),
           ),
-        ),
-        body: temPerguntaSelecionada?  Column(
-          children: [
-            Questao(texto: _lista[_index]['texto'] as String),
-            ...listaResposta.map((element) {
-              return Resposta(texto: element, onSelected: responder);
-            }).toList()
-          ],
-        ) : const SizedBox(
-          child: Center(child: Text('Fim da lista !'))
-        )
-      ),
+          body: _temPerguntaSelecionada
+              ? Questionario(index: _index,listaPerguntas:_lista,onSelected: _responder,)
+              : const Resultado()
+              ),
     );
   }
 }
