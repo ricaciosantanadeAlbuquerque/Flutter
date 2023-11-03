@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Questionario extends StatelessWidget {
   final int index;
   final List<Map<String, Object>> listaPerguntas;
-  final void Function() onSelected;
+  final void Function(int) onSelected;
 
   const Questionario({super.key, required this.index, required this.listaPerguntas, required this.onSelected});
 
@@ -20,7 +20,7 @@ class Questionario extends StatelessWidget {
       children: [
         Questao(texto: listaPerguntas[index]['texto'] as String),
         ...listaRespostas.map((map) {
-          return Resposta(texto: map['texto'] as String , onSelected2: onSelected);
+          return Resposta(texto: map['texto'] as String , onSelected2: () => onSelected(map['nota'] as int));
         }).toList()
       ],
     );

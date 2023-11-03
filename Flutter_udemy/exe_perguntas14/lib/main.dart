@@ -14,58 +14,46 @@ class PerguntaApp extends StatefulWidget {
 
 class _PerguntaAppState extends State<PerguntaApp> {
   int _index = 0;
+  int _valorTotla = 0;
 
   final List<Map<String, Object>> _lista = const [
     {
       'texto': 'Qual  é a sua cor favorita ?',
       'resposta': [
-
-         {'texto':'Preto','nota':10},
-
-         {'texto':'Vermelho','nota':5},
-
-         {'texto':'verde','nota':3},
-         
-         {'texto':'Branco','nota':1}
-
-           ],
+        {'texto': 'Preto', 'nota': 10},
+        {'texto': 'Vermelho', 'nota': 5},
+        {'texto': 'verde', 'nota': 3},
+        {'texto': 'Branco', 'nota': 1}
+      ],
     },
-
     {
       'texto': 'Qual é o seu Animal favorito ?',
       'resposta': [
-         {'texto':'Coelho','nota':10},
-
-         {'texto':'Cobra','nota':5}, 
-
-         {'texto': 'Elefante','nota':3},
-
-         {'texto':'Leão','nota':10},
-
-          ]
+        {'texto': 'Coelho', 'nota': 10},
+        {'texto': 'Cobra', 'nota': 5},
+        {'texto': 'Elefante', 'nota': 3},
+        {'texto': 'Leão', 'nota': 10},
+      ]
     },
     {
       'texto': 'Qual o seu instrutor favorito ?',
       'resposta': [
-
-        {'texto':'Maria','nota':10},
-
-        {'texto':'João','nota':5},
-
-        {'texto':'Leo','nota':3},
-        
-        {'texto':'Pedro','nota':1},
-
-        ]
+        {'texto': 'Maria', 'nota': 10},
+        {'texto': 'João', 'nota': 5},
+        {'texto': 'Leo', 'nota': 3},
+        {'texto': 'Pedro', 'nota': 1},
+      ]
     }
   ];
 
-  void _responder() {
+  void _responder(int valor) {
     if (_temPerguntaSelecionada) {
       setState(() {
         _index++;
+        _valorTotla += valor;
       });
     }
+    print(_valorTotla);
   }
 
   bool get _temPerguntaSelecionada {
@@ -78,13 +66,16 @@ class _PerguntaAppState extends State<PerguntaApp> {
       home: Scaffold(
           appBar: AppBar(
             title: const Center(
-              child: Text('Perguntas'), 
+              child: Text('Perguntas'),
             ),
           ),
           body: _temPerguntaSelecionada
-              ? Questionario(index: _index,listaPerguntas:_lista,onSelected: _responder,)
-              : const Resultado()
-              ),
+              ? Questionario(
+                  index: _index,
+                  listaPerguntas: _lista,
+                  onSelected: _responder,
+                )
+              : Resultado(pontuacao: _valorTotla,)),
     );
   }
 }
