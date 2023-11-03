@@ -32,7 +32,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
         {'texto': 'Coelho', 'nota': 10},
         {'texto': 'Cobra', 'nota': 5},
         {'texto': 'Elefante', 'nota': 3},
-        {'texto': 'Leão', 'nota': 10},
+        {'texto': 'Leão', 'nota': 1},
       ]
     },
     {
@@ -60,6 +60,13 @@ class _PerguntaAppState extends State<PerguntaApp> {
     return _index < _lista.length; // tamanho 3 (0 1 2)
   }
 
+  void resetarQuestionario() {
+    setState(() {
+      _index = 0;
+      _valorTotla = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -75,7 +82,9 @@ class _PerguntaAppState extends State<PerguntaApp> {
                   listaPerguntas: _lista,
                   onSelected: _responder,
                 )
-              : Resultado(pontuacao: _valorTotla,)),
+              : Resultado(
+                  pontuacao: _valorTotla,onReset: resetarQuestionario,
+                )),
     );
   }
 }
