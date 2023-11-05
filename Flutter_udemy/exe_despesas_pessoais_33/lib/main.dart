@@ -29,7 +29,7 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class _MyHomeAppState extends State<MyHomeApp> {
-  final List<Transaction> _listTransaction = [Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())];
+  final List<Transaction> _listTransaction = [];
 
   void _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
