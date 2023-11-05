@@ -1,5 +1,6 @@
 import 'package:exe_perguntas16/questao.dart';
 import 'package:exe_perguntas16/resposta.dart';
+import 'package:exe_perguntas16/resultado.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const PerguntaApp());
@@ -83,11 +84,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
           ],
         )
         :
-        Container(
-          child: const  Center(
-            child: Text(' fim !'), 
-          ),
-        ),
+        Resultado(),
       ),
     );
   }
