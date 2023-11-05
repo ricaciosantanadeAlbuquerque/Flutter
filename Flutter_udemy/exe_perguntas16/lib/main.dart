@@ -1,5 +1,4 @@
-import 'package:exe_perguntas16/questao.dart';
-import 'package:exe_perguntas16/resposta.dart';
+import 'package:exe_perguntas16/questionario.dart';
 import 'package:exe_perguntas16/resultado.dart';
 import 'package:flutter/material.dart';
 
@@ -46,10 +45,11 @@ class _PerguntaAppState extends State<PerguntaApp> {
     }
   ];
 
-  void _responder() {
+  void _responder(int valor) {
     if (temPerguntaSelecionada) {
       setState(() {
         _index++;
+        _valorTotla += valor;
       });
     }
   }
@@ -67,7 +67,6 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, Object>> lista = temPerguntaSelecionada ? _listaPerguntas[_index]['resposta'] as List<Map<String, Object>> : [];
     return MaterialApp(
       theme: ThemeData(),
       home: Scaffold(
@@ -77,25 +76,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
           ),
         ),
         body: temPerguntaSelecionada
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Questao(
-                    texto: _listaPerguntas[_index]['texto'] as String,
-                  ),
-                  ...lista.map(
-                    (map) {
-                      return SizedBox(
-                        width: double.infinity,
-                        child: Resposta(
-                          texto: map['texto'] as String,
-                          onSelected: _responder,
-                        ),
-                      );
-                    },
-                  ).toList(),
-                ],
-              )
+            ? Questionario(index: _index, listaPerguntas: _listaPerguntas, onSubmmitted: _responder)
             : Resultado(
                 nota: _valorTotla, // comunicação direta
                 onReset: resetPerguntas, // comunicao indireta
