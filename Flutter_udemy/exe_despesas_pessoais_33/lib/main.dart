@@ -48,50 +48,53 @@ class _MyHomeAppState extends State<MyHomeApp> {
       appBar: AppBar(
         title: const Text('Despesas pessoais'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Card(
-            elevation: 5,
-            color: Colors.blue,
-            child: Text('Gráfico'),
-          ),
-          SizedBox(
-            height: 380,
-            child: ListView.builder(
-                itemCount: _listTransaction.length,
-                itemBuilder: (_, index) {
-                  final trs = _listTransaction[index];
-                  return Card(
-                    margin: const EdgeInsets.symmetric(
-                      vertical: 8,
-                      horizontal: 5,
-                    ),
-                    elevation: 5,
-                    child: ListTile(
-                        leading: CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Theme.of(context).colorScheme.primary,
-                          child: Padding(
-                            padding: const EdgeInsets.all(6),
-                            child: FittedBox(
-                              child: Text('R\$ ${trs.value.toStringAsFixed(2)}'),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Card(
+              elevation: 5,
+              color: Colors.blue,
+              child: Text('Gráfico'),
+            ),
+             TransactionForm(onSubmmitted: _addTransaction,),
+            SizedBox(
+              height: 380,
+              child: ListView.builder(
+                  itemCount: _listTransaction.length,
+                  itemBuilder: (_, index) {
+                    final trs = _listTransaction[index];
+                    return Card(
+                      margin: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 5,
+                      ),
+                      elevation: 5,
+                      child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            child: Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: FittedBox(
+                                child: Text('R\$ ${trs.value.toStringAsFixed(2)}'),
+                              ),
                             ),
                           ),
-                        ),
-                        title: Text(trs.title),
-                        subtitle: Text(DateFormat('dd MMM y').format(trs.date)),
-                        trailing: IconButton(
-                          color: Theme.of(context).colorScheme.error,
-                          onPressed: () {},
-                          icon: const Icon(Icons.delete),
-                        )),
-                  );
-                }),
-          ),
-           TransactionForm(onSubmmitted: _addTransaction,)
-        ],
+                          title: Text(trs.title),
+                          subtitle: Text(DateFormat('dd MMM y').format(trs.date)),
+                          trailing: IconButton(
+                            color: Theme.of(context).colorScheme.error,
+                            onPressed: () {},
+                            icon: const Icon(Icons.delete),
+                          )),
+                    );
+                  }),
+            ),
+            
+          ],
+        ),
       ),
     );
   }
