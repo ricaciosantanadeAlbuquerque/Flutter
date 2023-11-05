@@ -3,6 +3,8 @@ import 'package:exe_despesas_pessoais_33/model/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'components/transaction_form.dart';
+
 void main() => runApp(const ExpensesApp());
 
 class ExpensesApp extends StatelessWidget {
@@ -28,20 +30,17 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class _MyHomeAppState extends State<MyHomeApp> {
+  final List<Transaction> _listTransaction = [Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())];
 
-  final List<Transaction> _listTransaction = [
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())];
+  _addTransaction(String title, double value) {
 
-    DateTime _selectedDate = DateTime.now();
+    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
 
-  final title  = TextEditingController();
-  final value = TextEditingController();
+    setState(() {
+      _listTransaction.add(newTransaction);
+    });
 
-
-
-
-
-
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,85 +58,39 @@ class _MyHomeAppState extends State<MyHomeApp> {
             child: Text('Gráfico'),
           ),
           SizedBox(
-            height:380,
+            height: 380,
             child: ListView.builder(
                 itemCount: _listTransaction.length,
-                itemBuilder: (_,index) {
+                itemBuilder: (_, index) {
                   final trs = _listTransaction[index];
                   return Card(
                     margin: const EdgeInsets.symmetric(
-                      vertical:8,
-                      horizontal:5,
+                      vertical: 8,
+                      horizontal: 5,
                     ),
-                    elevation:5,
-                    child:ListTile(
-                      leading: CircleAvatar(
-                        radius:30,
-                         backgroundColor:Theme.of(context).colorScheme.primary,
-                         child: Padding(
-                          padding: const EdgeInsets.all(6),
-                          
-                          child: FittedBox(
-                            child: Text('R\$ ${trs.value.toStringAsFixed(2)}'),
+                    elevation: 5,
+                    child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 30,
+                          backgroundColor: Theme.of(context).colorScheme.primary,
+                          child: Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: FittedBox(
+                              child: Text('R\$ ${trs.value.toStringAsFixed(2)}'),
                             ),
                           ),
-                      ),
-                      title: Text(trs.title),
-                      subtitle: Text(DateFormat('dd MMM y').format(trs.date)),
-                      trailing:  IconButton(
-                        color: Theme.of(context).colorScheme.error,
-                        onPressed:(){},
-                        icon:const Icon(Icons.delete)
-                        ,)
-                    ),
+                        ),
+                        title: Text(trs.title),
+                        subtitle: Text(DateFormat('dd MMM y').format(trs.date)),
+                        trailing: IconButton(
+                          color: Theme.of(context).colorScheme.error,
+                          onPressed: () {},
+                          icon: const Icon(Icons.delete),
+                        )),
                   );
                 }),
           ),
-           Card(
-            elevation: 5,
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children:[
-                  TextField(
-                    controller:title,
-                    decoration:const InputDecoration(
-                      labelText:'Título',
-                    ),
-                  ),
-                  TextField(
-                    controller:value,
-                    decoration: const InputDecoration(
-                      labelText: 'Valor (R\$)'
-                    )
-                  ),
-                  SizedBox(
-                    height:70,
-                    child: Row(
-                      children:[
-                        Expanded(
-                          child: Text('Data Selecionada ${DateFormat('dd MMM y').format(_selectedDate)}'),
-                        ),
-                        TextButton(
-                          onPressed:(){},
-                          child: const Text('Data Selecionada')
-                        ),
-                      ]
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment:MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                        onPressed:(){},
-                        child: const Text('Nova Transação'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+           TransactionForm(onSubmmitted: _addTransaction,)
         ],
       ),
     );
