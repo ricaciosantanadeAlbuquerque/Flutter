@@ -4,8 +4,21 @@ class Resultado extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: const Center(
-        child: Text(' fim !'),
+      width: double.infinity,
+      child: Column(
+        mainAxisAlignment:MainAxisAlignment.center,
+        children:[
+           const Text(
+          ' fim !',
+          style: TextStyle(
+            fontSize: 28,
+          ),
+        ),
+        ElevatedButton(
+          onPressed:(){},
+          child: const Text('Test !'),
+        ),
+        ],
       ),
     );
   }

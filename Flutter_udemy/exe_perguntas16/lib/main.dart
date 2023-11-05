@@ -71,6 +71,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
         ),
         body: temPerguntaSelecionada ? 
         Column(
+       
           children: [
             Questao(texto: _listaPerguntas[_index]['texto'] as String,),
             ...lista.map(
