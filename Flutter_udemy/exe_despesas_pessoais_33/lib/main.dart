@@ -1,7 +1,7 @@
 import 'dart:math';
-
 import 'package:exe_despesas_pessoais_33/model/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() => runApp(const ExpensesApp());
 
@@ -28,9 +28,21 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class _MyHomeAppState extends State<MyHomeApp> {
-  final List<Transaction> listTransaction = [
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
-  ];
+
+  final List<Transaction> _listTransaction = [
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())];
+
+    DateTime _selectedDate = DateTime.now();
+
+  final title  = TextEditingController();
+  final value = TextEditingController();
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,9 +61,9 @@ class _MyHomeAppState extends State<MyHomeApp> {
           SizedBox(
             height:380,
             child: ListView.builder(
-                itemCount: listTransaction.length,
+                itemCount: _listTransaction.length,
                 itemBuilder: (_,index) {
-                  final trs = listTransaction[index];
+                  final trs = _listTransaction[index];
                   return Card(
                     margin: const EdgeInsets.symmetric(
                       vertical:8,
@@ -71,7 +83,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
                           ),
                       ),
                       title: Text(trs.title),
-                      subtitle: Text(trs.date.toString()),
+                      subtitle: Text(DateFormat('dd MMM y').format(trs.date)),
                       trailing:  IconButton(
                         color: Theme.of(context).colorScheme.error,
                         onPressed:(){},
@@ -81,10 +93,50 @@ class _MyHomeAppState extends State<MyHomeApp> {
                   );
                 }),
           ),
-          Card(
+           Card(
             elevation: 5,
-            color: Colors.blue,
-            child: Text('Formulário'),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children:[
+                  TextField(
+                    controller:title,
+                    decoration:const InputDecoration(
+                      labelText:'Título',
+                    ),
+                  ),
+                  TextField(
+                    controller:value,
+                    decoration: const InputDecoration(
+                      labelText: 'Valor (R\$)'
+                    )
+                  ),
+                  SizedBox(
+                    height:70,
+                    child: Row(
+                      children:[
+                        Expanded(
+                          child: Text('Data Selecionada ${DateFormat('dd MMM y').format(_selectedDate)}'),
+                        ),
+                        TextButton(
+                          onPressed:(){},
+                          child: const Text('Data Selecionada')
+                        ),
+                      ]
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment:MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(
+                        onPressed:(){},
+                        child: const Text('Nova Transação'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
