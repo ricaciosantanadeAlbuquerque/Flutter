@@ -14,7 +14,7 @@ class PerguntaApp extends StatefulWidget {
 
 class _PerguntaAppState extends State<PerguntaApp> {
   int _index = 0;
-  int _valorTotle = 0;
+  int _valorTotla = 0;
 
   final List<Map<String, Object>> _listaPerguntas = const [
     {
@@ -47,7 +47,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
   ];
 
   void _responder() {
-    if(temPerguntaSelecionada){
+    if (temPerguntaSelecionada) {
       setState(() {
         _index++;
       });
@@ -56,6 +56,13 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
   bool get temPerguntaSelecionada {
     return _index < _listaPerguntas.length;
+  }
+
+  void resetPerguntas() {
+    setState(() {
+      _index = 0;
+      _valorTotla = 0;
+    });
   }
 
   @override
@@ -69,23 +76,30 @@ class _PerguntaAppState extends State<PerguntaApp> {
             child: Text('Perguntas'),
           ),
         ),
-        body: temPerguntaSelecionada ? 
-        Column(
-       
-          children: [
-            Questao(texto: _listaPerguntas[_index]['texto'] as String,),
-            ...lista.map(
-              (map) {
-                return SizedBox(
-                  width: double.infinity,
-                  child: Resposta(texto: map['texto'] as String,onSelected: _responder,),
-                );
-              },
-            ).toList(),
-          ],
-        )
-        :
-        Resultado(),
+        body: temPerguntaSelecionada
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Questao(
+                    texto: _listaPerguntas[_index]['texto'] as String,
+                  ),
+                  ...lista.map(
+                    (map) {
+                      return SizedBox(
+                        width: double.infinity,
+                        child: Resposta(
+                          texto: map['texto'] as String,
+                          onSelected: _responder,
+                        ),
+                      );
+                    },
+                  ).toList(),
+                ],
+              )
+            : Resultado(
+                nota: _valorTotla, // comunicação direta
+                onReset: resetPerguntas, // comunicao indireta
+              ),
       ),
     );
   }
