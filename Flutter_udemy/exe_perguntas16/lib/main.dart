@@ -1,4 +1,5 @@
 import 'package:exe_perguntas16/questao.dart';
+import 'package:exe_perguntas16/resposta.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const PerguntaApp());
@@ -75,10 +76,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
               (map) {
                 return SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: _responder,
-                    child: Text(map['texto'] as String),
-                  ),
+                  child: Resposta(texto: map['texto'] as String,onSelected: _responder,),
                 );
               },
             ).toList(),
