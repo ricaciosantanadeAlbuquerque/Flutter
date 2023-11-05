@@ -37,19 +37,49 @@ class _MyHomeAppState extends State<MyHomeApp> {
       appBar: AppBar(
         title: const Text('Despesas pessoais'),
       ),
-      body: const Column(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Card(
+          const Card(
             elevation: 5,
             color: Colors.blue,
             child: Text('Gráfico'),
           ),
-          Card(
-            elevation: 5,
-            color: Colors.blue,
-            child: Text('Lista'),
+          SizedBox(
+            height:380,
+            child: ListView.builder(
+                itemCount: listTransaction.length,
+                itemBuilder: (_,index) {
+                  final trs = listTransaction[index];
+                  return Card(
+                    margin: const EdgeInsets.symmetric(
+                      vertical:8,
+                      horizontal:5,
+                    ),
+                    elevation:5,
+                    child:ListTile(
+                      leading: CircleAvatar(
+                        radius:30,
+                         backgroundColor:Theme.of(context).colorScheme.primary,
+                         child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          
+                          child: FittedBox(
+                            child: Text('R\$ ${trs.value.toStringAsFixed(2)}'),
+                            ),
+                          ),
+                      ),
+                      title: Text(trs.title),
+                      subtitle: Text(trs.date.toString()),
+                      trailing:  IconButton(
+                        color: Theme.of(context).colorScheme.error,
+                        onPressed:(){},
+                        icon:const Icon(Icons.delete)
+                        ,)
+                    ),
+                  );
+                }),
           ),
           Card(
             elevation: 5,
