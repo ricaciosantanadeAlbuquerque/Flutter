@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String, double) onSubmmitted;
+  final void Function(String, double,DateTime) onSubmmitted;
 
   const TransactionForm({super.key, required this.onSubmmitted});
 
@@ -23,8 +23,22 @@ class _TransactionFormState extends State<TransactionForm> {
       return;
     }
 
-    widget.onSubmmitted(titulo, valor);
+    widget.onSubmmitted(titulo, valor,_selectedDate);
+  }
 
+  _showDatepicker() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2023),
+      lastDate: DateTime.now(),
+    ).then((responseDate) {
+      if (responseDate != null) {
+         setState(() {
+             _selectedDate = responseDate;
+         });
+      }
+    });
   }
 
   @override
@@ -37,24 +51,24 @@ class _TransactionFormState extends State<TransactionForm> {
           children: [
             TextField(
               controller: title,
-              onSubmitted:(_) => submited(),
+              onSubmitted: (_) => submited(),
               decoration: const InputDecoration(
                 labelText: 'Título',
               ),
             ),
             TextField(
               controller: value,
-              onSubmitted:(_) => submited(),
-               keyboardType: const TextInputType.numberWithOptions(decimal: true),
-               decoration: const InputDecoration(labelText: 'Valor (R\$)'),
-               ),
+              onSubmitted: (_) => submited(),
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+              decoration: const InputDecoration(labelText: 'Valor (R\$)'),
+            ),
             SizedBox(
               height: 70,
               child: Row(children: [
                 Expanded(
                   child: Text('Data Selecionada ${DateFormat('dd MMM y').format(_selectedDate)}'),
                 ),
-                TextButton(onPressed: () {}, child: const Text('Data Selecionada')),
+                TextButton(onPressed: _showDatepicker, child: const Text('Data Selecionada')),
               ]),
             ),
             Row(
