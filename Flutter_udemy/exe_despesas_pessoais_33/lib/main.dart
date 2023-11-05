@@ -29,10 +29,9 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class _MyHomeAppState extends State<MyHomeApp> {
-
   final List<Transaction> _listTransaction = [Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())];
 
-   void _addTransaction(String title, double value, DateTime date) {
+  void _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
 
     setState(() {
@@ -40,12 +39,22 @@ class _MyHomeAppState extends State<MyHomeApp> {
     });
   }
 
-   void _removeTransaction(String id) {
-     setState(() {
-        _listTransaction.removeWhere((trs) {
+  void _removeTransaction(String id) {
+    setState(() {
+      _listTransaction.removeWhere((trs) {
         return trs.id == id;
       });
-     });
+    });
+  }
+
+  _openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransactionForm(
+            onSubmmitted: _addTransaction,
+          );
+        });
   }
 
   @override
@@ -53,6 +62,14 @@ class _MyHomeAppState extends State<MyHomeApp> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Despesas pessoais'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _openTransactionFormModal(context);
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -64,13 +81,20 @@ class _MyHomeAppState extends State<MyHomeApp> {
               color: Colors.blue,
               child: Text('Gráfico'),
             ),
-            TransactionForm(
-              onSubmmitted: _addTransaction,
-            ),
-             TransactionList(listaTransaction: _listTransaction,onRemove: _removeTransaction,)
+            TransactionList(
+              listaTransaction: _listTransaction,
+              onRemove: _removeTransaction,
+            )
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _openTransactionFormModal(context);
+          },
+          child: const Icon(Icons.add),
+          ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
