@@ -1,3 +1,4 @@
+import 'package:exe_perguntas16/questao.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const PerguntaApp());
@@ -69,10 +70,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
         body: temPerguntaSelecionada ? 
         Column(
           children: [
-            SizedBox(
-              width: double.infinity,
-              child: Text(_listaPerguntas[_index]['texto'] as String),
-            ),
+            Questao(texto: _listaPerguntas[_index]['texto'] as String,),
             ...lista.map(
               (map) {
                 return SizedBox(
