@@ -100,11 +100,13 @@ class _MyHomeAppState extends State<MyHomeApp> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+
             Chart(listaTransaction: _recentTransaction),
+
             TransactionList(
               listaTransaction: _listTransaction,
               onRemove: _removeTransaction,
-            )
+            ),
           ],
         ),
       ),
