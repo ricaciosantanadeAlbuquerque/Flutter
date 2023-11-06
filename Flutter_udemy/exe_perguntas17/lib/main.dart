@@ -52,18 +52,11 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, Object>> lista = listaPergunta[_index]['resposta'] as List<Map<String, Object>>;
+ 
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Perguntas')),
         body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Questao(texto: listaPergunta[_index]['texto'] as String),
-          ...lista.map((map) {
-            return Resposta(
-              texto: map['texto'] as String,
-              onSelected: _responder,
-            );
-          }).toList()
         ]),
       ),
     );
