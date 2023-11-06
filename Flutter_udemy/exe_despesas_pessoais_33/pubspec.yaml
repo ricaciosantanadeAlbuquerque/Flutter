@@ -77,15 +77,15 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
+    - family: Quicksand
+      fonts:
+        - asset: assets/fonts/Quicksand-Light.ttf
+        - asset: assets/fonts/Quicksand-Medium.ttf
+          style: italic
     - family: EBGaramond
       fonts:
         - asset: assets/fonts/EBGaramond-ExtraBold.ttf
-        - asset: fonts/Schyler-Italic.ttf
-          style: italic
-    - family: BarlowCondensed
-      fonts:
-        - asset: assets/fonts/BarlowCondensed-ExtraBold.ttf
-        - asset: fonts/TrajanPro_Bold.ttf
+        - asset: assets/fonts/EBGaramond-Italic.ttf
           weight: 700
   #
   # For details regarding fonts from package dependencies,

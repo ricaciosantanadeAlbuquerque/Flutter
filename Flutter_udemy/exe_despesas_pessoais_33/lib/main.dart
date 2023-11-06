@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:exe_despesas_pessoais_33/model/transaction.dart';
 import 'package:flutter/material.dart';
+import 'components/chart.dart';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 
@@ -16,6 +17,21 @@ class ExpensesApp extends StatelessWidget {
               primary: Colors.purple,
               secondary: Colors.amberAccent,
             ),
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+                fontFamily: 'EBGaramond',
+              ),
+            ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Quicksand',
+          ),
+        ),
       ),
       home: const MyHomeApp(),
     );
@@ -37,6 +53,9 @@ class _MyHomeAppState extends State<MyHomeApp> {
     setState(() {
       _listTransaction.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
+
   }
 
   void _removeTransaction(String id) {
@@ -76,11 +95,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(
-              elevation: 5,
-              color: Colors.blue,
-              child: Text('Gráfico'),
-            ),
+          Chart(listaTransaction: _listTransaction), 
             TransactionList(
               listaTransaction: _listTransaction,
               onRemove: _removeTransaction,
@@ -89,11 +104,11 @@ class _MyHomeAppState extends State<MyHomeApp> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            _openTransactionFormModal(context);
-          },
-          child: const Icon(Icons.add),
-          ),
+        onPressed: () {
+          _openTransactionFormModal(context);
+        },
+        child: const Icon(Icons.add),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
