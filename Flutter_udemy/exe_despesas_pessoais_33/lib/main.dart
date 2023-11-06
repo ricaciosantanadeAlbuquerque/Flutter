@@ -55,7 +55,6 @@ class _MyHomeAppState extends State<MyHomeApp> {
     });
 
     Navigator.of(context).pop();
-
   }
 
   void _removeTransaction(String id) {
@@ -74,6 +73,12 @@ class _MyHomeAppState extends State<MyHomeApp> {
             onSubmmitted: _addTransaction,
           );
         });
+  }
+
+  List<Transaction> get _recentTransaction {
+    return _listTransaction.where((trs) {
+      return trs.date.isAfter(DateTime.now().subtract(const Duration(days: 7),),);
+    }).toList();
   }
 
   @override
@@ -95,7 +100,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-          Chart(listaTransaction: _listTransaction), 
+            Chart(listaTransaction: _recentTransaction),
             TransactionList(
               listaTransaction: _listTransaction,
               onRemove: _removeTransaction,
