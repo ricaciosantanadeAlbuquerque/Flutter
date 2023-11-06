@@ -18,7 +18,7 @@ class Questionario extends StatelessWidget {
         ...lista.map((map) {
         return Resposta(
           texto: map['texto'] as String,
-          onSelected: () => onSelected,
+          onSelected: () => onSelected(map['pontuacao'] as int),
         );
       }).toList()
       ]

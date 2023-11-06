@@ -1,5 +1,4 @@
-import 'package:exe_perguntas17/questao.dart';
-import 'package:exe_perguntas17/resposta.dart';
+import 'package:exe_perguntas17/questionario.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const PerguntaApp());
@@ -12,7 +11,7 @@ class PerguntaApp extends StatefulWidget {
 
 class _PerguntaAppState extends State<PerguntaApp> {
   int _index = 0;
-  int _valor = 0;
+  int _valorTotla = 0;
 
   final List<Map<String, Object>> listaPergunta = const [
     {
@@ -44,20 +43,36 @@ class _PerguntaAppState extends State<PerguntaApp> {
     },
   ];
 
-  void _responder() {
-    setState(() {
-      _index++;
-    });
+  void _responder(int valor) {
+
+    if(temPerguntaSelecionada == true){
+        setState(() {
+        _index++;
+        _valorTotla += valor;
+      });
+    }
+
+  }
+
+  bool get temPerguntaSelecionada {
+    return _index < listaPergunta.length;
   }
 
   @override
   Widget build(BuildContext context) {
- 
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Perguntas')),
-        body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        ]),
+        body: temPerguntaSelecionada == true ?  Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Questionario(
+              index: _index, 
+              listaPergunta: listaPergunta,
+               onSelected: _responder
+               ),
+               ],
+               ) :
+               Container()
       ),
     );
   }
