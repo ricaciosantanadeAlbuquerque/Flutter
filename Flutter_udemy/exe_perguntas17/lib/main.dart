@@ -1,3 +1,5 @@
+import 'package:exe_perguntas17/questao.dart';
+import 'package:exe_perguntas17/resposta.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const PerguntaApp());
@@ -54,14 +56,12 @@ class _PerguntaAppState extends State<PerguntaApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Perguntas')),
-        body: Column(
-          crossAxisAlignment:CrossAxisAlignment.stretch,
-          children: [
-          Text(listaPergunta[_index]['texto'] as String),
+        body: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Questao(texto: listaPergunta[_index]['texto'] as String),
           ...lista.map((map) {
-            return ElevatedButton(
-              onPressed: _responder,
-              child: Text(map['texto'] as String),
+            return Resposta(
+              texto: map['texto'] as String,
+              onSelected: _responder,
             );
           }).toList()
         ]),
