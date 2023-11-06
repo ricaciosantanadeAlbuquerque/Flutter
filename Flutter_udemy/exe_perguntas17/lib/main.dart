@@ -1,4 +1,5 @@
 import 'package:exe_perguntas17/questionario.dart';
+import 'package:exe_perguntas17/resultado.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const PerguntaApp());
@@ -58,6 +59,15 @@ class _PerguntaAppState extends State<PerguntaApp> {
     return _index < listaPergunta.length;
   }
 
+  void reset(){
+
+    setState(() {
+      _index = 0;
+      _valorTotla = 0;
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -72,7 +82,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
                ),
                ],
                ) :
-               Container()
+                Resultado(pontuacao: _valorTotla,onReset: reset ,)
       ),
     );
   }
