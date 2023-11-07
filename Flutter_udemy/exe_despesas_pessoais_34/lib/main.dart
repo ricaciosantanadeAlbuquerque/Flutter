@@ -1,4 +1,9 @@
+import 'dart:math';
+
+import 'package:exe_despesas_pessoais_34/model/transaction.dart';
 import 'package:flutter/material.dart';
+
+import 'components/transaction_list.dart';
 
 void main() {
   runApp(const ExpensesApp());
@@ -11,11 +16,11 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme:ThemeData().copyWith(
-        colorScheme:ThemeData().colorScheme.copyWith(
-          primary: Colors.purple,
-          secondary:Colors.amberAccent,
-        ),
+      theme: ThemeData().copyWith(
+        colorScheme: ThemeData().colorScheme.copyWith(
+              primary: Colors.purple,
+              secondary: Colors.amberAccent,
+            ),
       ),
       home: const MyHomeApp(),
     );
@@ -29,47 +34,56 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class MyHomeAppState extends State<MyHomeApp> {
+  final List<Transaction> _listTransaction = [
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tenis de Corrida', value: 350, date: DateTime.now()),
+  ];
 
- @override
-  Widget build(BuildContext context){
+  void _removeTrasaction(String id) {
+     setState(() {
+         _listTransaction.removeWhere((trs) {
+        return trs.id == id;
+      });
+     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
+      appBar: AppBar(
         title: const Center(
           child: Text('Despesas Pessoais'),
         ),
-        actions:[
+        actions: [
           IconButton(
-            onPressed:(){},
-            icon:const Icon(Icons.add),
+            onPressed: () {},
+            icon: const Icon(Icons.add),
           ),
         ],
       ),
-      body:  const Column(
-        mainAxisAlignment:MainAxisAlignment.spaceAround,
-        crossAxisAlignment:CrossAxisAlignment.stretch,
-        children:[
-          Card(
-            elevation:5,
-            color:Colors.blue,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const Card(
+            elevation: 5,
+            color: Colors.blue,
             child: Text('Gráfico'),
           ),
-          Card(
-            elevation: 5,
-            color:Colors.blue,
-            child: Text('Lista Widget')
+          TransactionList(
+            listTransaction: _listTransaction, onRemove: _removeTrasaction,
           ),
-          Card(
-            elevation:5,
-            color:Colors.blue,
-            child:Text('Form'),
+          const Card(
+            elevation: 5,
+            color: Colors.blue,
+            child: Text('Form'),
           ),
         ],
       ),
-      floatingActionButton:FloatingActionButton(
-        onPressed:(){},
-        child:const Icon(Icons.add),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.add),
       ),
-      floatingActionButtonLocation:FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
