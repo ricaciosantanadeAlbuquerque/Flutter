@@ -10,6 +10,7 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme:ThemeData().copyWith(
         colorScheme:ThemeData().colorScheme.copyWith(
           primary: Colors.purple,
