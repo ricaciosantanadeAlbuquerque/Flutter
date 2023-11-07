@@ -34,12 +34,14 @@ class _TransactionFormState extends State<TransactionForm> {
           children: [
             TextField(
               controller: title,
+              onSubmitted:(value) => submitted(),
               decoration: const InputDecoration(
                 labelText: 'Título',
               ),
             ),
             TextField(
               controller: value,
+              onSubmitted: (_) => submitted(),
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(labelText: 'Valor (R\$)'),
             ),
@@ -47,8 +49,11 @@ class _TransactionFormState extends State<TransactionForm> {
               height: 40,
               child: Row(
                 children: [
-                  Expanded(child: Text('Data Selecionada ${DateFormat('dd MMM y').format(_selectedDate)}')),
-                  TextButton(onPressed: () {}, child: const Text('Selecionar Data')),
+                  Expanded(
+                    child: Text('Data Selecionada ${DateFormat('dd MMM y').format(_selectedDate)}'),
+                    ),
+                  TextButton(onPressed: () {}, 
+                  child: const Text('Selecionar Data')),
                 ],
               ),
             ),

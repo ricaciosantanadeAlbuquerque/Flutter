@@ -45,6 +45,9 @@ class MyHomeAppState extends State<MyHomeApp> {
     setState(() {
       _listTransaction.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
+    
   }
 
   void _removeTrasaction(String id) {
