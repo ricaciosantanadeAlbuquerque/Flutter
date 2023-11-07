@@ -22,6 +22,21 @@ class ExpensesApp extends StatelessWidget {
               primary: Colors.purple,
               secondary: Colors.amberAccent,
             ),
+      textTheme:ThemeData().textTheme.copyWith(
+        titleLarge: const TextStyle(
+          fontSize:16,
+          color:Colors.black,
+          fontWeight:FontWeight.bold,
+          fontFamily:' EBGaramond'
+        ),
+      ),
+      appBarTheme: const AppBarTheme(
+        titleTextStyle: TextStyle(
+          fontSize:25,
+          fontWeight:FontWeight.bold,
+          fontFamily: 'BarlowCondensed'
+        ),
+      ),
       ),
       home: const MyHomeApp(),
     );
@@ -47,7 +62,7 @@ class MyHomeAppState extends State<MyHomeApp> {
     });
 
     Navigator.of(context).pop();
-    
+
   }
 
   void _removeTrasaction(String id) {
