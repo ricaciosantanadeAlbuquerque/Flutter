@@ -56,7 +56,7 @@ class _TransactionFormState extends State<TransactionForm> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: submitted,
                   child: const Text('Nova Transação'),
                 ),
               ],

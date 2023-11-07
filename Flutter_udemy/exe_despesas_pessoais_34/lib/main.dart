@@ -35,7 +35,6 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class MyHomeAppState extends State<MyHomeApp> {
-
   final List<Transaction> _listTransaction = [
     Transaction(id: Random().nextDouble().toString(), title: 'Novo Tenis de Corrida', value: 350, date: DateTime.now()),
   ];
@@ -56,6 +55,16 @@ class MyHomeAppState extends State<MyHomeApp> {
     });
   }
 
+  _openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransactionForm(
+            onSubmitted: _addTransaction,
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +74,9 @@ class MyHomeAppState extends State<MyHomeApp> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _openTransactionFormModal(context);
+            },
             icon: const Icon(Icons.add),
           ),
         ],
@@ -80,7 +91,6 @@ class MyHomeAppState extends State<MyHomeApp> {
               color: Colors.blue,
               child: Text('Gráfico'),
             ),
-            TransactionForm(onSubmitted: _addTransaction,),
             TransactionList(
               listTransaction: _listTransaction,
               onRemove: _removeTrasaction,
@@ -89,7 +99,9 @@ class MyHomeAppState extends State<MyHomeApp> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          _openTransactionFormModal(context);
+        },
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
