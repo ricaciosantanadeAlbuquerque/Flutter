@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:exe_despesas_pessoais_34/model/transaction.dart';
 import 'package:flutter/material.dart';
 
+import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 
 void main() {
@@ -34,16 +35,25 @@ class MyHomeApp extends StatefulWidget {
 }
 
 class MyHomeAppState extends State<MyHomeApp> {
+
   final List<Transaction> _listTransaction = [
     Transaction(id: Random().nextDouble().toString(), title: 'Novo Tenis de Corrida', value: 350, date: DateTime.now()),
   ];
 
+  void _addTransaction(String title, double value) {
+    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
+
+    setState(() {
+      _listTransaction.add(newTransaction);
+    });
+  }
+
   void _removeTrasaction(String id) {
-     setState(() {
-         _listTransaction.removeWhere((trs) {
+    setState(() {
+      _listTransaction.removeWhere((trs) {
         return trs.id == id;
       });
-     });
+    });
   }
 
   @override
@@ -60,24 +70,23 @@ class MyHomeAppState extends State<MyHomeApp> {
           ),
         ],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Card(
-            elevation: 5,
-            color: Colors.blue,
-            child: Text('Gráfico'),
-          ),
-          TransactionList(
-            listTransaction: _listTransaction, onRemove: _removeTrasaction,
-          ),
-          const Card(
-            elevation: 5,
-            color: Colors.blue,
-            child: Text('Form'),
-          ),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Card(
+              elevation: 5,
+              color: Colors.blue,
+              child: Text('Gráfico'),
+            ),
+            TransactionForm(onSubmitted: _addTransaction,),
+            TransactionList(
+              listTransaction: _listTransaction,
+              onRemove: _removeTrasaction,
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},

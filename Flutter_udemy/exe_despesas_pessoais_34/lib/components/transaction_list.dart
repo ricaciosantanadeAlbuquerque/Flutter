@@ -16,26 +16,29 @@ class TransactionList extends StatelessWidget {
           itemCount: listTransaction.length,
           itemBuilder: (_, index) {
             final trs = listTransaction[index];
-            return ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Theme.of(context).colorScheme.primary,
-                radius: 30,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FittedBox(
-                    child: Text('R\$ ${trs.value.toStringAsFixed(2)}'),
+            return Card(
+              elevation:5,
+              child: ListTile(
+                leading: CircleAvatar(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  radius: 30,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: FittedBox(
+                      child: Text('R\$ ${trs.value.toStringAsFixed(2)}'),
+                    ),
                   ),
                 ),
-              ),
-              title: Text(trs.title),
-              subtitle: Text(
-                DateFormat('dd MMM y').format(trs.date),
-              ),
-              trailing: IconButton(
-                onPressed: () {
-                  onRemove(trs.id);
-                },
-                icon: Icon(color: Theme.of(context).colorScheme.error, Icons.delete),
+                title: Text(trs.title),
+                subtitle: Text(
+                  DateFormat('dd MMM y').format(trs.date),
+                ),
+                trailing: IconButton(
+                  onPressed: () {
+                    onRemove(trs.id);
+                  },
+                  icon: Icon(color: Theme.of(context).colorScheme.error, Icons.delete),
+                ),
               ),
             );
           }),
