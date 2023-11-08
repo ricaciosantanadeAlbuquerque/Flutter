@@ -34,10 +34,16 @@ class Chart extends StatelessWidget {
     return Card(
         elevation: 6,
         margin: const EdgeInsets.all(20),
-        child: Row(
-          children: groupedTransaction.map((map) {
-            return ChartBar(label: map['day'] as String, value: map['value'] as double, percentage: 0.5);
-          }).toList(),
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment:MainAxisAlignment.spaceAround,
+            children: groupedTransaction.map((map) {
+              return Flexible(
+              fit: FlexFit.tight,
+                child: ChartBar(label: map['day'] as String, value: map['value'] as double, percentage: 0.5));
+            }).toList(),
+          ),
         ));
   }
 }
