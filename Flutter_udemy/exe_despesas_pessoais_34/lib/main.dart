@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:exe_despesas_pessoais_34/model/transaction.dart';
 import 'package:flutter/material.dart';
 
+import 'components/chart.dart';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
 
@@ -22,21 +23,12 @@ class ExpensesApp extends StatelessWidget {
               primary: Colors.purple,
               secondary: Colors.amberAccent,
             ),
-      textTheme:ThemeData().textTheme.copyWith(
-        titleLarge: const TextStyle(
-          fontSize:16,
-          color:Colors.black,
-          fontWeight:FontWeight.bold,
-          fontFamily:' EBGaramond'
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold, fontFamily: ' EBGaramond'),
+            ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: 'BarlowCondensed'),
         ),
-      ),
-      appBarTheme: const AppBarTheme(
-        titleTextStyle: TextStyle(
-          fontSize:25,
-          fontWeight:FontWeight.bold,
-          fontFamily: 'BarlowCondensed'
-        ),
-      ),
       ),
       home: const MyHomeApp(),
     );
@@ -62,7 +54,6 @@ class MyHomeAppState extends State<MyHomeApp> {
     });
 
     Navigator.of(context).pop();
-
   }
 
   void _removeTrasaction(String id) {
@@ -81,6 +72,14 @@ class MyHomeAppState extends State<MyHomeApp> {
             onSubmitted: _addTransaction,
           );
         });
+  }
+
+  List<Transaction> get _recentTransaction {
+    return _listTransaction.where((trs) {
+      return trs.date.isAfter(DateTime.now().subtract(const Duration(days:7),
+      ),
+      );
+    }).toList();
   }
 
   @override
@@ -104,11 +103,7 @@ class MyHomeAppState extends State<MyHomeApp> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(
-              elevation: 5,
-              color: Colors.blue,
-              child: Text('Gráfico'),
-            ),
+            Chart(listaTransaction: _recentTransaction),
             TransactionList(
               listTransaction: _listTransaction,
               onRemove: _removeTrasaction,
