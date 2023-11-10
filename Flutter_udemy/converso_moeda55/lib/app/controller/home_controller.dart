@@ -5,8 +5,8 @@ class HomeControlle {
   List<CurrencyModel>? listCurrencyModel;
   CurrencyModel? toCurrency;
   CurrencyModel? fromCurrency;
-  TextEditingController entrada;
-  TextEditingController saida;
+ final TextEditingController entrada;
+ final  TextEditingController saida;
 
   HomeControlle({required this.entrada, required this.saida}) {
     listCurrencyModel = CurrencyModel.listCurrencyModel;
@@ -28,5 +28,6 @@ class HomeControlle {
     }
 
     saida.text = retorno.toStringAsFixed(2);
+    
   }
 }
