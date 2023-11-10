@@ -4,11 +4,12 @@ import '../model/moeda.dart';
 
 class Linha extends StatelessWidget {
   final List<Moeda> lista;
-  TextEditingController controller;
-  Moeda selecionado;
-  void Function(Moeda?)?  funcao;
+   final TextEditingController controller;
+  final Moeda selecionado;
+  final void Function(Moeda?)?  funcao;
 
   Linha({
+    super.key,
     required this.controller, 
     required this.lista,
     required this.selecionado,

@@ -1,3 +1,4 @@
+import 'package:converso_moeda55/view/home_view.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const AppWidget());
@@ -8,7 +9,7 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: null,
+      home: const HomeView(),
     );
   }
 }
