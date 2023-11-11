@@ -19,7 +19,7 @@ class HomeViewState extends State<HomeView> {
         width: MediaQuery.of(context).size.width,
         height:MediaQuery.of(context).size.height,
         child: Padding(
-          padding: const EdgeInsets.only(left:20,right:20,top:200,bottom:20),
+          padding: const EdgeInsets.only(left:30,right:30,top:200,bottom:20),
           child: Column(
             children:[
               ClipRRect(
@@ -33,7 +33,12 @@ class HomeViewState extends State<HomeView> {
             EntradaSaida(controller: entrada),
             EntradaSaida(controller: saida),
               const SizedBox(height: 50),
-              ElevatedButton(onPressed:(){},child:const Text('CONVERTER'),
+              ElevatedButton(
+                style:ElevatedButton.styleFrom(
+                  backgroundColor:Colors.amberAccent,
+                ),
+                onPressed:(){},
+                child:const Text('CONVERTER'),
               ),
             ],
           ),
