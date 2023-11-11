@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 
-class EntradaSaida extends StatelessWidget {
-  final TextEditingController controller;
+import '../models/currency_model.dart';
 
-  const EntradaSaida({super.key, required this.controller});
-  
- @override
+class EntradaSaida extends StatelessWidget {
+  final List<CurrencyModel> listCurrencyModel;
+  final TextEditingController controller;
+  final void Function(CurrencyModel?)? onChanged;
+  final CurrencyModel selectedItem;
+
+  const EntradaSaida({super.key, required this.controller,required this.listCurrencyModel,required this.onChanged,required this.selectedItem});
+
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
@@ -13,7 +18,13 @@ class EntradaSaida extends StatelessWidget {
           flex: 1,
           child: SizedBox(
             height: 63,
-            child: DropdownButton(isExpanded: true, iconDisabledColor: Colors.amberAccent, underline: Container(height: 1, color: Colors.amberAccent), items: [], onChanged: (value) {}),
+            child: DropdownButton(
+                 value: selectedItem,
+                isExpanded: true,
+                iconDisabledColor: Colors.amberAccent,
+                underline: Container(height: 1, color: Colors.amberAccent),
+                items: listCurrencyModel.map((e) => DropdownMenuItem(value: e, child: Text(e.name))).toList(),
+                onChanged: onChanged),
           ),
         ),
         const SizedBox(width: 20),
