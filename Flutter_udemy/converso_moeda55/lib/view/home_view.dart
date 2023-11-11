@@ -47,7 +47,9 @@ class _HomeViewState extends State<HomeView> {
                 listCurrencyModel: homeControlle!.listCurrencyModel!,
                 controller: entrada,
                 onChanged: (model) {
-                  homeControlle!.toCurrency = model;
+                  setState(() {
+                     homeControlle!.toCurrency = model;
+                  });
                 },
               ),
               EntradaSaida(
