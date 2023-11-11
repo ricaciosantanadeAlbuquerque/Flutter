@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../models/currency_model.dart';
 
 class HomeController {
+  
   final TextEditingController entrada;
   final TextEditingController saida;
   List<CurrencyModel>? listCurrencyModel;
