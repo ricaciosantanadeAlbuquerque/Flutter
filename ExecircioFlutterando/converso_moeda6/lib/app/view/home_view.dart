@@ -1,3 +1,4 @@
+import 'package:converso_moeda6/app/components/entrada_saida.dart';
 import 'package:flutter/material.dart';
 
 class HomeView extends StatefulWidget {
@@ -9,7 +10,7 @@ class HomeView extends StatefulWidget {
 class HomeViewState extends State<HomeView> {
   final entrada = TextEditingController();
   final saida = TextEditingController();
-  final controller = TextEditingController();
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -29,40 +30,10 @@ class HomeViewState extends State<HomeView> {
                 ),
               ),
               const SizedBox(height:30),
-              Row(children:[
-                Expanded(
-                  flex:1,
-                  child: SizedBox(
-                    height:63,
-                    child: DropdownButton(
-                      isExpanded:true,
-                      iconDisabledColor:Colors.amberAccent,
-                      underline: Container(height: 1, color:Colors.amberAccent),
-                      items:[],
-                      onChanged:(value){}
-                    ),
-                  ),
-                ),
-              const SizedBox(width:20),
-                Expanded(    // O TextField() dentro de uma Row() produz um erro, é necessário dar um tamaho fixo ou expandi-ló
-                flex:4,
-                  child: TextField(
-                    controller: controller,
-                    decoration:const InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide:BorderSide(
-                          color: Colors.amberAccent,
-                        ),
-                      ),
-                      focusedBorder:UnderlineInputBorder(
-                        borderSide:BorderSide(
-                          color:Colors.amberAccent
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            EntradaSaida(controller: entrada),
+            EntradaSaida(controller: saida),
+              const SizedBox(height: 50),
+              ElevatedButton(onPressed:(){},child:const Text('CONVERTER'),
               ),
             ],
           ),
