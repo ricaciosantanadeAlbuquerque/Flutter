@@ -27,44 +27,50 @@ class HomeViewState extends State<HomeView> {
         height: MediaQuery.of(context).size.height,
         child: Padding(
           padding: const EdgeInsets.only(left: 30, right: 30, top: 200, bottom: 20),
-          child: Column(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(50),
-                child: Image.asset(
-                  'assets/image/logo.jpg',
-                  width: 100,
-                  height: 100,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(50),
+                  child: Image.asset(
+                    'assets/image/logo.jpg',
+                    width: 100,
+                    height: 100,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 30),
-              EntradaSaida(
-                controller: entrada,
-                listCurrencyModel: homeController!.listCurrencyModel!,
-                onChanged: (value) {
-                  homeController!.toCurrency = value;
-                },
-                selectedItem: homeController!.toCurrency!,
-              ),
-              EntradaSaida(
-                controller: saida,
-                listCurrencyModel: homeController!.listCurrencyModel!,
-                onChanged: (value) {
-                  homeController!.fromCurrency = value;
-                },
-                selectedItem: homeController!.fromCurrency!,
-              ),
-              const SizedBox(height: 50),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.amberAccent,
+                const SizedBox(height: 30),
+                EntradaSaida(
+                  controller: entrada,
+                  listCurrencyModel: homeController!.listCurrencyModel!,
+                  onChanged: (value) {
+                    setState(() {
+                       homeController!.toCurrency = value;
+                    });
+                  },
+                  selectedItem: homeController!.toCurrency!,
                 ),
-                onPressed: () {
-                  homeController!.convert();
-                },
-                child: const Text('CONVERTER'),
-              ),
-            ],
+                EntradaSaida(
+                  controller: saida,
+                  listCurrencyModel: homeController!.listCurrencyModel!,
+                  onChanged: (value) {
+                     setState(() {
+                       homeController!.fromCurrency = value;
+                     });
+                  },
+                  selectedItem: homeController!.fromCurrency!,
+                ),
+                const SizedBox(height: 50),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.amberAccent,
+                  ),
+                  onPressed: () {
+                    homeController!.convert();
+                  },
+                  child: const Text('CONVERTER'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../models/currency_model.dart';
 
 class HomeController {
-  
   final TextEditingController entrada;
   final TextEditingController saida;
   List<CurrencyModel>? listCurrencyModel;
@@ -18,7 +17,7 @@ class HomeController {
 
   void convert() {
     String text = entrada.text;
-    double value = double.tryParse(text) ?? 1.0;
+    double value = double.tryParse(text.replaceAll(',','.')) ?? 1.0;
     double retorno = 0;
 
     if (fromCurrency!.name == 'Real') {
@@ -27,6 +26,8 @@ class HomeController {
       retorno = value * toCurrency!.dolar;
     } else if (fromCurrency!.name == 'Euro') {
       retorno = value * toCurrency!.euro;
+    } else if (fromCurrency!.name == 'Peso Argentino') {
+      retorno = value * toCurrency!.pesoArgentino;
     }
 
     saida.text = retorno.toStringAsFixed(2);
