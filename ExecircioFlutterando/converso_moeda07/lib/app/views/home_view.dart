@@ -7,7 +7,7 @@ class HomeView extends StatefulWidget {
 }
 
 class HomeViewState extends State<HomeView> {
-  final controller = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,40 +22,7 @@ class HomeViewState extends State<HomeView> {
                 height:150,
                 ),
               ),
-              Row(
-                children:[
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(
-                      height:63,
-                      child: DropdownButton(
-                        iconEnabledColor:Colors.amberAccent,
-                        isExpanded:true,
-                        underline: Container(color:Colors.amberAccent,height:1),
-                        items: const [ 
-                          DropdownMenuItem(child: Text(''),
-                        ),
-                        ],
-                        onChanged:(value){}
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width:20),
-                  Expanded(
-                    flex:3,
-                    child: TextField(
-                      controller:controller,
-                      decoration: const InputDecoration(
-                         enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                               color:Colors.amberAccent
-                          ),
-                         ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+             
              const SizedBox(height: 50,),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
