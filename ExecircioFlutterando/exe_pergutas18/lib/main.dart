@@ -1,3 +1,4 @@
+import 'package:exe_pergutas18/questao.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const PerguntasApp());
@@ -61,7 +62,7 @@ class PerguntasAppState extends State<PerguntasApp> {
           ),
         ),
         body: Column(children: [
-          Text(listPerguntas[_index]['texto'] as String),
+           Questao(texto:listPerguntas[_index]['texto'] as String),
           ...lista.map((map) {
             return ElevatedButton(
               onPressed: responder,
