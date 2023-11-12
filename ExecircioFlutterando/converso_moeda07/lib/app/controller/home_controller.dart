@@ -1,0 +1,34 @@
+import 'package:converso_moeda07/app/models/currency_model.dart';
+import 'package:flutter/material.dart';
+
+class HomeController {
+  
+  final TextEditingController entrada;
+  final TextEditingController saida;
+  List<CurrencyModel>? listCurrencyModel;
+  CurrencyModel? toCurrency;
+  CurrencyModel? fromCurrency;
+
+  HomeController({required this.entrada, required this.saida}) {
+    listCurrencyModel = CurrencyModel.listCurrencyModel;
+    toCurrency = listCurrencyModel![0];
+    fromCurrency = listCurrencyModel![1];
+  }
+
+  void convert() {
+    double value = double.tryParse(entrada.text.replaceAll(',', '.')) ?? 1.0;
+    double retorno = 0;
+
+    if (fromCurrency!.name == 'Real') {
+      retorno = value * toCurrency!.real;
+    } else if (fromCurrency!.name == 'Dolar') {
+      retorno = value * toCurrency!.dolar;
+    } else if (fromCurrency!.name == 'Euro') {
+      retorno = value * toCurrency!.euro;
+    } else if (fromCurrency!.name == 'Peso Argentino') {
+      retorno = value * toCurrency!.pesoArgentino;
+    }
+
+    saida.text = retorno.toStringAsFixed(2);
+  }
+}
