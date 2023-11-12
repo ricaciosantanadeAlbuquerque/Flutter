@@ -1,4 +1,6 @@
+import 'package:exe_pergutas18/Resultado.dart';
 import 'package:exe_pergutas18/questao.dart';
+import 'package:exe_pergutas18/questionario.dart';
 import 'package:exe_pergutas18/resposta.dart';
 import 'package:flutter/material.dart';
 
@@ -45,9 +47,10 @@ class PerguntasAppState extends State<PerguntasApp> {
     }
   ];
 
-  void responder() {
+  void responder(int valor) {
     setState(() {
       _index++;
+      _valorTotla += valor;
     });
   }
 
@@ -55,9 +58,15 @@ class PerguntasAppState extends State<PerguntasApp> {
     return _index < listPerguntas.length;
   }
 
+  void resetar() {
+    setState(() {
+      _index = 0;
+      _valorTotla = 0;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, Object>> lista = temPerguntaSelecionada == true ? listPerguntas[_index]['respostas'] as List<Map<String, Object>> : [];
     return MaterialApp(
       theme: ThemeData(),
       home: Scaffold(
@@ -66,12 +75,13 @@ class PerguntasAppState extends State<PerguntasApp> {
             child: Text('Perguntas'),
           ),
         ),
-        body: Column(children: [
-          Questao(texto: listPerguntas[_index]['texto'] as String),
-          ...lista.map((map) {
-            return Resposta(texto: map['texto'] as String, onPressed: responder);
-          }),
-        ]),
+        body: temPerguntaSelecionada == true
+            ? Questionario(
+                listaPerguntas: listPerguntas,
+                index: _index,
+                returnValue: responder,
+              )
+            :  Resultado(valorTotla: _valorTotla,onChanged: resetar),
       ),
     );
   }
