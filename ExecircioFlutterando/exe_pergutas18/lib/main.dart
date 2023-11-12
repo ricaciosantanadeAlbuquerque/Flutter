@@ -1,4 +1,5 @@
 import 'package:exe_pergutas18/questao.dart';
+import 'package:exe_pergutas18/resposta.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const PerguntasApp());
@@ -50,9 +51,13 @@ class PerguntasAppState extends State<PerguntasApp> {
     });
   }
 
+  bool get temPerguntaSelecionada {
+    return _index < listPerguntas.length;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, Object>> lista = listPerguntas[_index]['respostas'] as List<Map<String, Object>>;
+    final List<Map<String, Object>> lista = temPerguntaSelecionada == true ? listPerguntas[_index]['respostas'] as List<Map<String, Object>> : [];
     return MaterialApp(
       theme: ThemeData(),
       home: Scaffold(
@@ -62,12 +67,9 @@ class PerguntasAppState extends State<PerguntasApp> {
           ),
         ),
         body: Column(children: [
-           Questao(texto:listPerguntas[_index]['texto'] as String),
+          Questao(texto: listPerguntas[_index]['texto'] as String),
           ...lista.map((map) {
-            return ElevatedButton(
-              onPressed: responder,
-              child: Text(map['texto'] as String),
-            );
+            return Resposta(texto: map['texto'] as String, onPressed: responder);
           }),
         ]),
       ),
