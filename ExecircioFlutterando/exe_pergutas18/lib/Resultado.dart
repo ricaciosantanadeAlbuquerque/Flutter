@@ -19,15 +19,24 @@ class Resultado extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text( farseResultado),
-        const SizedBox(height: 30),
-        ElevatedButton(
-          onPressed: onChanged,
-          child: const Text('Reset !'),
+    return SizedBox(
+      child: Center(
+        child: Column(
+          mainAxisAlignment:MainAxisAlignment.center,
+          children: [
+            Text( farseResultado,
+            style: const TextStyle(
+              fontSize:28,
+            ),
+            ),
+            const SizedBox(height: 30),
+            ElevatedButton(
+              onPressed: onChanged,
+              child: const Text('Reset !'),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

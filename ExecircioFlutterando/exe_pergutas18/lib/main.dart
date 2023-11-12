@@ -1,7 +1,5 @@
 import 'package:exe_pergutas18/Resultado.dart';
-import 'package:exe_pergutas18/questao.dart';
 import 'package:exe_pergutas18/questionario.dart';
-import 'package:exe_pergutas18/resposta.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const PerguntasApp());
