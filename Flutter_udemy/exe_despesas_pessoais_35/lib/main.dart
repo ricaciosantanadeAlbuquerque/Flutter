@@ -8,6 +8,7 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner:false,
       theme: ThemeData().copyWith(
         colorScheme:ThemeData().colorScheme.copyWith(
           primary: Colors.purple,
@@ -18,12 +19,14 @@ class ExpensesApp extends StatelessWidget {
             fontSize:16,
             fontWeight:FontWeight.bold,
             color:Colors.black,
+            fontFamily: 'BarlowCondensed',
           ),
         ),
         appBarTheme: const AppBarTheme(
           titleTextStyle:  TextStyle(
             fontSize:25,
             fontWeight:FontWeight.bold,
+            fontFamily:'EBGaramond'
           )
         ),
       ),

@@ -62,7 +62,10 @@ class TransactionFormState extends State<TransactionForm> {
             ),
             Row(
               children: [
-                Expanded(child: Text('Data Selecionada ${DateFormat('dd MMM y').format(selectedDate)}')),
+                Expanded(child: Text('Data Selecionada ${DateFormat('dd MMM y').format(selectedDate)}',
+                style: Theme.of(context).textTheme.titleLarge,
+                ),
+                ),
                 TextButton(
                   onPressed: () {
                     _showDatePicker();
