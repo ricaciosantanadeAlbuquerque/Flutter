@@ -26,15 +26,20 @@ class Chart extends StatelessWidget {
     }).reversed.toList();
   }
 
+  double get weekTotleValue {
+    return groupedTransaction.fold(0.0, (ct, map) {
+      return ct += map['value'] as double;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
         elevation: 6,
         margin: const EdgeInsets.all(30),
         child: Row(
-          children: groupedTransaction.map((map){
-            return Text('${map['day']}  ${map['value']}');
-          }).toList()
-        ));
+            children: groupedTransaction.map((map) {
+          return Text('${map['day']}  ${map['value']}');
+        }).toList()));
   }
 }

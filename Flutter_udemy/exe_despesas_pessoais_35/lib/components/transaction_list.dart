@@ -15,28 +15,31 @@ class TransactioList extends StatelessWidget {
       child: ListView.builder(
           itemCount: listTransaction.length,
           itemBuilder: (_, index) {
-            return ListTile(
-                leading: CircleAvatar(
-                  radius: 30,
-                  backgroundColor:Theme.of(context).colorScheme.primary,
-                  child: Padding(
-                    padding: const EdgeInsets.all(6),
-                    child: FittedBox(
-                      child: Text(
-                        listTransaction[index].value.toStringAsFixed(2),
+            return Card(
+              elevation:5,
+              child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 30,
+                    backgroundColor:Theme.of(context).colorScheme.primary,
+                    child: Padding(
+                      padding: const EdgeInsets.all(6),
+                      child: FittedBox(
+                        child: Text(
+                          listTransaction[index].value.toStringAsFixed(2),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                title: Text(listTransaction[index].title),
-                subtitle: Text(DateFormat('dd MMM y').format(listTransaction[index].date)),
-                trailing: IconButton(
-                  onPressed: () {
-                    onSubmitted(listTransaction[index].id);
-                  },
-                  icon: const Icon(Icons.delete),
-                  color: Theme.of(context).colorScheme.error,
-                ));
+                  title: Text(listTransaction[index].title),
+                  subtitle: Text(DateFormat('dd MMM y').format(listTransaction[index].date)),
+                  trailing: IconButton(
+                    onPressed: () {
+                      onSubmitted(listTransaction[index].id);
+                    },
+                    icon: const Icon(Icons.delete),
+                    color: Theme.of(context).colorScheme.error,
+                  )),
+            );
           }),
     );
   }
