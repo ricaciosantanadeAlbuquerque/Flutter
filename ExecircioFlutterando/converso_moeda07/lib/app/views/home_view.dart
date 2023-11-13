@@ -25,47 +25,49 @@ class HomeViewState extends State<HomeView> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 100),
-        child: Column(
-          children: [
-            ClipOval(
-              child: Image.asset(
-                'assets/image/logo.jpg',
-                width: 150,
-                height: 150,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ClipOval(
+                child: Image.asset(
+                  'assets/image/logo.jpg',
+                  width: 150,
+                  height: 150,
+                ),
               ),
-            ),
-            EntradaSaida(
-              controller: entrada,
-              isSelected: controle!.toCurrency!,
-              listCurrencyModel: controle!.listCurrencyModel!,
-              onChanged: (value) {
-                setState(() {
-                  controle!.toCurrency = value;
-                });
-              },
-            ),
-            EntradaSaida(
+              EntradaSaida(
+                controller: entrada,
+                isSelected: controle!.toCurrency!,
                 listCurrencyModel: controle!.listCurrencyModel!,
-                isSelected: controle!.fromCurrency!,
-                controller: saida,
                 onChanged: (value) {
                   setState(() {
-                    controle!.fromCurrency = value;
+                    controle!.toCurrency = value;
                   });
-                }),
-            const SizedBox(
-              height: 50,
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.amberAccent,
+                },
               ),
-              onPressed: () {
-                controle!.convert();
-              },
-              child: const Text('CONVERTER!'),
-            ),
-          ],
+              EntradaSaida(
+                  listCurrencyModel: controle!.listCurrencyModel!,
+                  isSelected: controle!.fromCurrency!,
+                  controller: saida,
+                  onChanged: (value) {
+                    setState(() {
+                      controle!.fromCurrency = value;
+                    });
+                  }),
+              const SizedBox(
+                height: 50,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.amberAccent,
+                ),
+                onPressed: () {
+                  controle!.convert();
+                },
+                child: const Text('CONVERTER!'),
+              ),
+            ],
+          ),
         ),
       ),
     );
