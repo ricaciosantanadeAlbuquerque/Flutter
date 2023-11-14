@@ -8,6 +8,7 @@ class EntradaSaida extends StatelessWidget {
   final void Function(CurrencyModel?)? onChanged; 
 
   const EntradaSaida({super.key, required this.controlle, required this.listaCurrencyModel, required this.isSelected, required this.onChanged});
+  
 
   @override
   Widget build(BuildContext context) {
