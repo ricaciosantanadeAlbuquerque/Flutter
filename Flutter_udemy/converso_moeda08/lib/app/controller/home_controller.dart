@@ -30,6 +30,6 @@ class HomeControlle {
       valorRetorno = valor * toCurrency!.pesoArgentino;
     }
 
-    saida.text = valorRetorno.toStringAsFixed(2);
+    saida.text = valorRetorno.toStringAsFixed(3);
   }
 }
