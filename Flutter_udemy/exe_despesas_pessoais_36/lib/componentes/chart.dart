@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
+import 'chart_bar.dart';
 
 class Chart extends StatelessWidget {
   final List<Transaction> listTransaction;
@@ -25,25 +26,25 @@ class Chart extends StatelessWidget {
       //print(DateFormat.E().format(weekDay)[0] + DateFormat.E().format(weekDay)[1]);
       switch (DateFormat.E().format(weekDay)[0] + DateFormat.E().format(weekDay)[1]) {
         case 'Mo':
-          dia = 'S';
+          dia = 'Seg';
           break;
         case 'Tu':
-          dia = 'T';
+          dia = 'Ter';
           break;
         case 'We':
-          dia = 'Q';
+          dia = 'Qua';
           break;
         case 'Th':
-          dia = 'Q';
+          dia = 'Qui';
           break;
         case 'Fr':
-          dia = 'S';
+          dia = 'Sex';
           break;
         case 'Sa':
-          dia = 'S';
+          dia = 'Sab';
           break;
         case 'Su':
-          dia = 'D';
+          dia = 'Dog';
           break;
       }
 
@@ -57,9 +58,15 @@ class Chart extends StatelessWidget {
     return Card(
         elevation: 6,
         margin: const EdgeInsets.all(20),
-        child: Row(
-            children: groupedTransaction.map((map) {
-          return Text('${map['day']} ${map['value']}');
-        }).toList()));
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Row(
+            mainAxisAlignment:MainAxisAlignment.spaceAround,
+              children: groupedTransaction.map((map) {
+            return Flexible(
+              fit:FlexFit.tight,
+              child: ChartBar(label: map['day'] as String,value: map['value'] as double,percentage: 0.5));
+          }).toList()),
+        ));
   }
 }
