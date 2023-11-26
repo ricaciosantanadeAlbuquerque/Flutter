@@ -33,13 +33,21 @@ class _MyHomePageState extends State<MyHomePage> {
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
   ];
 
- void _addTransaction(String title, double value) {
+  void _addTransaction(String title, double value) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
 
     setState(() {
       _listTransaction.add(newTransaction);
     });
+    Navigator.of(context).pop();
+  }
 
+  void _openTransactionFormModal(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return TransactionForm(onSubmitted: _addTransaction); // comunicação indireta.
+        });
   }
 
   @override
@@ -49,22 +57,35 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Center(
           child: Text('Despesas Pessoais'),
         ),
-      ),
-      body: Column(
-        // mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          const Card(
-            elevation: 5,
-            color: Colors.blue,
-            child: Text('Gráfico'),
-          ),
-          TransactionForm(onSubmitted: _addTransaction),
-          TransactionList(
-            listTransaction: _listTransaction, // comunicação direta
-          ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                _openTransactionFormModal(context);
+              },
+              icon: const Icon(Icons.add)),
         ],
       ),
+      body: SingleChildScrollView(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Card(
+              elevation: 5,
+              color: Colors.blue,
+              child: Text('Gráfico'),
+            ),
+            TransactionList(
+              listTransaction: _listTransaction, // comunicação direta
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _openTransactionFormModal(context),
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
