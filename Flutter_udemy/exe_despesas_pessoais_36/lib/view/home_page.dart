@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import '../componentes/chart.dart';
 import '../componentes/transaction_form.dart';
 import '../componentes/transaction_list.dart';
 import '../models/transaction.dart';
@@ -13,8 +14,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _listTransaction = [
-   // Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
-   // Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+   Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+   Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
   ];
 
   void _addTransaction(String title, double value) {
@@ -52,11 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Card(
-              elevation: 5,
-              color: Colors.blue,
-              child: Text('Gráfico'),
-            ),
+           Chart(listTransaction: _listTransaction),
             TransactionList(
               listTransaction: _listTransaction, // comunicação direta
             ),
