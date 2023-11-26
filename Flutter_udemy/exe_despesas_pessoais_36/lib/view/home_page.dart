@@ -14,8 +14,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _listTransaction = [
-   Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
-   Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 200000, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 200000, date: DateTime.now().subtract(const Duration(days: 6))),
   ];
 
   void _addTransaction(String title, double value) {
@@ -33,6 +33,12 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (_) {
           return TransactionForm(onSubmitted: _addTransaction); // comunicação indireta.
         });
+  }
+
+  List<Transaction> get _recentTransaction {
+   return _listTransaction.where((trs) {
+      return trs.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
+    }).toList();
   }
 
   @override
@@ -53,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-           Chart(listTransaction: _listTransaction),
+            Chart(listTransaction: _recentTransaction),
             TransactionList(
               listTransaction: _listTransaction, // comunicação direta
             ),
