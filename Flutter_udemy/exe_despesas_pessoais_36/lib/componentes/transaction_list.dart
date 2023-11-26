@@ -22,20 +22,20 @@ class TransactionList extends StatelessWidget {
                 elevation: 5,
                 child: ListTile(
                   leading: CircleAvatar(
+                    backgroundColor:Theme.of(context).colorScheme.primary,
                     radius: 30,
                     child: Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: FittedBox(
                         child: Text(
                           trs.value.toStringAsFixed(2),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.labelLarge,
                         ),
                       ),
                     ),
                   ),
-                  title: Text(trs.title),
+                  title: Text(trs.title,
+                  style:Theme.of(context).textTheme.titleLarge),
                   subtitle: Text(DateFormat('dd MMM y').format(trs.date)),
                   trailing: IconButton(color: Theme.of(context).colorScheme.error, onPressed: () {}, icon: const Icon(Icons.delete)),
                 ),
