@@ -14,12 +14,12 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _listTransaction = [
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
+    // Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+    //Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
   ];
 
-  void _addTransaction(String title, double value) {
-    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
+  void _addTransaction(String title, double value, DateTime date) {
+    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
 
     setState(() {
       _listTransaction.add(newTransaction);
@@ -36,9 +36,17 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   List<Transaction> get _recentTransaction {
-   return _listTransaction.where((trs) {
+    return _listTransaction.where((trs) {
       return trs.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
     }).toList();
+  }
+
+  void _removeTransaction(String id) {
+   setState(() {
+      _listTransaction.removeWhere((trs) {
+        return trs.id == id; // para remover deve ser true
+      });
+   });
   }
 
   @override
@@ -61,7 +69,8 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Chart(listTransaction: _recentTransaction),
             TransactionList(
-              listTransaction: _listTransaction, // comunicação direta
+              listTransaction: _listTransaction,
+              onRemove: _removeTransaction, // comunicação direta
             ),
           ],
         ),
