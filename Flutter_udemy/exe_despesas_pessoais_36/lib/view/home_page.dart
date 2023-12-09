@@ -14,9 +14,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _listTransaction = [
-    /**
-     *  Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
+    
      Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
      Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
@@ -31,7 +29,9 @@ class _MyHomePageState extends State<MyHomePage> {
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
      Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
-     */
+     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
+    
   ];
 
   void _addTransaction(String title, double value, DateTime date) {
