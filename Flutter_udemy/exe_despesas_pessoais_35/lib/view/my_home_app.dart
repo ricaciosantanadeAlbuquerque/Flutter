@@ -50,26 +50,31 @@ class MyHomeAppState extends State<MyHomeApp> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: [
+        IconButton(
+          onPressed: () {
+            openTransactionFormModal(context);
+          },
+          icon: const Icon(Icons.add),
+        )
+      ],
+    );
+
+    final avaliableHeight = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              openTransactionFormModal(context);
-            },
-            icon: const Icon(Icons.add),
-          )
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-           crossAxisAlignment: CrossAxisAlignment.stretch, 
-           children: [
-            
-          Chart(listaTransaction: recentTransaction),
-          TransactioList(listTransaction: listTransaction, onSubmitted: removeTransactio),
+        child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          SizedBox(
+            height: avaliableHeight * 0.25,
+            child: Chart(listaTransaction: recentTransaction),
+            ),
+          SizedBox(
+            height: avaliableHeight * 0.75,
+            child: TransactioList(listTransaction: listTransaction, onSubmitted: removeTransactio)),
         ]),
       ),
       floatingActionButton: FloatingActionButton(
