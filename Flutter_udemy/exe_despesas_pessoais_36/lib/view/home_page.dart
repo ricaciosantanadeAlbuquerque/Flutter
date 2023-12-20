@@ -14,24 +14,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _listTransaction = [
-    
-     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
-     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
-     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
-     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
-     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
-     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
-     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
-     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 250.33, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 80, date: DateTime.now().subtract(const Duration(days: 6))),
-    
   ];
 
   void _addTransaction(String title, double value, DateTime date) {
@@ -58,35 +56,45 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _removeTransaction(String id) {
-   setState(() {
+    setState(() {
       _listTransaction.removeWhere((trs) {
         return trs.id == id; // para remover deve ser true
       });
-   });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: [
+        IconButton(
+            onPressed: () {
+              _openTransactionFormModal(context);
+            },
+            icon: const Icon(Icons.add)),
+      ],
+    );
+
+    final avaliableHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top - appBar.preferredSize.height;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                _openTransactionFormModal(context);
-              },
-              icon: const Icon(Icons.add)),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(listTransaction: _recentTransaction),
-            TransactionList(
-              listTransaction: _listTransaction,
-              onRemove: _removeTransaction, // comunicação direta
+            SizedBox(
+              height: avaliableHeight * 0.20,
+              child: Chart(listTransaction: _recentTransaction),
+              ),
+            SizedBox(
+              height: avaliableHeight * 0.80,
+              child: TransactionList(
+                listTransaction: _listTransaction,
+                onRemove: _removeTransaction, // comunicação direta
+              ),
             ),
           ],
         ),
