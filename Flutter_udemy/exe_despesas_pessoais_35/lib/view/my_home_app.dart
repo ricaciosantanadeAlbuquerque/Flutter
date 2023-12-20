@@ -69,11 +69,11 @@ class MyHomeAppState extends State<MyHomeApp> {
       body: SingleChildScrollView(
         child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           SizedBox(
-            height: avaliableHeight * 0.25,
+            height: avaliableHeight * 0.18,
             child: Chart(listaTransaction: recentTransaction),
             ),
           SizedBox(
-            height: avaliableHeight * 0.75,
+            height: avaliableHeight * 0.82,
             child: TransactioList(listTransaction: listTransaction, onSubmitted: removeTransactio)),
         ]),
       ),
