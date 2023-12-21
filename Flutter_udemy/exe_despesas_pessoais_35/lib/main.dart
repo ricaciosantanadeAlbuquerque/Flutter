@@ -26,7 +26,13 @@ class ExpensesApp extends StatelessWidget {
                 fontFamily: 'BarlowCondensed',
               ),
             ),
-        appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: 'EBGaramond')),
+        appBarTheme:  AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize: 25 * MediaQuery.of(context).textScaleFactor,
+             fontWeight: FontWeight.bold,
+              fontFamily: 'EBGaramond',
+              ),
+              ),
       ),
       home: const MyHomeApp(),
     );
