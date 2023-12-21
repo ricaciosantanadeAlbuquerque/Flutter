@@ -24,8 +24,12 @@ class ExpensesApp extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-        appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: 'PlayfairDisplay'),
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize: 25 * MediaQuery.of(context).textScaleFactor, 
+            fontWeight: FontWeight.bold, 
+            fontFamily: 'PlayfairDisplay',
+            ),
         ),
       ),
       home: const MyHomePage(),
