@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:exe_despesas_pessoais_32/model/transaction.dart';
 import 'package:flutter/material.dart';
-
+//import 'package:flutter/services.dart';
 import 'components/chart.dart';
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
@@ -14,14 +14,24 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData().copyWith(
-          colorScheme: ThemeData().colorScheme.copyWith(primary: Colors.purple, secondary: Colors.amberAccent),
-          textTheme: ThemeData().textTheme.copyWith(
-                titleLarge: const TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'BarlowCondensed'),
-                labelLarge: const TextStyle(color: Colors.white),
+        colorScheme: ThemeData().colorScheme.copyWith(primary: Colors.purple, secondary: Colors.amberAccent),
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: const TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'BarlowCondensed',
               ),
-          appBarTheme: const AppBarTheme(titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: 'EBGaramond'))),
+              labelLarge: const TextStyle(color: Colors.white),
+            ),
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(fontSize: 25 * MediaQuery.of(context).textScaleFactor, fontWeight: FontWeight.bold, fontFamily: 'EBGaramond'),
+        ),
+      ),
       home: const MyHomeApp(),
     );
   }
@@ -36,6 +46,7 @@ class MyHomeApp extends StatefulWidget {
 
 class MyHomeAppSteta extends State<MyHomeApp> {
   final List<Transaction> _listaTransaction = [];
+  bool showChart = false;
 
   void _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
@@ -72,25 +83,50 @@ class MyHomeAppSteta extends State<MyHomeApp> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: [
+        IconButton(
+          onPressed: () => _openTransactionFormModal(context),
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+     final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
+    final avaliableHeight = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: [
-          IconButton(
-            onPressed: () => _openTransactionFormModal(context),
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Chart(listaTransaction: _recentTransaction),
-          TransactionList(
-            listaTransaction: _listaTransaction,
-            onRemove: _removeTransaction,
-          ), // comunicação direta
+          if(isLandscape)
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            const Text('Mostrar gráfico'),
+            Switch(
+              value: showChart,
+              onChanged: (value) {
+                setState(() {
+                  showChart = value;
+                });
+              },
+            ),
+          ]),
+          if (showChart || !isLandscape)
+            SizedBox(
+              height: avaliableHeight * (isLandscape ? 0.7 :0.25),
+              child: Chart(listaTransaction: _recentTransaction),
+            ),
+          if (!showChart || !isLandscape)
+            SizedBox(
+              height: avaliableHeight * 0.75,
+              child: TransactionList(
+                listaTransaction: _listaTransaction,
+                onRemove: _removeTransaction,
+              ),
+            ), // comunicação direta
         ],
       ),
       floatingActionButton: FloatingActionButton(
