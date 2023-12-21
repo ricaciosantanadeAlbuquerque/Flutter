@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:exe_despesas_pessoais_34/model/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'components/chart.dart';
 import 'components/transaction_form.dart';
@@ -16,6 +17,9 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp
+    ]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData().copyWith(
@@ -26,8 +30,8 @@ class ExpensesApp extends StatelessWidget {
         textTheme: ThemeData().textTheme.copyWith(
               titleLarge: const TextStyle(fontSize: 16, color: Colors.black, fontWeight: FontWeight.bold, fontFamily: ' EBGaramond'),
             ),
-        appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: 'BarlowCondensed'),
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(fontSize: 25 * MediaQuery.of(context).textScaleFactor, fontWeight: FontWeight.bold, fontFamily: 'BarlowCondensed'),
         ),
       ),
       home: const MyHomeApp(),
@@ -46,7 +50,7 @@ class MyHomeAppState extends State<MyHomeApp> {
     Transaction(id: Random().nextDouble().toString(), title: 'Novo Tenis de Corrida', value: 350, date: DateTime.now()),
   ];
 
-  void _addTransaction(String title, double value,DateTime date) {
+  void _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
 
     setState(() {
@@ -76,37 +80,49 @@ class MyHomeAppState extends State<MyHomeApp> {
 
   List<Transaction> get _recentTransaction {
     return _listTransaction.where((trs) {
-      return trs.date.isAfter(DateTime.now().subtract(const Duration(days:7),
-      ),
+      return trs.date.isAfter(
+        DateTime.now().subtract(
+          const Duration(days: 7),
+        ),
       );
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-          child: Text('Despesas Pessoais'),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              _openTransactionFormModal(context);
-            },
-            icon: const Icon(Icons.add),
-          ),
-        ],
+    final appBar = AppBar(
+      title: const Center(
+        child: Text('Despesas Pessoais'),
       ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            _openTransactionFormModal(context);
+          },
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+
+    final avaliableHeight = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(listaTransaction: _recentTransaction),
-            TransactionList(
-              listTransaction: _listTransaction,
-              onRemove: _removeTrasaction,
+            SizedBox(
+              height: avaliableHeight * 0.25,
+              child: Chart(listaTransaction: _recentTransaction),
+            ),
+            SizedBox(
+              height: avaliableHeight * 0.75,
+              child: TransactionList(
+                listTransaction: _listTransaction,
+                onRemove: _removeTrasaction,
+              ),
             ),
           ],
         ),
