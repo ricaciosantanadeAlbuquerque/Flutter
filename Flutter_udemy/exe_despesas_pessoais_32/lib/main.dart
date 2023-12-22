@@ -83,6 +83,8 @@ class MyHomeAppSteta extends State<MyHomeApp> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       title: const Text('Despesas Pessoais'),
       actions: [
@@ -90,10 +92,17 @@ class MyHomeAppSteta extends State<MyHomeApp> {
           onPressed: () => _openTransactionFormModal(context),
           icon: const Icon(Icons.add),
         ),
+        if (isLandscape)
+          IconButton(
+            onPressed: () {
+              setState(() {
+                showChart = !showChart;
+              });
+            },
+            icon: Icon(showChart ? Icons.list : Icons.show_chart),
+          ),
       ],
     );
-     final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
-
     final avaliableHeight = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -102,21 +111,9 @@ class MyHomeAppSteta extends State<MyHomeApp> {
         //mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if(isLandscape)
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const Text('Mostrar gráfico'),
-            Switch(
-              value: showChart,
-              onChanged: (value) {
-                setState(() {
-                  showChart = value;
-                });
-              },
-            ),
-          ]),
           if (showChart || !isLandscape)
             SizedBox(
-              height: avaliableHeight * (isLandscape ? 0.7 :0.25),
+              height: avaliableHeight * (isLandscape ? 0.7 : 0.25),
               child: Chart(listaTransaction: _recentTransaction),
             ),
           if (!showChart || !isLandscape)
