@@ -61,7 +61,7 @@ class TransactionFormState extends State<TransactionForm> {
               onSubmitted: (_) => submit(),
               decoration: const InputDecoration(labelText: 'valor (R\$)'),
             ),
-            Container(
+            SizedBox(
               height: 60,
               child: Row(children: [
                 Expanded(

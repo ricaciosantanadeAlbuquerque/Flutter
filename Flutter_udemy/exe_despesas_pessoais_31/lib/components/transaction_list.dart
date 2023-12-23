@@ -4,32 +4,35 @@ import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> listTransaction;
+  final bool landScape;
   final void Function(String) onRemove;
 
-  const TransactionList({super.key, required this.listTransaction, required this.onRemove});
+  const TransactionList({super.key, required this.listTransaction, required this.onRemove,required this.landScape});
 
   @override
   Widget build(BuildContext context) {
     return listTransaction.isEmpty
-        ? Column(children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Nenhuma Transação Cadastrada !!',
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              height: 280,
-              child: Image.asset(
-                'assets/image/waiting.png',
-                fit: BoxFit.cover,
+        ? LayoutBuilder(builder: (context, constraints) {
+            return Column(children: [
+              SizedBox(
+                height: landScape ? constraints.maxHeight * 0.10: constraints.maxHeight * 0.05,
               ),
-            ),
-          ])
+              Text(
+                'Nenhuma Transação Cadastrada !!',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              SizedBox(
+                height:  landScape ?constraints.maxHeight * 0.10 : constraints.maxHeight * 0.05,
+              ),
+              SizedBox(
+                height: constraints.maxHeight * 0.40,
+                child: Image.asset(
+                  'assets/image/waiting.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ]);
+          })
         : ListView.builder(
             itemCount: listTransaction.length,
             itemBuilder: (_, index) {

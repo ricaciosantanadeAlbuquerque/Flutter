@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:exe_despesas_pessoais_31/components/chart.dart';
 import 'package:exe_despesas_pessoais_31/models/transaction.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+//import 'package:flutter/services.dart';
 
 import 'components/transaction_form.dart';
 import 'components/transaction_list.dart';
@@ -14,11 +14,13 @@ class ExpensesApp extends StatelessWidget {
   const ExpensesApp({super.key});
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
+    /**
+    *  SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
+    */
     return MaterialApp(
-      debugShowCheckedModeBanner:false,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData().copyWith(
         colorScheme: ThemeData().colorScheme.copyWith(
               primary: Colors.purple,
@@ -55,13 +57,15 @@ class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> _listaTransaction = [
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
-     Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
-      Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
-       Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
-        Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
-         Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
-          Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.3, date: DateTime.now()),
   ];
+
+  bool showChart = false;
 
   _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
@@ -99,9 +103,17 @@ class MyHomeAppState extends State<MyHomeApp> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: const Text('Despesas Pessoais'),
       actions: [
+        if(isLandscape)IconButton(
+            icon: Icon(showChart ? Icons.list : Icons.show_chart),
+            onPressed: () {
+              setState(() {
+                showChart = !showChart;
+              });
+            }),
         IconButton(
           onPressed: () => _openTransactionFormModal(context),
           icon: const Icon(Icons.add),
@@ -118,17 +130,20 @@ class MyHomeAppState extends State<MyHomeApp> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              height: avariableHeight * 0.25,
-              child: Chart(listTransaction: recentTransaction),
-            ),
-            SizedBox(
-              height: avariableHeight * 0.75,
-              child: TransactionList(
-                listTransaction: _listaTransaction,
-                onRemove: _deleteTransaction,
+            if (showChart || !isLandscape)
+              SizedBox(
+                height: avariableHeight * (isLandscape ? 0.70 : 0.25),
+                child: Chart(listTransaction: recentTransaction),
               ),
-            ),
+            if (!showChart || !isLandscape)
+              SizedBox(
+                height: avariableHeight * 0.75,
+                child: TransactionList(
+                  listTransaction: _listaTransaction,
+                  onRemove: _deleteTransaction,
+                  landScape: isLandscape,
+                ),
+              ),
           ],
         ),
       ),
