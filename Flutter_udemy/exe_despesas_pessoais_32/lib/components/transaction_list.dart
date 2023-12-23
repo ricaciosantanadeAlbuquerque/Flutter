@@ -37,8 +37,13 @@ class TransactionList extends StatelessWidget {
                   leading: CircleAvatar(
                     radius: 30,
                     backgroundColor: Theme.of(context).colorScheme.primary,
-                    child: Text(
-                      trs.value.toStringAsFixed(2),
+                    child: Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: FittedBox(
+                        child: Text(
+                          trs.value.toStringAsFixed(2),
+                        ),
+                      ),
                     ),
                   ),
                   title: Text(trs.title, style: Theme.of(context).textTheme.titleLarge),
