@@ -105,7 +105,18 @@ class MyHomeAppState extends State<MyHomeApp> {
 
   @override
   Widget build(BuildContext context) {
+
+    final isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(title: const Text('Despesas Pessoais'), actions: [
+     if(isLandScape) IconButton(
+        onPressed: () {
+          setState(() {
+            showChart = !showChart;
+          });
+        },
+        icon: Icon(showChart ? Icons.list : Icons.show_chart),
+      ),
       IconButton(
         onPressed: () {
           openTransactionForm(context);
@@ -117,30 +128,26 @@ class MyHomeAppState extends State<MyHomeApp> {
     final avaliableHeight = MediaQuery.of(context).size.height;
     -appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
-    final isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
-
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-          if(isLandScape)  Row(
-              mainAxisAlignment: 
-              MainAxisAlignment.center, 
-              children: [
-              const Text('Mostrar o gráfico'),
-              Switch(
-                  value: showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      showChart = value;
-                    });
-                  }),
-            ]),
+            if (isLandScape)
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                const Text('Mostrar o gráfico'),
+                Switch(
+                    value: showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        showChart = value;
+                      });
+                    }),
+              ]),
             if (showChart == true || !isLandScape == true)
               SizedBox(
-                height: avaliableHeight * (isLandScape ? 0.7: 0.20),
+                height: avaliableHeight * (isLandScape ? 0.7 : 0.20),
                 child: Chart(
                   listaTransaction: recentTransaction,
                 ),
