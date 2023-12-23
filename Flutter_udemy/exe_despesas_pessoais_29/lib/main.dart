@@ -13,6 +13,7 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ThemeData().colorScheme.copyWith(
               primary: Colors.purple,
@@ -28,8 +29,12 @@ class ExpensesApp extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: 'Quicksand'),
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize: 25 * MediaQuery.of(context).textScaleFactor,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Quicksand',
+          ),
         ),
       ),
       home: const MyHomeApp(),
@@ -46,10 +51,21 @@ class MyHomeApp extends StatefulWidget {
 
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listaTransaction = [
-   // Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
-   // Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.10, date: DateTime.now()),
-     
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.10, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.10, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.10, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.10, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.10, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.33, date: DateTime.now()),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.10, date: DateTime.now()),
   ];
+
+  bool showChart = false;
 
   addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
@@ -89,23 +105,51 @@ class MyHomeAppState extends State<MyHomeApp> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(title: const Text('Despesas Pessoais'), actions: [
+      IconButton(
+        onPressed: () {
+          openTransactionForm(context);
+        },
+        icon: const Icon(Icons.add),
+      ),
+    ]);
+
+    final avaliableHeight = MediaQuery.of(context).size.height;
+    -appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+
+    final isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Despesas Pessoais'), actions: [
-        IconButton(
-          onPressed: () {
-            openTransactionForm(context);
-          },
-          icon: const Icon(Icons.add),
-        ),
-      ]),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(
-              listaTransaction: recentTransaction,
-            ),
-            TransactionList(listaTransaction: listaTransaction, onRemove:removeTrasaction), // comunicação direta // comunicação indireta
+          if(isLandScape)  Row(
+              mainAxisAlignment: 
+              MainAxisAlignment.center, 
+              children: [
+              const Text('Mostrar o gráfico'),
+              Switch(
+                  value: showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      showChart = value;
+                    });
+                  }),
+            ]),
+            if (showChart == true || !isLandScape == true)
+              SizedBox(
+                height: avaliableHeight * (isLandScape ? 0.7: 0.20),
+                child: Chart(
+                  listaTransaction: recentTransaction,
+                ),
+              ),
+            if (!showChart == true || !isLandScape == true)
+              SizedBox(
+                height: avaliableHeight * (isLandScape ? 0.7 : 0.8),
+                child: TransactionList(listaTransaction: listaTransaction, onRemove: removeTrasaction),
+              ), // comunicação direta // comunicação indireta
           ],
         ),
       ),
