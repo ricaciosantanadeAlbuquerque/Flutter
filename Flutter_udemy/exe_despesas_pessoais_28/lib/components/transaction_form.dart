@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String, double) onSubmitted;
+  final void Function(String, double, DateTime) onSubmitted;
 
   const TransactionForm({super.key, required this.onSubmitted});
 
@@ -12,7 +13,7 @@ class TransactionForm extends StatefulWidget {
 class TransactionFormState extends State<TransactionForm> {
   final title = TextEditingController();
   final value = TextEditingController();
-
+  DateTime selectedDate = DateTime.now();
   submitted() {
     final titulo = title.text;
     final valor = double.tryParse(value.text) ?? 0.0;
@@ -21,7 +22,22 @@ class TransactionFormState extends State<TransactionForm> {
       return;
     }
 
-    widget.onSubmitted(titulo, valor);
+    widget.onSubmitted(titulo, valor, selectedDate);
+  }
+
+  calendar() {
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2023),
+      lastDate: DateTime.now(),
+    ).then((dateSelected) {
+      if (dateSelected != null) {
+        setState(() {
+          selectedDate = dateSelected;
+        });
+      }
+    });
   }
 
   @override
@@ -45,24 +61,26 @@ class TransactionFormState extends State<TransactionForm> {
               keyboardType: const TextInputType.numberWithOptions(decimal: true),
               decoration: const InputDecoration(labelText: 'Valor (R\$)'),
             ),
-            Container(
-              height:70,
-              child: Row(
-                children: [
-                  Text('Nenhuma Data selecionada !',
-                  style: Theme.of(context).textTheme.titleLarge),
-                  TextButton(onPressed: (){},child: const Text('Selecionar Data'),)
-                ]
-              ),
+            SizedBox(
+              height: 70,
+              child: Row(children: [
+                Expanded(
+                  child: Text('Data Selecionada ${DateFormat('dd /MMM / y').format(selectedDate)}', style: Theme.of(context).textTheme.titleLarge),
+                ),
+                TextButton(
+                  onPressed: calendar,
+                  child: const Text('Selecionar Data'),
+                )
+              ]),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
-                                   onPressed: () {
+                  onPressed: () {
                     submitted();
                   },
-                  child:  Text(
+                  child: Text(
                     'Nova Transação',
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
