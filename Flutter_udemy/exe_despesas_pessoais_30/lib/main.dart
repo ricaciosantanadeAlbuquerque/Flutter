@@ -13,6 +13,7 @@ class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData().copyWith(
         colorScheme: ThemeData().colorScheme.copyWith(
               primary: Colors.purple,
@@ -26,9 +27,9 @@ class ExpensesApp extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           titleTextStyle: TextStyle(
-            fontSize: 25,
+            fontSize: 25 * MediaQuery.of(context).textScaleFactor,
             fontWeight: FontWeight.bold,
             fontFamily: 'Quicksand',
           ),
@@ -48,6 +49,7 @@ class MyHomeApp extends StatefulWidget {
 
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> _listaTransaction = [];
+  bool showChart = false;
 
   _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
@@ -81,33 +83,67 @@ class MyHomeAppState extends State<MyHomeApp> {
   }
 
   void _removeTransaction(String id) {
-      setState(() {
-        _listaTransaction.removeWhere((trs) {
+    setState(() {
+      _listaTransaction.removeWhere((trs) {
         return trs.id == id;
       });
-      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: [
+    final isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
+
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: [
+        if (isLandScape)
           IconButton(
-              icon: const Icon(Icons.add),
+              icon: Icon(showChart ? Icons.list : Icons.show_chart),
               onPressed: () {
-                _openTransactionFormModal(context);
+                setState(() {
+                  showChart = !showChart;
+                });
               }),
-        ],
-      ),
+        IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              _openTransactionFormModal(context);
+            }),
+      ],
+    );
+
+    final altura = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Chart(listaTransaction: _recentTransaction),
-          TransactionList(
-            // comunicação direta
-            listTransaction: _listaTransaction,onRemove: _removeTransaction,
-          ),
+         if(isLandScape) Row(
+            mainAxisAlignment: MainAxisAlignment.center, 
+            children: [
+            const Text('Mostre o Gráfico'),
+            Switch(
+                value: showChart,
+                onChanged: (value) {
+                  setState(() {
+                    showChart = value;
+                  });
+                }),
+          ]),
+          if (showChart || !isLandScape)
+            SizedBox(
+              height: altura * (isLandScape ? 0.8 : 0.25),
+              child: Chart(listaTransaction: _recentTransaction),
+            ),
+          if (!showChart || !isLandScape)
+            SizedBox(
+              height: altura * 0.75,
+              child: TransactionList(
+                // comunicação direta
+                listTransaction: _listaTransaction, onRemove: _removeTransaction,
+              ),
+            ),
         ]),
       ),
       floatingActionButton: FloatingActionButton(

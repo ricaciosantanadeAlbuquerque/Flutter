@@ -9,28 +9,26 @@ class ChartBart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
+    return LayoutBuilder(builder: (context, constraints) {
+      return Column(children: [
         SizedBox(
-          height: 20,
+          height: constraints.maxHeight * 0.15,
           child: FittedBox(
-            child: Text(value.toStringAsFixed(2),
+            child: Text(
+              value.toStringAsFixed(2),
+            ),
           ),
-          ),
-          ),
-        const SizedBox(height:5),
-        Container(
-          height:60,
-          width:10,
-          child:Stack(
-            alignment:Alignment.bottomCenter,
-            children:[
+        ),
+        SizedBox(height: constraints.maxHeight * 0.05),
+        SizedBox(
+          height: constraints.maxHeight * 0.60,
+          width: 10,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
               Container(
-                decoration:BoxDecoration(
-                  border:Border.all(
-                    width:1.0,
-                    color: Colors.grey
-                  ),
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1.0, color: Colors.grey),
                   color: const Color.fromRGBO(220, 220, 220, 1),
                   borderRadius: BorderRadius.circular(5),
                 ),
@@ -38,18 +36,22 @@ class ChartBart extends StatelessWidget {
               FractionallySizedBox(
                 heightFactor: perncentage,
                 child: Container(
-                  decoration:BoxDecoration(
-                    color:Theme.of(context).colorScheme.primary,
-                    borderRadius:BorderRadius.circular(5),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: BorderRadius.circular(5),
                   ),
                 ),
               ),
             ],
           ),
         ),
-         const SizedBox(height: 5),
-         Text(label),
-      ]
-    );
+         SizedBox(height: constraints.maxHeight * 0.05),
+        SizedBox(
+          height:constraints.maxHeight * 0.15,
+          child: FittedBox(child: Text(label),
+          ),
+          ),
+      ]);
+    });
   }
 }
