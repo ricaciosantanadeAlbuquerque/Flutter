@@ -45,14 +45,55 @@ class MyHomeApp extends StatefulWidget {
 
 class HyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listaTransaction = [
-    /**
-     *  Transaction(
+    
+      Transaction(
       id: Random().nextDouble().toString(),
       title: 'Novo Tênis de corrida',
       value: 310.10,
       date: DateTime.now(),
-    )
-     */
+    ),
+      Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Novo Tênis de corrida',
+      value: 310.10,
+      date: DateTime.now(),
+    ),
+     Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Novo Tênis de corrida',
+      value: 310.10,
+      date: DateTime.now(),
+    ),
+     Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Novo Tênis de corrida',
+      value: 310.10,
+      date: DateTime.now(),
+    ),
+     Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Novo Tênis de corrida',
+      value: 310.10,
+      date: DateTime.now(),
+    ),
+     Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Novo Tênis de corrida',
+      value: 310.10,
+      date: DateTime.now(),
+    ),
+     Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Novo Tênis de corrida',
+      value: 310.10,
+      date: DateTime.now(),
+    ),
+     Transaction(
+      id: Random().nextDouble().toString(),
+      title: 'Novo Tênis de corrida',
+      value: 310.10,
+      date: DateTime.now(),
+    ),
   ];
   bool showChart = false;
 
@@ -138,7 +179,7 @@ class HyHomeAppState extends State<MyHomeApp> {
               ),
             if (!showChart || !isLandScape)
               SizedBox(
-                height: altura * 0.80,
+                height: altura * (isLandScape ? 0.6 : 0.74),
                 child: TransactionList(
                   listaTransaction: listaTransaction,onRemove: removeTrasaction,
                 ),
