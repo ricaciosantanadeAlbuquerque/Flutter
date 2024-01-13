@@ -13,10 +13,7 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData().copyWith(
-        colorScheme: ThemeData().colorScheme.copyWith(
-              primary: Colors.purple,
-              secondary: Colors.amberAccent
-            ),
+        colorScheme: ThemeData().colorScheme.copyWith(primary: Colors.purple, secondary: Colors.amberAccent),
         textTheme: ThemeData().textTheme.copyWith(
               titleLarge: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black, fontFamily: 'OpenSans'),
               labelLarge: const TextStyle(
@@ -42,9 +39,8 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final List<Transaction> listaTransaction = [
-     Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 211.30, date: DateTime.now().subtract(const Duration(days: 22))),
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.33, date: DateTime.now().subtract(const Duration(days:3))),
-   
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 211.30, date: DateTime.now().subtract(const Duration(days: 22))),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 210.33, date: DateTime.now().subtract(const Duration(days: 3))),
   ];
 
   addTransaction(String title, double value) {
@@ -77,26 +73,37 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: [
+        IconButton(
+          onPressed: () {
+            openTransactionForm(context);
+          },
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+
+    final altura = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              openTransactionForm(context);
-            },
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(listaTransaction: recentTransaction),
-      
-            TransactionList(
-              listaTransaction: listaTransaction,
+            SizedBox(
+              height: altura * 0.25,
+              child: Chart(listaTransaction: recentTransaction),
+              ),
+
+            SizedBox(
+              height:altura * 0.75,
+              child: TransactionList(
+                listaTransaction: listaTransaction,
+              ),
             ), // comunicação direta
           ],
         ),
