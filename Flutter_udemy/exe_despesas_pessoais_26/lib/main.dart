@@ -16,9 +16,12 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
+    /**
+    *  SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp
     ]);
+     código para fixar a tela no modo retrato
+    */
     return MaterialApp(
       theme: ThemeData().copyWith(
         colorScheme: ThemeData().colorScheme.copyWith(
@@ -52,9 +55,11 @@ class MyHomeApp extends StatefulWidget {
 // ===============================State================================
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listaTransaction = [
-    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now().subtract(const Duration(days: 5))),
-    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
+    //Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now().subtract(const Duration(days: 5))),
+    //Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
   ];
+
+  bool _showChart = false;
 
   addTransaction(String title, double value) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
@@ -103,13 +108,27 @@ class MyHomeAppState extends State<MyHomeApp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
+           Row(
+            mainAxisAlignment:MainAxisAlignment.center,
+            children:[
+              const Text('Exibir gráfico'),
+                 Switch(
+                  value: _showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      _showChart = value;
+                    });
+                  }),
+            ]
+           ),
+            if(_showChart)SizedBox(
               height: alturaDispositivo * 0.25,
               child: Chart(
                 listaTransaction: recentTransaction,
               ),
             ),
-            SizedBox(
+
+            if(!_showChart)SizedBox(
               height: alturaDispositivo * 0.75,
               child: TransactionList(listaTransaction: listaTransaction),
             ), // comunicação direta
