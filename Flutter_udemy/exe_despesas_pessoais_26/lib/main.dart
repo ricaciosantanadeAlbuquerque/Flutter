@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:exe_despesas_pessoais_26/models/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'components/chart.dart';
 import 'components/transaction_form.dart';
@@ -15,24 +16,24 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp
+    ]);
     return MaterialApp(
       theme: ThemeData().copyWith(
         colorScheme: ThemeData().colorScheme.copyWith(
-          primary: Colors.purple, 
-          secondary: Colors.amberAccent,
-          ),
-        textTheme: ThemeData().textTheme.copyWith(
-          titleLarge: const TextStyle(
-            fontSize: 20, color: Colors.black, 
-            fontWeight: FontWeight.bold, 
-            fontFamily: 'IBMPlexSans'),
+              primary: Colors.purple,
+              secondary: Colors.amberAccent,
             ),
-        appBarTheme:  AppBarTheme(
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: const TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold, fontFamily: 'IBMPlexSans'),
+            ),
+        appBarTheme: AppBarTheme(
           titleTextStyle: TextStyle(
             fontSize: 25 * MediaQuery.of(context).textScaleFactor,
-             fontWeight: FontWeight.bold,
-              fontFamily: 'OpenSans',
-              ),
+            fontWeight: FontWeight.bold,
+            fontFamily: 'OpenSans',
+          ),
         ),
       ),
       home: const MyHomeApp(),
@@ -94,9 +95,7 @@ class MyHomeAppState extends State<MyHomeApp> {
             icon: const Icon(Icons.add))
       ],
     );
-    final alturaDispositivo = MediaQuery.of(context).size.height 
-    - appBar.preferredSize.height 
-    - MediaQuery.of(context).padding.top;
+    final alturaDispositivo = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
     return Scaffold(
       appBar: appBar,
@@ -105,15 +104,15 @@ class MyHomeAppState extends State<MyHomeApp> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(
-              height:alturaDispositivo * 0.25,
+              height: alturaDispositivo * 0.25,
               child: Chart(
                 listaTransaction: recentTransaction,
               ),
             ),
             SizedBox(
-              height:alturaDispositivo * 0.75,
+              height: alturaDispositivo * 0.75,
               child: TransactionList(listaTransaction: listaTransaction),
-              ), // comunicação direta
+            ), // comunicação direta
           ],
         ),
       ),
