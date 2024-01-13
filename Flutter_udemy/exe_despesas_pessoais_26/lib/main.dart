@@ -39,8 +39,8 @@ class MyHomeApp extends StatefulWidget {
 // ===============================State================================
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listaTransaction = [
-    //Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now().subtract(const Duration(days:5))),
-    //Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now().subtract(const Duration(days: 5))),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
   ];
 
   addTransaction(String title, double value) {
@@ -66,29 +66,42 @@ class MyHomeAppState extends State<MyHomeApp> {
 
   List<Transaction> get recentTransaction {
     return listaTransaction.where((trs) {
-      return trs.date.isAfter(DateTime.now().subtract(const Duration(days:7)));
+      return trs.date.isAfter(DateTime.now().subtract(const Duration(days: 7)));
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: [
+        IconButton(
+            onPressed: () {
+              openTransactionFormModal(context);
+            },
+            icon: const Icon(Icons.add))
+      ],
+    );
+    final alturaDispositivo = MediaQuery.of(context).size.height 
+    - appBar.preferredSize.height 
+    - MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                openTransactionFormModal(context);
-              },
-              icon: const Icon(Icons.add))
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-           Chart(listaTransaction: recentTransaction,),
-            TransactionList(listaTransaction: listaTransaction), // comunicação direta
+            SizedBox(
+              height:alturaDispositivo * 0.25,
+              child: Chart(
+                listaTransaction: recentTransaction,
+              ),
+            ),
+            SizedBox(
+              height:alturaDispositivo * 0.75,
+              child: TransactionList(listaTransaction: listaTransaction),
+              ), // comunicação direta
           ],
         ),
       ),
