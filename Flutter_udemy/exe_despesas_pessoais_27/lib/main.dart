@@ -16,6 +16,9 @@ class ExpensesApp extends StatelessWidget {
       DeviceOrientation.portraitUp
     ]);
     return MaterialApp(
+      
+      debugShowCheckedModeBanner:false,
+
       theme: ThemeData().copyWith(
         colorScheme: ThemeData().colorScheme.copyWith(
           primary: Colors.purple, secondary: Colors.amberAccent,
