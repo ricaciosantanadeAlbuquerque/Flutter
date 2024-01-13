@@ -13,17 +13,26 @@ class ExpensesApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData().copyWith(
-        colorScheme: ThemeData().colorScheme.copyWith(primary: Colors.purple, secondary: Colors.amberAccent),
+        colorScheme: ThemeData().colorScheme.copyWith(
+          primary: Colors.purple, secondary: Colors.amberAccent,
+          ),
         textTheme: ThemeData().textTheme.copyWith(
-              titleLarge: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black, fontFamily: 'OpenSans'),
+              titleLarge: const TextStyle(fontSize: 16, 
+              fontWeight: FontWeight.bold, 
+              color: Colors.black,
+               fontFamily: 'OpenSans',
+               ),
               labelLarge: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
             ),
-        appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, fontFamily: 'Quicksand'),
+        appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize: 25 * MediaQuery.of(context).textScaleFactor,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Quicksand'),
         ),
       ),
       home: const MyHomePage(),
