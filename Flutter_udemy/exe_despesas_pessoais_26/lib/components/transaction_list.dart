@@ -4,27 +4,33 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> listaTransaction;
+  final void Function(String) onRemove;
 
-  const TransactionList({super.key,required this.listaTransaction});
+  const TransactionList({super.key, required this.listaTransaction, required this.onRemove});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 330,
       child: listaTransaction.isEmpty
-          ? Column(
-              children: [
-                const SizedBox(height: 20),
-                 Text('Nenhuma Transação Cadastrada',
-                style:Theme.of(context).textTheme.titleLarge),
-                const SizedBox(height: 20),
-                SizedBox(
-                  height: 250,
-                  child: Image.asset('assets/image/waiting.png',
-                  fit: BoxFit.cover,
+          ? LayoutBuilder(builder: (context, constraints) {
+              return Column(
+                children: [
+                  SizedBox(height: constraints.maxHeight * 0.02),
+                  Container(
+                    height: constraints.maxHeight * 0.20,
+                    child: Text('Nenhuma Transação Cadastrada', style: Theme.of(context).textTheme.titleLarge),
                   ),
-                ),
-              ],
-            )
+                  SizedBox(height: constraints.maxHeight * 0.02),
+                  SizedBox(
+                    height: constraints.maxHeight * 0.4,
+                    child: Image.asset(
+                      'assets/image/waiting.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              );
+            })
           : ListView.builder(
               itemCount: listaTransaction.length,
               itemBuilder: (_, index) {
@@ -46,23 +52,33 @@ class TransactionList extends StatelessWidget {
                         ),
                         child: Text(
                           'R\$ ${TRS.value.toStringAsFixed(2)}',
-                          style: TextStyle(color: Theme.of(context).colorScheme.primary
-                          , fontWeight: FontWeight.bold, fontSize: 20),
+                          style: TextStyle(color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            TRS.title,
-                            style: Theme.of(context).textTheme.titleLarge
-                          ),
+                          Text(TRS.title, style: Theme.of(context).textTheme.titleLarge),
                           Text(
                             DateFormat('d MMM y').format(TRS.date),
                             style: const TextStyle(color: Colors.grey),
                           ),
                         ],
                       ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment:MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                            color: Theme.of(context).colorScheme.error,
+                            onPressed: () {
+                              onRemove(TRS.id);
+                            },
+                            icon: const Icon(Icons.delete),
+                          ),
+                          ]
+                        ),
+                      )
                     ],
                   ),
                 );

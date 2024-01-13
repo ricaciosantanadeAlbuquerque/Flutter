@@ -23,6 +23,7 @@ class ExpensesApp extends StatelessWidget {
      código para fixar a tela no modo retrato
     */
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData().copyWith(
         colorScheme: ThemeData().colorScheme.copyWith(
               primary: Colors.purple,
@@ -55,14 +56,14 @@ class MyHomeApp extends StatefulWidget {
 // ===============================State================================
 class MyHomeAppState extends State<MyHomeApp> {
   final List<Transaction> listaTransaction = [
-    //Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now().subtract(const Duration(days: 5))),
-    //Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
+    Transaction(id: Random().nextDouble().toString(), title: 'Novo Tênis de corrida', value: 310.76, date: DateTime.now().subtract(const Duration(days: 5))),
+    Transaction(id: Random().nextDouble().toString(), title: 'Conta de Luz', value: 211.30, date: DateTime.now())
   ];
 
   bool _showChart = false;
 
-  addTransaction(String title, double value) {
-    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: DateTime.now());
+  addTransaction(String title, double value,DateTime date) {
+    final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date:date);
 
     setState(() {
       listaTransaction.add(newTransaction);
@@ -88,11 +89,32 @@ class MyHomeAppState extends State<MyHomeApp> {
     }).toList();
   }
 
+  void removeTransaction(String id) {
+    setState((){
+       listaTransaction.removeWhere((trs) {
+        return trs.id == id;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    // se a orientação do dispositivo for igual ao modo paisagem
+
+    final isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       title: const Text('Despesas Pessoais'),
       actions: [
+        if (isLandScape)
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _showChart = !_showChart;
+              });
+            },
+            icon: Icon(_showChart ? Icons.list : Icons.show_chart),
+          ),
         IconButton(
             onPressed: () {
               openTransactionFormModal(context);
@@ -108,30 +130,30 @@ class MyHomeAppState extends State<MyHomeApp> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-           Row(
-            mainAxisAlignment:MainAxisAlignment.center,
-            children:[
-              const Text('Exibir gráfico'),
-                 Switch(
-                  value: _showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      _showChart = value;
-                    });
-                  }),
-            ]
-           ),
-            if(_showChart)SizedBox(
-              height: alturaDispositivo * 0.25,
-              child: Chart(
-                listaTransaction: recentTransaction,
+            if (isLandScape)
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                const Text('Exibir gráfico'),
+                Switch(
+                    value: _showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        _showChart = value;
+                      });
+                    }),
+              ]),
+            if (_showChart || !isLandScape)
+              SizedBox(
+                height: isLandScape ? alturaDispositivo * 0.80 : alturaDispositivo * 0.25,
+                child: Chart(
+                  listaTransaction: recentTransaction,
+                ),
               ),
-            ),
 
-            if(!_showChart)SizedBox(
-              height: alturaDispositivo * 0.75,
-              child: TransactionList(listaTransaction: listaTransaction),
-            ), // comunicação direta
+            if (!_showChart || !isLandScape)
+              SizedBox(
+                height: alturaDispositivo * 0.75,
+                child: TransactionList(listaTransaction: listaTransaction,onRemove: removeTransaction,),
+              ), // comunicação direta
           ],
         ),
       ),
