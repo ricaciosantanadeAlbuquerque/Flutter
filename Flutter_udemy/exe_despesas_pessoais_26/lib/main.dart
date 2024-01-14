@@ -101,7 +101,7 @@ class MyHomeAppState extends State<MyHomeApp> {
   Widget build(BuildContext context) {
     // se a orientação do dispositivo for igual ao modo paisagem
 
-    final isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
+    bool isLandScape = MediaQuery.of(context).orientation == Orientation.landscape;
 
     final appBar = AppBar(
       title: const Text('Despesas Pessoais'),
