@@ -17,6 +17,8 @@ class MyHomePageState extends State<MyHomePage> {
     // Transaction(id: Random().nextDouble().toString(), title: 'conta de luz', value: 55, date:DateTime.now())
   ];
 
+  bool _showChart = false;
+
   void addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
 
@@ -53,18 +55,18 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-        title: const Text(
-          'Despesas Pessoais',
+      title: const Text(
+        'Despesas Pessoais',
+      ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            opeTransactionFormModal(context);
+          },
+          icon: const Icon(Icons.add),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              opeTransactionFormModal(context);
-            },
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      );
+      ],
+    );
 
     final altura = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
@@ -74,12 +76,26 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Row(
+              mainAxisAlignment:MainAxisAlignment.center,
+              children: [
+              const Text('Exibindo o gráfico'),
+              Switch(
+                  value: _showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      _showChart = value;
+                    });
+                  })
+            ]),
+            if(_showChart)
             SizedBox(
               height: altura * 0.25,
               child: Chart(
                 listaTransaction: recentTransaction,
               ),
             ),
+            if(!_showChart)
             SizedBox(
               height: altura * 0.75,
               child: TransactionLits(
