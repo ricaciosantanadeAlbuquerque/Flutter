@@ -54,11 +54,21 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final orientacaoPaisagem = MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: const Text(
         'Despesas Pessoais',
       ),
       actions: [
+        
+        if(orientacaoPaisagem)IconButton(
+          onPressed: () {
+            setState(() {
+              _showChart = !_showChart;
+            });
+          },
+          icon: Icon(_showChart ? Icons.list : Icons.show_chart),
+        ),
         IconButton(
           onPressed: () {
             opeTransactionFormModal(context);
@@ -67,7 +77,7 @@ class MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
-
+  
     final altura = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -76,33 +86,32 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              mainAxisAlignment:MainAxisAlignment.center,
-              children: [
-              const Text('Exibindo o gráfico'),
-              Switch(
-                  value: _showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      _showChart = value;
-                    });
-                  })
-            ]),
-            if(_showChart)
-            SizedBox(
-              height: altura * 0.25,
-              child: Chart(
-                listaTransaction: recentTransaction,
+            if (orientacaoPaisagem)
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                const Text('Exibindo o gráfico'),
+                Switch(
+                    value: _showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        _showChart = value;
+                      });
+                    })
+              ]),
+            if (_showChart || !orientacaoPaisagem)
+              SizedBox(
+                height: altura * (orientacaoPaisagem ? 0.70 : 0.25),
+                child: Chart(
+                  listaTransaction: recentTransaction,
+                ),
               ),
-            ),
-            if(!_showChart)
-            SizedBox(
-              height: altura * 0.75,
-              child: TransactionLits(
-                listTransaction: listTransaction,
-                onSubmitted: removeTransactio,
-              ),
-            ), // comunicação dirate / comunicação indireta
+            if (!_showChart || !orientacaoPaisagem)
+              SizedBox(
+                height: altura * 0.75,
+                child: TransactionLits(
+                  listTransaction: listTransaction,
+                  onSubmitted: removeTransactio,
+                ),
+              ), // comunicação dirate / comunicação indireta
           ],
         ),
       ),
