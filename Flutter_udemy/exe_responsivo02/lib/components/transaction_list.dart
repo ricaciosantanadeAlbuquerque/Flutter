@@ -20,7 +20,7 @@ class TransactionLits extends StatelessWidget {
                   height: constraints.maxHeight * 0.05,
                 ),
                 SizedBox(
-                  height: constraints.maxHeight * 0.80,
+                  height: constraints.maxHeight * 0.60,
                   child: Image.asset('assets/image/waiting.png', fit: BoxFit.cover),
                 ),
               ],
