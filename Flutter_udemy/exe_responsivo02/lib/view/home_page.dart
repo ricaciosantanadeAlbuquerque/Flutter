@@ -43,7 +43,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   removeTransactio(String id) {
-    print("===============================================${id} ===================================================");
+    // print("===============================================${id} ===================================================");
     setState(() {
       listTransaction.removeWhere((trs) {
         return trs.id == id;
@@ -53,7 +53,6 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     final orientacaoPaisagem = MediaQuery.of(context).orientation == Orientation.landscape;
 
     final appBar = AppBar(
@@ -61,6 +60,15 @@ class MyHomePageState extends State<MyHomePage> {
         'Despesas Pessoais',
       ),
       actions: [
+        if (orientacaoPaisagem)
+          IconButton(
+            onPressed: () {
+              setState(() {
+                _showChart = !_showChart;
+              });
+            },
+            icon: Icon((_showChart ? Icons.list : Icons.show_chart)),
+          ),
         IconButton(
           onPressed: () {
             opeTransactionFormModal(context);
@@ -78,7 +86,8 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            /** if(orientacaoPaisagem) 
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               const Text('Exibir Gráfico'),
               Switch(
                   value: _showChart,
@@ -87,10 +96,10 @@ class MyHomePageState extends State<MyHomePage> {
                       _showChart = value;
                     });
                   }),
-            ]),
+            ]), */
             if (_showChart || !orientacaoPaisagem)
               SizedBox(
-                height: altura * 0.25,
+                height: altura * (orientacaoPaisagem ? 0.70 : 0.25),
                 child: Chart(
                   listaTransaction: recentTransaction,
                 ),
