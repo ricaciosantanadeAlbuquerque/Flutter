@@ -15,9 +15,9 @@ class TransactionLits extends StatelessWidget {
         ? LayoutBuilder(builder: (context, constraints) {
             return Column(
               children: [
-                     SizedBox(height: constraints.maxHeight * 0.05),
+                SizedBox(height: constraints.maxHeight * 0.05),
                 Text('Nenhuma Transação Cadastrada !', style: Theme.of(context).textTheme.titleLarge),
-                     SizedBox(
+                SizedBox(
                   height: constraints.maxHeight * 0.05,
                 ),
                 SizedBox(
@@ -32,33 +32,48 @@ class TransactionLits extends StatelessWidget {
             itemBuilder: (_, index) {
               final trs = listTransaction[index];
               return Card(
-                margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
-                elevation: 5,
-                child: ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    radius: 30,
-                    child: Padding(
-                      padding: const EdgeInsets.all(9.0),
-                      child: FittedBox(
-                        child: Text(
-                          trs.value.toStringAsFixed(2),
-                          style: Theme.of(context).textTheme.labelLarge,
+                  margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  elevation: 5,
+                  child: ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor: Theme.of(context).colorScheme.primary,
+                        radius: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.all(9.0),
+                          child: FittedBox(
+                            child: Text(
+                              trs.value.toStringAsFixed(2),
+                              style: Theme.of(context).textTheme.labelLarge,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  title: Text(trs.title, style: Theme.of(context).textTheme.titleLarge),
-                  subtitle: Text(DateFormat('dd MMM y').format(trs.date)),
-                  trailing: IconButton(
-                    onPressed: () {
-                      onSubmitted(listTransaction[index].id);
-                    },
-                    color: Theme.of(context).colorScheme.error,
-                    icon: const Icon(Icons.delete),
-                  ),
-                ),
-              );
+                      title: Text(trs.title, style: Theme.of(context).textTheme.titleLarge),
+                      subtitle: Text(DateFormat('dd MMM y').format(trs.date)),
+                      trailing: MediaQuery.of(context).size.width > 480 //0 se for está no modo paisagem
+                          ? TextButton.icon(
+                              onPressed: () {
+                                onSubmitted(trs.id);
+                              },
+                              icon:  Icon(
+                                Icons.delete,
+                                color: Theme.of(context).colorScheme.error),
+                              label: Text('Excluir',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.error,
+                              ),
+                            ),
+                              
+                            )
+                          : IconButton(
+                              color: Theme.of(context).colorScheme.error,
+                              onPressed: () {
+                                onSubmitted(trs.id);
+                              },
+                              icon: const Icon(Icons.delete),
+                            ),
+                            ),
+                            );
             },
           );
   }
