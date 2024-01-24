@@ -110,14 +110,14 @@ class MyHomePageState extends State<MyHomePage> {
               ]),
             if (_showChart || !orientacaoPaisagem)
               SizedBox(
-                height: altura * (orientacaoPaisagem ? 0.70 : 0.25),
+                height: altura * (orientacaoPaisagem ? 0.80 : 0.25),
                 child: Chart(
                   listaTransaction: recentTransaction,
                 ),
               ),
             if (!_showChart || !orientacaoPaisagem)
               SizedBox(
-                height: altura * 0.75,
+                height: altura * (orientacaoPaisagem? 1 :0.75),
                 child: TransactionLits(
                   listTransaction: listTransaction,
                   onSubmitted: removeTransactio,
