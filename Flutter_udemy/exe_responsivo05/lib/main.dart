@@ -1,5 +1,6 @@
 import 'package:exe_responsivo05/view/homa_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() => runApp(const ExpensesApp());
 
@@ -8,6 +9,7 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData().copyWith(
@@ -19,12 +21,12 @@ class ExpensesApp extends StatelessWidget {
                 titleLarge: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black, fontFamily: 'Nunito'),
                 labelLarge: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, fontFamily: 'Nunito'),
               ),
-          appBarTheme:  AppBarTheme(
+          appBarTheme: AppBarTheme(
             titleTextStyle: TextStyle(
-            fontSize: 25 * MediaQuery.of(context).textScaleFactor,
-             fontWeight: FontWeight.bold, 
-             fontFamily: 'AlexBrush',
-             ),
+              fontSize: 25 * MediaQuery.of(context).textScaleFactor,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'AlexBrush',
+            ),
           ),
         ),
         home: const MyHomePage());
