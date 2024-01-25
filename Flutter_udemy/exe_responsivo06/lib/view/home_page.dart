@@ -52,6 +52,9 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final orientacaoPaisagem = MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       title: const Text(
         'Despesas Pessoais',
@@ -86,14 +89,14 @@ class MyHomePageState extends State<MyHomePage> {
                     });
                   }),
             ]),
-            if(showChart)
+            if(showChart || !orientacaoPaisagem)
               SizedBox(
                height: alturaDispositivo * 0.25,
                child: Chart(
                 listaTransaction: recentTransaction,
               ),
             ),
-            if(!showChart)  
+            if(!showChart || !orientacaoPaisagem)  
               SizedBox(
                 height: alturaDispositivo * 0.75,
                 child: TransactionLits(
