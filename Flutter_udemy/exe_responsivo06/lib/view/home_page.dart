@@ -52,22 +52,23 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final orientacaoPaisagem = MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    final orientacaoPaisagem = mediaQuery.orientation == Orientation.landscape;
 
     final appBar = AppBar(
       title: const Text(
         'Despesas Pessoais',
       ),
       actions: [
-       if(orientacaoPaisagem) 
+        if (orientacaoPaisagem)
           IconButton(
-          onPressed: () {
-            setState(() {
-              showChart = !showChart;
-            });
-          },
-          icon: Icon(showChart ? Icons.list : Icons.show_chart),
-        ),
+            onPressed: () {
+              setState(() {
+                showChart = !showChart;
+              });
+            },
+            icon: Icon(showChart ? Icons.list : Icons.show_chart),
+          ),
         IconButton(
           onPressed: () {
             opeTransactionFormModal(context);
@@ -77,7 +78,7 @@ class MyHomePageState extends State<MyHomePage> {
       ],
     );
 
-    final alturaDispositivo = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+    final alturaDispositivo = mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top;
 
     return Scaffold(
       appBar: appBar,
@@ -85,17 +86,17 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-          if(orientacaoPaisagem) 
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(showChart ? 'Exibir Lista' : 'Exibir Gráfico'),
-              Switch(
-                  value: showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      showChart = value;
-                    });
-                  }),
-            ]),
+            if (orientacaoPaisagem)
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text(showChart ? 'Exibir Lista' : 'Exibir Gráfico'),
+                Switch(
+                    value: showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        showChart = value;
+                      });
+                    }),
+              ]),
             if (showChart || !orientacaoPaisagem)
               SizedBox(
                 height: alturaDispositivo * (orientacaoPaisagem ? 0.80 : 0.25),
