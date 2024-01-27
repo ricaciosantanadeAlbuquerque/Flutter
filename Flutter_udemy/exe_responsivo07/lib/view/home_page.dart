@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../components/chart.dart';
@@ -60,14 +61,15 @@ class MyHomePageState extends State<MyHomePage> {
         'Despesas Pessoais',
       ),
       actions: [
-      if(orientacaoPaisagem)  IconButton(
-          onPressed: () {
-            setState(() {
-              showChart = !showChart;
-            });
-          },
-          icon: Icon(showChart ? Icons.list : Icons.show_chart),
-        ),
+        if (orientacaoPaisagem)
+          IconButton(
+            onPressed: () {
+              setState(() {
+                showChart = !showChart;
+              });
+            },
+            icon: Icon(showChart ? Icons.list : Icons.show_chart),
+          ),
         IconButton(
           onPressed: () {
             opeTransactionFormModal(context);
@@ -88,7 +90,8 @@ class MyHomePageState extends State<MyHomePage> {
             if (orientacaoPaisagem)
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Text(showChart ? 'Exibir A lista' : 'Exibir o Gráfico'),
-                Switch(
+                Switch.adaptive(
+                  activeColor:Theme.of(context).colorScheme.secondary,
                   value: showChart,
                   onChanged: (value) {
                     setState(() {
@@ -115,7 +118,7 @@ class MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: Platform.isIOS ? Container()  :FloatingActionButton(
         onPressed: () {
           opeTransactionFormModal(context);
         },
