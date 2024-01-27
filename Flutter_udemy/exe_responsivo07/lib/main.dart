@@ -9,9 +9,11 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
+   /**
+    *  SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp
     ]);
+    */
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData().copyWith(
