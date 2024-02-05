@@ -28,9 +28,9 @@ class ExpensesApp extends StatelessWidget {
             fontFamily:'Nunito'
           ),
         ),
-        appBarTheme: const AppBarTheme(
+        appBarTheme:  AppBarTheme(
           titleTextStyle: TextStyle(
-            fontSize: 25,
+            fontSize: 25 * MediaQuery.of(context).textScaleFactor,
             fontWeight:FontWeight.bold,
             fontFamily: 'AlexBrush'
           ),
