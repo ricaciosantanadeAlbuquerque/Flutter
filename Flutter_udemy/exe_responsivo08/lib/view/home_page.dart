@@ -15,6 +15,7 @@ class MyHomePageState extends State<MyHomePage> {
   final List<Transaction> listTransaction = [
     // Transaction(id: Random().nextDouble().toString(), title: 'conta de luz', value: 55, date:DateTime.now())
   ];
+  bool showCart = false;
 
   void addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
@@ -41,7 +42,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   removeTransactio(String id) {
-   // print("===============================================${id} ===================================================");
+    // print("===============================================${id} ===================================================");
     setState(() {
       listTransaction.removeWhere((trs) {
         return trs.id == id;
@@ -65,9 +66,7 @@ class MyHomePageState extends State<MyHomePage> {
       ],
     );
 
-    final altura = MediaQuery.of(context).size.height -
-     appBar.preferredSize.height - 
-     MediaQuery.of(context).padding.top;
+    final altura = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
     return Scaffold(
       appBar: appBar,
@@ -75,14 +74,28 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
+            Row(
+              mainAxisAlignment:MainAxisAlignment.center,
+              children: [
+                const Text('Exibir Gráfico !!!'),
+                Switch(
+                value: showCart,
+                onChanged: (value) {
+                  setState(() {
+                    showCart = value;
+                  });
+                },
+              ),
+              ]
+            ),
+           if(showCart) SizedBox(
               height: altura * 0.25,
               child: Chart(
                 listaTransaction: recentTransaction,
               ),
             ),
-            SizedBox(
-              height:altura * 0.75,
+            if(!showCart) SizedBox(
+              height: altura * 0.75,
               child: TransactionLits(
                 listTransaction: listTransaction,
                 onSubmitted: removeTransactio,
