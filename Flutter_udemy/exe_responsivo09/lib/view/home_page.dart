@@ -50,7 +50,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
+    
     final paisagem = MediaQuery.of(context).orientation == Orientation.landscape;
 
     final appBar = AppBar(
@@ -58,6 +58,14 @@ class MyHomePageState extends State<MyHomePage> {
         'Despesas Pessoais',
       ),
       actions: [
+     if(paisagem)  
+       IconButton(onPressed: () {
+          setState(() {
+            showChart = !showChart;
+          });
+        },
+        icon:Icon(showChart ? Icons.list:Icons.show_chart),
+        ),
         IconButton(
           onPressed: () {
             opeTransactionFormModal(context);
@@ -75,28 +83,16 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if(paisagem)
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(showChart ? 'Mostrado o Gráfico' : 'Mostrando a Lista'),
-              Switch(
-                  value: showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      showChart = value;
-                    });
-                  }),
-            ]),
-
-            if (showChart || !paisagem)
+           if (showChart || !paisagem)
               SizedBox(
-                height: altura * 0.25,
+                height: altura * (paisagem ? 0.80 : 0.25),
                 child: Chart(
                   listaTransaction: recentTransaction,
                 ),
               ),
             if (!showChart || !paisagem)
               SizedBox(
-                height: altura * 0.75,
+                height: altura * (paisagem ? 1 : 0.75),
                 child: TransactionLits(
                   listTransaction: listTransaction,
                   onSubmitted: removeTransactio,
