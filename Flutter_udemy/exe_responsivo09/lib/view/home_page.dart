@@ -50,6 +50,9 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    final paisagem = MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       title: const Text(
         'Despesas Pessoais',
@@ -63,6 +66,7 @@ class MyHomePageState extends State<MyHomePage> {
         ),
       ],
     );
+
     final altura = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
     return Scaffold(
@@ -71,7 +75,8 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            if(paisagem)
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(showChart ? 'Mostrado o Gráfico' : 'Mostrando a Lista'),
               Switch(
                   value: showChart,
@@ -81,22 +86,22 @@ class MyHomePageState extends State<MyHomePage> {
                     });
                   }),
             ]),
-           
-           if(showChart)
-               SizedBox(
-              height: altura * 0.25,
-              child: Chart(
-                listaTransaction: recentTransaction,
+
+            if (showChart || !paisagem)
+              SizedBox(
+                height: altura * 0.25,
+                child: Chart(
+                  listaTransaction: recentTransaction,
+                ),
               ),
-            ),
-            if(!showChart)
-               SizedBox(
-              height: altura * 0.75,
-              child: TransactionLits(
-                listTransaction: listTransaction,
-                onSubmitted: removeTransactio,
-              ),
-            ), // comunicação dirate / comunicação indireta
+            if (!showChart || !paisagem)
+              SizedBox(
+                height: altura * 0.75,
+                child: TransactionLits(
+                  listTransaction: listTransaction,
+                  onSubmitted: removeTransactio,
+                ),
+              ), // comunicação dirate / comunicação indireta
           ],
         ),
       ),
