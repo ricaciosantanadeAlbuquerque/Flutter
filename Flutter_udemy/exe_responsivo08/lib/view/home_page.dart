@@ -15,7 +15,7 @@ class MyHomePageState extends State<MyHomePage> {
   final List<Transaction> listTransaction = [
     // Transaction(id: Random().nextDouble().toString(), title: 'conta de luz', value: 55, date:DateTime.now())
   ];
-  bool showCart = false;
+  bool showChart = false;
 
   void addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
@@ -52,7 +52,6 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     final orientacaoPaisagem = MediaQuery.of(context).orientation == Orientation.landscape;
 
     final appBar = AppBar(
@@ -60,6 +59,16 @@ class MyHomePageState extends State<MyHomePage> {
         'Despesas Pessoais',
       ),
       actions: [
+       if(orientacaoPaisagem)
+         IconButton(
+          onPressed: () {
+            setState(
+              () {
+              showChart = !showChart;
+            });
+          },
+          icon: Icon(showChart ? Icons.list : Icons.show_chart),
+        ),
         IconButton(
           onPressed: () {
             opeTransactionFormModal(context);
@@ -77,28 +86,28 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-        if(orientacaoPaisagem)   
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Text('Exibir Gráfico !!!'),
-              Switch(
-                value: showCart,
-                onChanged: (value) {
-                  setState(() {
-                    showCart = value;
-                  });
-                },
-              ),
-            ]),
-            if (showCart || !orientacaoPaisagem)
+            if (orientacaoPaisagem)
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                const Text('Exibir Gráfico !!!'),
+                Switch(
+                  value: showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      showChart = value;
+                    });
+                  },
+                ),
+              ]),
+            if (showChart || !orientacaoPaisagem)
               SizedBox(
-                height: altura * 0.25,
+                height: altura * (orientacaoPaisagem ? 0.80 : 0.25),
                 child: Chart(
                   listaTransaction: recentTransaction,
                 ),
               ),
-            if (!showCart || !orientacaoPaisagem)
+            if (!showChart || !orientacaoPaisagem)
               SizedBox(
-                height: altura * 0.75,
+                height: altura * (orientacaoPaisagem ? 1 : 0.75),
                 child: TransactionLits(
                   listTransaction: listTransaction,
                   onSubmitted: removeTransactio,
