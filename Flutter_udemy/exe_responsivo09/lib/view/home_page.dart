@@ -13,6 +13,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final List<Transaction> listTransaction = [Transaction(id: Random().nextDouble().toString(), title: 'conta de luz', value: 55, date: DateTime.now())];
+  bool showChart = false;
 
   void addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
@@ -50,20 +51,19 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-        title: const Text(
-          'Despesas Pessoais',
+      title: const Text(
+        'Despesas Pessoais',
+      ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            opeTransactionFormModal(context);
+          },
+          icon: const Icon(Icons.add),
         ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              opeTransactionFormModal(context);
-            },
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      );
+      ],
+    );
     final altura = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
-
 
     return Scaffold(
       appBar: appBar,
@@ -71,14 +71,27 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              height:altura * 0.25,
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(showChart ? 'Mostrado o Gráfico' : 'Mostrando a Lista'),
+              Switch(
+                  value: showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      showChart = value;
+                    });
+                  }),
+            ]),
+           
+           if(showChart)
+               SizedBox(
+              height: altura * 0.25,
               child: Chart(
                 listaTransaction: recentTransaction,
               ),
             ),
-            SizedBox(
-              height:altura * 0.75,
+            if(!showChart)
+               SizedBox(
+              height: altura * 0.75,
               child: TransactionLits(
                 listTransaction: listTransaction,
                 onSubmitted: removeTransactio,
