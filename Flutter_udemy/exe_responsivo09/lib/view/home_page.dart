@@ -12,9 +12,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> listTransaction = [
-    // Transaction(id: Random().nextDouble().toString(), title: 'conta de luz', value: 55, date:DateTime.now())
-  ];
+  final List<Transaction> listTransaction = [Transaction(id: Random().nextDouble().toString(), title: 'conta de luz', value: 55, date: DateTime.now())];
 
   void addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
@@ -41,7 +39,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   removeTransactio(String id) {
-    print("===============================================${id} ===================================================");
+    // print("===============================================${id} ===================================================");
     setState(() {
       listTransaction.removeWhere((trs) {
         return trs.id == id;
@@ -51,8 +49,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    final appBar = AppBar(
         title: const Text(
           'Despesas Pessoais',
         ),
@@ -64,17 +61,28 @@ class MyHomePageState extends State<MyHomePage> {
             icon: const Icon(Icons.add),
           ),
         ],
-      ),
+      );
+    final altura = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(
-              listaTransaction: recentTransaction,
+            SizedBox(
+              height:altura * 0.25,
+              child: Chart(
+                listaTransaction: recentTransaction,
+              ),
             ),
-            TransactionLits(
-              listTransaction: listTransaction,
-              onSubmitted: removeTransactio,
+            SizedBox(
+              height:altura * 0.75,
+              child: TransactionLits(
+                listTransaction: listTransaction,
+                onSubmitted: removeTransactio,
+              ),
             ), // comunicação dirate / comunicação indireta
           ],
         ),
