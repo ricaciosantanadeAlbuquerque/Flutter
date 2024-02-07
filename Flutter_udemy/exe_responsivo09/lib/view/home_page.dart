@@ -50,8 +50,8 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    
-    final paisagem = MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    final paisagem = mediaQuery.orientation == Orientation.landscape;
 
     final appBar = AppBar(
       title: const Text(
@@ -75,7 +75,7 @@ class MyHomePageState extends State<MyHomePage> {
       ],
     );
 
-    final altura = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+    final altura = mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top;
 
     return Scaffold(
       appBar: appBar,
