@@ -12,15 +12,12 @@ class TransactionLits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return listTransaction.isEmpty
-        ? LayoutBuilder(
-          builder: (context, constraints) {
+        ? LayoutBuilder(builder: (context, constraints) {
             return Column(
               children: [
-                 SizedBox(
-                  height:constraints.maxHeight * 0.10
-                 ),
+                SizedBox(height: constraints.maxHeight * 0.10),
                 Text('Nenhuma Transação Cadastrada !', style: Theme.of(context).textTheme.titleLarge),
-                 SizedBox(
+                SizedBox(
                   height: constraints.maxHeight * 0.05,
                 ),
                 SizedBox(
@@ -53,13 +50,28 @@ class TransactionLits extends StatelessWidget {
                   ),
                   title: Text(trs.title, style: Theme.of(context).textTheme.titleLarge),
                   subtitle: Text(DateFormat('dd MMM y').format(trs.date)),
-                  trailing: IconButton(
-                    onPressed: () {
-                      onSubmitted(listTransaction[index].id);
-                    },
-                    color: Theme.of(context).colorScheme.error,
-                    icon: const Icon(Icons.delete),
-                  ),
+                  trailing: MediaQuery.of(context).size.width > 480
+                      ? TextButton.icon(
+                          onPressed: () {
+                            onSubmitted(trs.id);
+                          },
+                          icon: Icon(
+                            Icons.delete,
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                          label:Text('Excluir',
+                           style:TextStyle(
+                            color:Theme.of(context).colorScheme.error,
+                           ),
+                          ),
+                        )
+                      : IconButton(
+                          onPressed: () {
+                            onSubmitted(listTransaction[index].id);
+                          },
+                          color: Theme.of(context).colorScheme.error,
+                          icon: const Icon(Icons.delete),
+                        ),
                 ),
               );
             },
