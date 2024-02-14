@@ -41,7 +41,7 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   removeTransactio(String id) {
-    print("===============================================${id} ===================================================");
+    //print("===============================================${id} ===================================================");
     setState(() {
       listTransaction.removeWhere((trs) {
         return trs.id == id;
@@ -51,30 +51,41 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Despesas Pessoais',
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              opeTransactionFormModal(context);
-            },
-            icon: const Icon(Icons.add),
-          ),
-        ],
+    final appBar = AppBar(
+      title: const Text(
+        'Despesas Pessoais',
       ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            opeTransactionFormModal(context);
+          },
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+
+    final altura = MediaQuery.of(context).size.height - 
+    appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(
-              listaTransaction: recentTransaction,
+            SizedBox(
+              height:altura * 0.5,
+              child: Chart(
+                listaTransaction: recentTransaction,
+              ),
             ),
-            TransactionLits(
-              listTransaction: listTransaction,
-              onSubmitted: removeTransactio,
+            SizedBox(
+              height: altura * 0.5,
+              child: TransactionLits(
+                listTransaction: listTransaction,
+                onSubmitted: removeTransactio,
+              ),
             ), // comunicação dirate / comunicação indireta
           ],
         ),
