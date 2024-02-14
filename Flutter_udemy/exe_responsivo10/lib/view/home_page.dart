@@ -85,7 +85,8 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          if(paisagem)  
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(showChart ? 'Mostrando o gráfico' : 'Mostrando a lista'),
               Switch(
                 value: showChart,
