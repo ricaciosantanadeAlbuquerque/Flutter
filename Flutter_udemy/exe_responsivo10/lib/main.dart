@@ -25,6 +25,7 @@ class ExpensesApp extends StatelessWidget {
              fontWeight: FontWeight.bold, fontFamily: 'AlexBrush'),
           ),
         ),
-        home: const MyHomePage());
+        home: const MyHomePage(),
+        );
   }
 }
