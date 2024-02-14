@@ -52,22 +52,22 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    final paisagem = MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    final paisagem = mediaQuery.orientation == Orientation.landscape;
 
     final appBar = AppBar(
       title: const Text(
         'Despesas Pessoais',
       ),
       actions: [
-      if(paisagem)  IconButton(
-          icon:Icon(showChart ? Icons.list : Icons.show_chart),
-          onPressed:(){
-            setState((){
-              showChart = !showChart;
-            });
-          }
-        ),
+        if (paisagem)
+          IconButton(
+              icon: Icon(showChart ? Icons.list : Icons.show_chart),
+              onPressed: () {
+                setState(() {
+                  showChart = !showChart;
+                });
+              }),
         IconButton(
           onPressed: () {
             opeTransactionFormModal(context);
@@ -77,7 +77,7 @@ class MyHomePageState extends State<MyHomePage> {
       ],
     );
 
-    final altura = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+    final altura = mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top;
 
     return Scaffold(
       appBar: appBar,
@@ -85,18 +85,18 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-          if(paisagem)  
+            if (paisagem)
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(showChart ? 'Mostrando o gráfico' : 'Mostrando a lista'),
-              Switch(
-                value: showChart,
-                onChanged: (value) {
-                  setState(() {
-                    showChart = value;
-                  });
-                },
-              ),
-            ]),
+                Text(showChart ? 'Mostrando o gráfico' : 'Mostrando a lista'),
+                Switch(
+                  value: showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      showChart = value;
+                    });
+                  },
+                ),
+              ]),
             if (showChart || !paisagem)
               SizedBox(
                 height: altura * (paisagem ? 0.8 : 0.25),
