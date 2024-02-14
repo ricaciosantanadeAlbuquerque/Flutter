@@ -57,7 +57,7 @@ class MyHomePageState extends State<MyHomePage> {
         ? GestureDetector(onTap: fn, child: Icon(icon))
         : IconButton(
             onPressed: fn,
-            icon:Icon(icon),
+            icon: Icon(icon),
           );
   }
 
@@ -66,23 +66,25 @@ class MyHomePageState extends State<MyHomePage> {
     final mediaQuery = MediaQuery.of(context);
     final paisagem = mediaQuery.orientation == Orientation.landscape;
 
+    final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
+    final iconChart = Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
+
     final arrayActions = [
       if (paisagem)
-        getIconButton(
-            showChart ? Icons.list : Icons.show_chart,
-            () {
-              setState(() {
-                showChart = !showChart;
-              });
-            }),
+        getIconButton(showChart ? iconList : iconChart, 
+         () {
+          setState(() {
+            showChart = !showChart;
+          });
+        }),
       getIconButton(
-           Platform.isIOS ? CupertinoIcons.add : Icons.add,
-          () {
+        Platform.isIOS ? CupertinoIcons.add : Icons.add,
+        () {
           opeTransactionFormModal(context);
         },
-       
       ),
     ];
+
     final appBar = AppBar(
         title: const Text(
           'Despesas Pessoais',
@@ -133,9 +135,7 @@ class MyHomePageState extends State<MyHomePage> {
         ? CupertinoPageScaffold(
             navigationBar: CupertinoNavigationBar(
               middle: const Text('Despesas Pessoais'),
-              trailing: Row(
-                mainAxisSize:MainAxisSize.min,
-                children: arrayActions),
+              trailing: Row(mainAxisSize: MainAxisSize.min, children: arrayActions),
             ),
             child: bodyPage,
           )
