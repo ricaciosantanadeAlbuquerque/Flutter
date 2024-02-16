@@ -16,6 +16,8 @@ class MyHomePageState extends State<MyHomePage> {
     // Transaction(id: Random().nextDouble().toString(), title: 'conta de luz', value: 55, date:DateTime.now())
   ];
 
+  bool showChart = false;
+
   void addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
 
@@ -51,7 +53,6 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     final appBar = AppBar(
       title: const Text(
         'Despesas Pessoais',
@@ -74,14 +75,25 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
+            Switch(
+              value: showChart,
+              onChanged: (value) {
+                setState(() {
+                  showChart = value;
+                });
+              },
+            ),
+            if(showChart)
+               SizedBox(
               height: alturaApp * 0.25,
               child: Chart(
                 listaTransaction: recentTransaction,
               ),
             ),
-            SizedBox(
-              height:alturaApp * 0.75,
+           if(!showChart) 
+           
+           SizedBox(
+              height: alturaApp * 0.75,
               child: TransactionLits(
                 listTransaction: listTransaction,
                 onSubmitted: removeTransactio,
