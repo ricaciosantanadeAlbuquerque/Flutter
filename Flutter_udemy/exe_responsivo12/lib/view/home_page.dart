@@ -53,7 +53,6 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
     final paisagem = MediaQuery.of(context).orientation == Orientation.landscape;
 
     final appBar = AppBar(
@@ -61,6 +60,15 @@ class MyHomePageState extends State<MyHomePage> {
         'Despesas Pessoais',
       ),
       actions: [
+     if(paisagem)   
+       IconButton(
+          onPressed: () {
+            setState(() {
+              showChart = !showChart;
+            });
+          },
+          icon: Icon(showChart ? Icons.list : Icons.show_chart),
+        ),
         IconButton(
           onPressed: () {
             opeTransactionFormModal(context);
@@ -78,25 +86,23 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-           if(paisagem)
-             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-             children: [
-              Text(
-                showChart ? 'Mostrando o Gráfico' : 'Mostrando a Lista',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
+            if (paisagem)
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text(
+                  showChart ? 'Mostrando o Gráfico' : 'Mostrando a Lista',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Switch(
-                value: showChart,
-                onChanged: (value) {
-                  setState(() {
-                    showChart = value;
-                  });
-                },
-              ),
-            ]),
+                Switch(
+                  value: showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      showChart = value;
+                    });
+                  },
+                ),
+              ]),
             if (showChart || !paisagem)
               SizedBox(
                 height: alturaApp * (paisagem ? 0.80 : 0.25),
