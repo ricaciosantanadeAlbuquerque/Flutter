@@ -10,9 +10,11 @@ class ExpensesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
+  /**
+   *   SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp
     ]);
+   */
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData().copyWith(
@@ -30,6 +32,7 @@ class ExpensesApp extends StatelessWidget {
               , fontWeight: FontWeight.bold, fontFamily: 'AlexBrush'),
           ),
         ),
-        home: const MyHomePage());
+        home: const MyHomePage()
+        );
   }
 }

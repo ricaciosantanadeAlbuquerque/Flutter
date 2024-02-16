@@ -13,6 +13,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final List<Transaction> listTransaction = [Transaction(id: Random().nextDouble().toString(), title: 'conta de luz', value: 55, date: DateTime.now())];
+  bool showChart = false;
 
   void addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
@@ -71,14 +72,29 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              height:alturaApp * 0.25,
+            Row(
+              mainAxisAlignment:MainAxisAlignment.center,
+              children: [
+                Text(showChart ? 'Exibindo o Gráfico' : 'Exibindo a Lista'),
+                Switch(
+                  value: showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      showChart = value;
+                    });
+                  }),
+              ]
+            ),
+         if(showChart)   
+             SizedBox(
+              height: alturaApp * 0.25,
               child: Chart(
                 listaTransaction: recentTransaction,
               ),
             ),
-            SizedBox(
-              height: alturaApp *  0.75,
+           if(!showChart) 
+              SizedBox(
+              height: alturaApp * 0.75,
               child: TransactionLits(
                 listTransaction: listTransaction,
                 onSubmitted: removeTransactio,
