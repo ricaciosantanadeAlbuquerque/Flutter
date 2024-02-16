@@ -103,7 +103,7 @@ class MyHomePageState extends State<MyHomePage> {
               ),
             if (!showChart || !paisagem)
               SizedBox(
-                height: alturaApp *  0.75,
+                height: alturaApp *  (paisagem ? 1 : 0.75),
                 child: TransactionLits(
                   listTransaction: listTransaction,
                   onSubmitted: removeTransactio,
