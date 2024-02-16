@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'dart:math';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../components/chart.dart';
 import '../components/transaction_form.dart';
@@ -48,77 +50,96 @@ class MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Widget getIconButton( Function() fn,IconData icon) {
+    return Platform.isIOS ? GestureDetector(onTap: fn, child: Icon(icon)) 
+    : IconButton(onPressed: fn,icon: Icon(icon));
+  }
+
   @override
   Widget build(BuildContext context) {
     final paisagem = MediaQuery.of(context).orientation == Orientation.landscape;
-
-    final appBar = AppBar(
-      title: const Text(
-        'Despesas Pessoais',
-      ),
-      actions: [
-       if(paisagem)
-          IconButton(
-          onPressed: () {
+    final arrayActions = [
+      if (paisagem)
+         getIconButton(
+           () {
             setState(() {
               showChart = !showChart;
             });
           },
-          icon: Icon(showChart ? Icons.list : Icons.show_chart),
+          showChart ? Icons.list : Icons.show_chart,
         ),
-        IconButton(
-          onPressed: () {
-            opeTransactionFormModal(context);
-          },
-          icon: const Icon(Icons.add),
+      getIconButton(
+        () {
+          opeTransactionFormModal(context);
+        },
+        Platform.isIOS ? CupertinoIcons.add : Icons.add
+      ),
+    ];
+
+    final appBar = AppBar(
+        title: const Text(
+          'Despesas Pessoais',
         ),
-      ],
-    );
+        actions: arrayActions);
 
     final alturaApp = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (paisagem)
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(showChart ? 'Exibindo o Gráfico' : 'Exibindo a Lista'),
-                Switch(
-                    value: showChart,
-                    onChanged: (value) {
-                      setState(() {
-                        showChart = value;
-                      });
-                    }),
-              ]),
-            if (showChart || !paisagem)
-              SizedBox(
-                height: alturaApp * (paisagem ? 0.80 : 0.25),
-                child: Chart(
-                  listaTransaction: recentTransaction,
-                ),
+    final bodyPage = SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (paisagem)
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(showChart ? 'Exibindo o Gráfico' : 'Exibindo a Lista'),
+              Switch.adaptive(
+                  activeColor: Theme.of(context).colorScheme.primary,
+                  value: showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      showChart = value;
+                    });
+                  }),
+            ]),
+          if (showChart || !paisagem)
+            SizedBox(
+              height: alturaApp * (paisagem ? 0.80 : 0.25),
+              child: Chart(
+                listaTransaction: recentTransaction,
               ),
-            if (!showChart || !paisagem)
-              SizedBox(
-                height: alturaApp *  (paisagem ? 1 : 0.75),
-                child: TransactionLits(
-                  listTransaction: listTransaction,
-                  onSubmitted: removeTransactio,
-                ),
-              ), // comunicação dirate / comunicação indireta
-          ],
-        ),
+            ),
+          if (!showChart || !paisagem)
+            SizedBox(
+              height: alturaApp * (paisagem ? 1 : 0.75),
+              child: TransactionLits(
+                listTransaction: listTransaction,
+                onSubmitted: removeTransactio,
+              ),
+            ), // comunicação dirate / comunicação indireta
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          opeTransactionFormModal(context);
-        },
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+              middle: const Text('Despesas Pessoais'),
+               trailing: Row(
+                mainAxisSize:MainAxisSize.min,
+                children: arrayActions),
+               ),
+            child: bodyPage,
+          )
+        : Scaffold(
+            appBar: appBar,
+            body: bodyPage,
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    onPressed: () {
+                      opeTransactionFormModal(context);
+                    },
+                    child: const Icon(Icons.add),
+                  ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          );
   }
 }
