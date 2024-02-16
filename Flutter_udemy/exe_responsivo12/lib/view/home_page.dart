@@ -75,7 +75,15 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Switch(
+           Row(
+            mainAxisAlignment:MainAxisAlignment.center,
+            children:[
+            Text(showChart ? 'Mostrando o Gráfico' : 'Mostrando a Lista',
+            style: const TextStyle(
+             fontWeight:FontWeight.bold,
+            ),
+            ),
+             Switch(
               value: showChart,
               onChanged: (value) {
                 setState(() {
@@ -83,6 +91,7 @@ class MyHomePageState extends State<MyHomePage> {
                 });
               },
             ),
+           ]),
             if(showChart)
                SizedBox(
               height: alturaApp * 0.25,
