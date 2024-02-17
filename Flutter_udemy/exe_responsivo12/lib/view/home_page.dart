@@ -53,22 +53,23 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final paisagem = MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    final paisagem = mediaQuery.orientation == Orientation.landscape;
 
     final appBar = AppBar(
       title: const Text(
         'Despesas Pessoais',
       ),
       actions: [
-     if(paisagem)   
-       IconButton(
-          onPressed: () {
-            setState(() {
-              showChart = !showChart;
-            });
-          },
-          icon: Icon(showChart ? Icons.list : Icons.show_chart),
-        ),
+        if (paisagem)
+          IconButton(
+            onPressed: () {
+              setState(() {
+                showChart = !showChart;
+              });
+            },
+            icon: Icon(showChart ? Icons.list : Icons.show_chart),
+          ),
         IconButton(
           onPressed: () {
             opeTransactionFormModal(context);
@@ -78,7 +79,7 @@ class MyHomePageState extends State<MyHomePage> {
       ],
     );
 
-    final alturaApp = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+    final alturaApp = mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top;
 
     return Scaffold(
       appBar: appBar,
