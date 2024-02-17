@@ -53,7 +53,7 @@ class MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Widget getIconButton(Function() fn,IconData icon) {
+  Widget getIconButton(Function() fn, IconData icon) {
     return Platform.isIOS ? GestureDetector(onTap: fn, child: Icon(icon)) : IconButton(onPressed: fn, icon: Icon(icon));
   }
 
@@ -61,6 +61,8 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final paisagem = mediaQuery.orientation == Orientation.landscape;
+    final iconList = Platform.isIOS ? CupertinoIcons.news : Icons.list;
+    final iconChart = Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
     final arrayActions = [
       getIconButton(
         () {
@@ -68,13 +70,13 @@ class MyHomePageState extends State<MyHomePage> {
             showChart = !showChart;
           });
         },
-        showChart ? Icons.list : Icons.show_chart,
+        showChart ? iconList : iconChart,
       ),
       getIconButton(
-         () {
+        () {
           opeTransactionFormModal(context);
         },
-         Platform.isIOS ? CupertinoIcons.add : Icons.add,
+        Platform.isIOS ? CupertinoIcons.add : Icons.add,
       ),
     ];
 
@@ -86,38 +88,40 @@ class MyHomePageState extends State<MyHomePage> {
 
     final alturaApp = mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top;
 
-    final bodyPage = SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (paisagem)
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(showChart ? 'Mostrando o Gráfico' : 'Mostrando a Lista'),
-              Switch.adaptive(
-                  activeColor: Theme.of(context).colorScheme.secondary,
-                  value: showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      showChart = value;
-                    });
-                  }),
-            ]),
-          if (showChart || !paisagem)
-            SizedBox(
-              height: alturaApp * (paisagem ? 0.80 : 0.25),
-              child: Chart(
-                listaTransaction: recentTransaction,
+    final bodyPage = SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (paisagem)
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text(showChart ? 'Mostrando o Gráfico' : 'Mostrando a Lista'),
+                Switch.adaptive(
+                    activeColor: Theme.of(context).colorScheme.secondary,
+                    value: showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        showChart = value;
+                      });
+                    }),
+              ]),
+            if (showChart || !paisagem)
+              SizedBox(
+                height: alturaApp * (paisagem ? 0.80 : 0.25),
+                child: Chart(
+                  listaTransaction: recentTransaction,
+                ),
               ),
-            ),
-          if (!showChart || !paisagem)
-            SizedBox(
-              height: alturaApp * (paisagem ? 1 : 0.75),
-              child: TransactionLits(
-                listTransaction: listTransaction,
-                onSubmitted: removeTransactio,
-              ),
-            ), // comunicação dirate / comunicação indireta
-        ],
+            if (!showChart || !paisagem)
+              SizedBox(
+                height: alturaApp * (paisagem ? 1 : 0.75),
+                child: TransactionLits(
+                  listTransaction: listTransaction,
+                  onSubmitted: removeTransactio,
+                ),
+              ), // comunicação dirate / comunicação indireta
+          ],
+        ),
       ),
     );
 
@@ -125,11 +129,11 @@ class MyHomePageState extends State<MyHomePage> {
         ? CupertinoPageScaffold(
             navigationBar: CupertinoNavigationBar(
               middle: const Text('Despesas Pessoais'),
-               trailing: Row(
-                mainAxisSize:MainAxisSize.min,
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
                 children: arrayActions,
-                ),
-               ),
+              ),
+            ),
             child: bodyPage,
           )
         : Scaffold(
