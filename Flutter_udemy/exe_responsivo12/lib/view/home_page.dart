@@ -53,7 +53,7 @@ class MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  Widget getIconButton(Function() fn,IconData icon) {
+  Widget getIconButton(Function() fn, IconData icon) {
     return Platform.isIOS
         ? GestureDetector(onTap: fn, child: Icon(icon))
         : IconButton(
@@ -66,6 +66,8 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final paisagem = mediaQuery.orientation == Orientation.landscape;
+    final iconList = Platform.isIOS ? CupertinoIcons.news : Icons.list;
+    final iconChart = Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
 
     final arrayActions = [
       if (paisagem)
@@ -75,13 +77,13 @@ class MyHomePageState extends State<MyHomePage> {
               showChart = !showChart;
             });
           },
-          showChart ? Icons.list : Icons.show_chart,
+          showChart ? iconList : iconChart,
         ),
       getIconButton(
-         () {
+        () {
           opeTransactionFormModal(context);
         },
-         Platform.isIOS ? CupertinoIcons.add : Icons.add,
+        Platform.isIOS ? CupertinoIcons.add : Icons.add,
       ),
     ];
 
@@ -92,44 +94,47 @@ class MyHomePageState extends State<MyHomePage> {
         actions: arrayActions);
 
     final alturaApp = mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top;
-    final bodyPage = SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (paisagem)
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(
-                showChart ? 'Mostrando o Gráfico' : 'Mostrando a Lista',
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
+
+    final bodyPage = SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (paisagem)
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text(
+                  showChart ? 'Mostrando o Gráfico' : 'Mostrando a Lista',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Switch.adaptive(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  value: showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      showChart = value;
+                    });
+                  },
+                ),
+              ]),
+            if (showChart || !paisagem)
+              SizedBox(
+                height: alturaApp * (paisagem ? 0.80 : 0.25),
+                child: Chart(
+                  listaTransaction: recentTransaction,
                 ),
               ),
-              Switch.adaptive(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                value: showChart,
-                onChanged: (value) {
-                  setState(() {
-                    showChart = value;
-                  });
-                },
-              ),
-            ]),
-          if (showChart || !paisagem)
-            SizedBox(
-              height: alturaApp * (paisagem ? 0.80 : 0.25),
-              child: Chart(
-                listaTransaction: recentTransaction,
-              ),
-            ),
-          if (!showChart || !paisagem)
-            SizedBox(
-              height: alturaApp * (paisagem ? 1 : 0.75),
-              child: TransactionLits(
-                listTransaction: listTransaction,
-                onSubmitted: removeTransactio,
-              ),
-            ), // comunicação dirate / comunicação indireta
-        ],
+            if (!showChart || !paisagem)
+              SizedBox(
+                height: alturaApp * (paisagem ? 1 : 0.75),
+                child: TransactionLits(
+                  listTransaction: listTransaction,
+                  onSubmitted: removeTransactio,
+                ),
+              ), // comunicação dirate / comunicação indireta
+          ],
+        ),
       ),
     );
 
