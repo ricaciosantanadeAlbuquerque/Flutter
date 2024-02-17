@@ -79,6 +79,14 @@ class MyHomePageState extends State<MyHomePage> {
         actions: [
           IconButton(
             onPressed: () {
+              setState(() {
+                showChart = !showChart;
+              });
+            },
+            icon: Icon(showChart ? Icons.list : Icons.show_chart),
+          ),
+          IconButton(
+            onPressed: () {
               opeTransactionFormModal(context);
             },
             icon: const Icon(Icons.add),
@@ -89,16 +97,17 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(showChart ? 'Mostrando o Gráfico' : 'Mostrando a Lista'),
-              Switch(
-                  value: showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      showChart = value;
-                    });
-                  }),
-            ]),
+            if (paisagem)
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Text(showChart ? 'Mostrando o Gráfico' : 'Mostrando a Lista'),
+                Switch(
+                    value: showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        showChart = value;
+                      });
+                    }),
+              ]),
             if (showChart || !paisagem)
               SizedBox(
                 height: alturaApp * (paisagem ? 0.80 : 0.25),
