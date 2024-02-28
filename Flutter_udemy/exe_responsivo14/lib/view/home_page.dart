@@ -15,6 +15,7 @@ class MyHomePageState extends State<MyHomePage> {
   final List<Transaction> listTransaction = [
     // Transaction(id: Random().nextDouble().toString(), title: 'conta de luz', value: 55, date:DateTime.now())
   ];
+  bool showChart = false;
 
   void addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
@@ -51,6 +52,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final paisagem = MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: const Text(
         'Despesas Pessoais',
@@ -72,6 +74,13 @@ class MyHomePageState extends State<MyHomePage> {
           'Despesas Pessoais',
         ),
         actions: [
+         if(paisagem) IconButton(
+              icon: Icon(showChart ? Icons.list : Icons.show_chart),
+              onPressed: () {
+                setState(() {
+                  showChart = !showChart;
+                });
+              }),
           IconButton(
             onPressed: () {
               opeTransactionFormModal(context);
@@ -84,19 +93,34 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              height: altura * 0.25,
-              child: Chart(
-                listaTransaction: recentTransaction,
-              ),
+           if(paisagem) Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+               children: [
+              Text(showChart ? 'Mostrando o Gráfico' : 'Mostrando A Lista'),
+              Switch(
+                  value: showChart,
+                  onChanged: (valeu) {
+                    setState(() {
+                      showChart = valeu;
+                    });
+                  }),
+            ],
             ),
-            SizedBox(
-              height:altura * 0.75,
-              child: TransactionLits(
-                listTransaction: listTransaction,
-                onSubmitted: removeTransactio,
+            if (showChart || !paisagem)
+              SizedBox(
+                height: altura * (paisagem ? 0.80 : 0.25),
+                child: Chart(
+                  listaTransaction: recentTransaction,
+                ),
               ),
-            ), // comunicação dirate / comunicação indireta
+            if (!showChart || !paisagem)
+              SizedBox(
+                height: altura * (paisagem ? 1 : 0.75),
+                child: TransactionLits(
+                  listTransaction: listTransaction,
+                  onSubmitted: removeTransactio,
+                ),
+              ), // comunicação dirate / comunicação indireta
           ],
         ),
       ),
