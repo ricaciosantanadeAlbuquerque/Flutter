@@ -15,6 +15,7 @@ class MyHomePageState extends State<MyHomePage> {
   final List<Transaction> listTransaction = [
     // Transaction(id: Random().nextDouble().toString(), title: 'conta de luz', value: 55, date:DateTime.now())
   ];
+  bool showChart = false;
 
   void addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(id: Random().nextDouble().toString(), title: title, value: value, date: date);
@@ -73,13 +74,25 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
+            Row(
+              mainAxisAlignment:MainAxisAlignment.center,
+              children: [
+                Switch(
+                  value: showChart,
+                  onChanged: (value) {
+                    setState(() {
+                      showChart = value;
+                    });
+                  }),
+              ],
+            ),
+           if(showChart) SizedBox(
               height: altura * 0.25,
               child: Chart(
                 listaTransaction: recentTransaction,
               ),
             ),
-            SizedBox(
+           if(!showChart) SizedBox(
               height: altura * 0.75,
               child: TransactionLits(
                 listTransaction: listTransaction,
