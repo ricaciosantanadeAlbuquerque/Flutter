@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:exe_responsivo14/components/chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../components/transaction_form.dart';
 import '../components/transaction_list.dart';
@@ -50,48 +52,47 @@ class MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  Widget getIconButton(Function() fn, IconData icon) {
+    return Platform.isIOS
+        ? GestureDetector(onTap: fn, child: Icon(icon))
+        : IconButton(
+            onPressed: fn,
+            icon: Icon(icon),
+          );
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final paisagem = mediaQuery.orientation == Orientation.landscape;
+    final iconList = Platform.isIOS ? CupertinoIcons.news : Icons.list;
+    final iconChart = Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
+    final arrayActions = [
+      if (paisagem)
+        getIconButton(() {
+          setState(() {
+            showChart = !showChart;
+          });
+        },
+         showChart ? iconList: iconChart,
+         ),
+      getIconButton(
+        () {
+          opeTransactionFormModal(context);
+        },
+        Icons.add,
+      ),
+    ];
     final appBar = AppBar(
       title: const Text(
         'Despesas Pessoais',
       ),
-      actions: [
-        IconButton(
-          onPressed: () {
-            opeTransactionFormModal(context);
-          },
-          icon: const Icon(Icons.add),
-        ),
-      ],
+      actions: arrayActions,
     );
     final altura = mediaQuery.size.height - appBar.preferredSize.height - mediaQuery.padding.top;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Despesas Pessoais',
-        ),
-        actions: [
-          if (paisagem)
-            IconButton(
-                icon: Icon(showChart ? Icons.list : Icons.show_chart),
-                onPressed: () {
-                  setState(() {
-                    showChart = !showChart;
-                  });
-                }),
-          IconButton(
-            onPressed: () {
-              opeTransactionFormModal(context);
-            },
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
+    final bodyPage = SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -100,7 +101,8 @@ class MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(showChart ? 'Mostrando o Gráfico' : 'Mostrando A Lista'),
-                  Switch(
+                  Switch.adaptive(
+                      activeColor: Theme.of(context).colorScheme.secondary,
                       value: showChart,
                       onChanged: (valeu) {
                         setState(() {
@@ -127,13 +129,28 @@ class MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          opeTransactionFormModal(context);
-        },
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+              middle: const Text('Despesas Pessoais'),
+              trailing: Row(mainAxisSize: MainAxisSize.min, children: arrayActions),
+            ),
+            child: bodyPage,
+          )
+        : Scaffold(
+            appBar: appBar,
+            body: bodyPage,
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    onPressed: () {
+                      opeTransactionFormModal(context);
+                    },
+                    child: const Icon(Icons.add),
+                  ),
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          );
   }
 }
