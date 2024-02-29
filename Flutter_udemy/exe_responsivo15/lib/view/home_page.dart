@@ -52,6 +52,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    
     final appBar = AppBar(
       title: const Text(
         'Despesas Pessoais',
@@ -77,6 +78,7 @@ class MyHomePageState extends State<MyHomePage> {
             Row(
               mainAxisAlignment:MainAxisAlignment.center,
               children: [
+                Text(showChart ? 'Mostrando o Gráfico' : 'Mostrando a Lista'),
                 Switch(
                   value: showChart,
                   onChanged: (value) {
