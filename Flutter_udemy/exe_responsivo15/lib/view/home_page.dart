@@ -52,7 +52,9 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    
+
+    final paisagem = MediaQuery.of(context).orientation == Orientation.landscape;
+
     final appBar = AppBar(
       title: const Text(
         'Despesas Pessoais',
@@ -75,32 +77,35 @@ class MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              mainAxisAlignment:MainAxisAlignment.center,
+          if(paisagem) 
+              Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(showChart ? 'Mostrando o Gráfico' : 'Mostrando a Lista'),
                 Switch(
-                  value: showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      showChart = value;
-                    });
-                  }),
+                    value: showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        showChart = value;
+                      });
+                    }),
               ],
             ),
-           if(showChart) SizedBox(
-              height: altura * 0.25,
-              child: Chart(
-                listaTransaction: recentTransaction,
+            if (showChart || !paisagem)
+              SizedBox(
+                height: altura * (paisagem ? 0.80 :0.25),
+                child: Chart(
+                  listaTransaction: recentTransaction,
+                ),
               ),
-            ),
-           if(!showChart) SizedBox(
-              height: altura * 0.75,
-              child: TransactionLits(
-                listTransaction: listTransaction,
-                onSubmitted: removeTransactio,
-              ),
-            ), // comunicação dirate / comunicação indireta
+            if (!showChart || !paisagem)
+              SizedBox(
+                height: altura * (paisagem ? 1 : 0.75),
+                child: TransactionLits(
+                  listTransaction: listTransaction,
+                  onSubmitted: removeTransactio,
+                ),
+              ), // comunicação dirate / comunicação indireta
           ],
         ),
       ),
