@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import '../components/chart.dart';
@@ -60,7 +61,7 @@ class MyHomePageState extends State<MyHomePage> {
       ),
       actions: [
      if(paisagem) 
-     
+
         IconButton(
           onPressed: () {
             setState(() {
@@ -91,7 +92,8 @@ class MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(showChart ? 'Mostrando o Gráfico' : 'Mostrando a Lista'),
-                  Switch(
+                  Switch.adaptive(
+                     activeColor: Theme.of(context).colorScheme.secondary,
                       value: showChart,
                       onChanged: (value) {
                         setState(() {
@@ -118,7 +120,9 @@ class MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: Platform.isIOS ?
+       Container() 
+       : FloatingActionButton(
         onPressed: () {
           opeTransactionFormModal(context);
         },
